@@ -1,0 +1,2299 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <!-- title -->
+
+
+    
+
+<!-- keywords -->
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="author" content="Guohao">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="Guohao">
+    
+        <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content="">
+    <meta name="description" content="在Spring使用MongoDB文档地址：https:&#x2F;&#x2F;docs.spring.io&#x2F;spring-data&#x2F;mongodb&#x2F;docs&#x2F;current&#x2F;reference&#x2F;html&#x2F;#mongo.core Spring 的MongoDB支持MongoTemplate 帮助类和 MongoRepository 支持文档与POJO的对象映射 基本配置Maven 12345&lt;dependency">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mongo基础">
+<meta property="og:url" content="https://blog.vistazx1.top/2020/11/02/2020-11-02%2009:11:11/index.html">
+<meta property="og:site_name" content="Vista">
+<meta property="og:description" content="在Spring使用MongoDB文档地址：https:&#x2F;&#x2F;docs.spring.io&#x2F;spring-data&#x2F;mongodb&#x2F;docs&#x2F;current&#x2F;reference&#x2F;html&#x2F;#mongo.core Spring 的MongoDB支持MongoTemplate 帮助类和 MongoRepository 支持文档与POJO的对象映射 基本配置Maven 12345&lt;dependency">
+<meta property="og:locale">
+<meta property="og:image" content="https://blog.vistazx1.top/images/MongoDB.png">
+<meta property="article:published_time" content="2020-11-02T01:11:11.000Z">
+<meta property="article:modified_time" content="2021-03-05T07:48:06.000Z">
+<meta property="article:author" content="Guohao">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.vistazx1.top/images/MongoDB.png">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="icon" href="/assets/favicon.ico">
+    
+    <title>Mongo基础 · Vista</title>
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+    (function (w) {
+        'use strict'
+        // rel=preload support test
+        if (!w.loadCSS) {
+            w.loadCSS = function () {}
+        }
+        // define on the loadCSS obj
+        var rp = (loadCSS.relpreload = {})
+        // rel=preload feature support test
+        // runs once and returns a function for compat purposes
+        rp.support = (function () {
+            var ret
+            try {
+                ret = w.document.createElement('link').relList.supports('preload')
+            } catch (e) {
+                ret = false
+            }
+            return function () {
+                return ret
+            }
+        })()
+
+        // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+        // then change that media back to its intended value on load
+        rp.bindMediaToggle = function (link) {
+            // remember existing media attr for ultimate state, or default to 'all'
+            var finalMedia = link.media || 'all'
+
+            function enableStylesheet() {
+                link.media = finalMedia
+            }
+
+            // bind load handlers to enable media
+            if (link.addEventListener) {
+                link.addEventListener('load', enableStylesheet)
+            } else if (link.attachEvent) {
+                link.attachEvent('onload', enableStylesheet)
+            }
+
+            // Set rel and non-applicable media type to start an async request
+            // note: timeout allows this to happen async to let rendering continue in IE
+            setTimeout(function () {
+                link.rel = 'stylesheet'
+                link.media = 'only x'
+            })
+            // also enable media after 3 seconds,
+            // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+            setTimeout(enableStylesheet, 3000)
+        }
+
+        // loop through link elements in DOM
+        rp.poly = function () {
+            // double check this to prevent external calls from running
+            if (rp.support()) {
+                return
+            }
+            var links = w.document.getElementsByTagName('link')
+            for (var i = 0; i < links.length; i++) {
+                var link = links[i]
+                // qualify links to those with rel=preload and as=style attrs
+                if (
+                    link.rel === 'preload' &&
+                    link.getAttribute('as') === 'style' &&
+                    !link.getAttribute('data-loadcss')
+                ) {
+                    // prevent rerunning on link
+                    link.setAttribute('data-loadcss', true)
+                    // bind listeners to toggle media back
+                    rp.bindMediaToggle(link)
+                }
+            }
+        }
+
+        // if unsupported, run the polyfill
+        if (!rp.support()) {
+            // run once at least
+            rp.poly()
+
+            // rerun poly on an interval until onload
+            var run = w.setInterval(rp.poly, 500)
+            if (w.addEventListener) {
+                w.addEventListener('load', function () {
+                    rp.poly()
+                    w.clearInterval(run)
+                })
+            } else if (w.attachEvent) {
+                w.attachEvent('onload', function () {
+                    rp.poly()
+                    w.clearInterval(run)
+                })
+            }
+        }
+
+        // commonjs
+        if (typeof exports !== 'undefined') {
+            exports.loadCSS = loadCSS
+        } else {
+            w.loadCSS = loadCSS
+        }
+    })(typeof global !== 'undefined' ? global : this)
+</script>
+
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+</style>
+
+    <link rel="preload" href="/css/style.css?v=20211217" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/css/dark.css?v=20211217" as="style">
+    <link rel="stylesheet" href="/css/dark.css">
+    <link rel="stylesheet" href="/css/mobile.css?v=20211217" media="(max-width: 960px)">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" as="script">
+    <link rel="preload" href="/scripts/main.js?v=20211217" as="script">
+    <link rel="preload" href="/scripts/dark.js?v=20211217" as="script">
+    <link rel="preload" href="/font/Oswald-Regular.ttf" as="font" crossorigin>
+    <link rel="preload" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" as="font" crossorigin>
+    <!-- algolia -->
+    
+    <!-- 百度统计  -->
+    
+    <!-- Google tag (gtag.js) -->
+    
+
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ == undefined) {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js" />')
+        }
+    </script>
+    
+        <body class="post-body">
+    
+        <!-- header -->
+        <header class="header header-mobile">
+    <!-- top read progress line -->
+    <div class="header-element">
+        <div class="read-progress"></div>
+    </div>
+    <!-- sidebar menu button -->
+    <div class="header-element">
+        
+            <div class="header-sidebar-menu">
+        
+            
+                <div style="padding-left: 1px;">&#xe775;</div>
+            
+        </div>
+    </div>
+    <!-- header actions -->
+    <div class="header-actions">
+        <!-- theme mode switch button -->
+        <span class="header-theme-btn header-element">
+            <i class="fas fa-adjust"></i>
+        </span>
+        <!-- back to home page text -->
+        <span class="home-link header-element">
+            <a href=/>Vista</a>
+        </span>
+    </div>
+    <!-- toggle banner for post layout -->
+    
+        
+            <div class="banner">
+        
+            <div class="blog-title header-element">
+                <a href="/">Vista</a>
+            </div>
+            <div class="post-title header-element">
+                <a href="#" class="post-name">Mongo基础</a>
+            </div>
+        </div>
+    
+</header>
+
+        <!-- fixed footer -->
+        <footer class="footer-fixed">
+    <!-- back to top button -->
+    <div class="footer-fixed-element">
+        
+            <div class="back-top back-top-hidden">
+        
+        
+            <div>&#xe639;</div>
+        
+        </div>
+    </div>
+</footer>
+
+        <!-- wrapper -->
+        <div class="wrapper">
+            <div class="site-intro" style="
+
+
+
+
+
+
+
+    height:50vh;
+
+">
+    
+    <!-- 主页  -->
+    
+        
+    <!-- 404页  -->
+    
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+                Mongo基础
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+                
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页 meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+    
+</div>
+
+                
+                <!-- 文章字数统计 -->
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">1.5k</span>阅读时长: <span class="post-count reading-time">7 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <!-- 撰写日期 -->
+                    <span class="iconfont-archer post-intro-calander">&#xe676;</span>
+                    <span class="post-intro-time">2020/11/02</span>
+                    <!-- busuanzi -->
+                    
+                        <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                            <span class="iconfont-archer post-intro-busuanzi">&#xe602;</span>
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    
+                    <!-- 文章分享 -->
+                    <span class="share-wrapper">
+                        <span class="iconfont-archer share-icon">&#xe71d;</span>
+                        <span class="share-text">Share</span>
+                        <ul class="share-list">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+
+            <script>
+  // get user agent
+  function getBrowserVersions() {
+    var u = window.navigator.userAgent
+    return {
+      userAgent: u,
+      trident: u.indexOf('Trident') > -1, //IE内核
+      presto: u.indexOf('Presto') > -1, //opera内核
+      webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+      gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+      mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+      ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+      android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+      iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+      iPad: u.indexOf('iPad') > -1, //是否为iPad
+      webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+      weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+      uc: u.indexOf('UCBrowser') > -1, //是否为android下的UC浏览器
+    }
+  }
+  var browser = {
+    versions: getBrowserVersions(),
+  }
+  console.log('userAgent: ' + browser.versions.userAgent)
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded')
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document
+        .getElementsByClassName('intro-title')[0]
+        .classList.add('intro-fade-in')
+      document
+        .getElementsByClassName('intro-subtitle')[0]
+        .classList.add('intro-fade-in')
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in')
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb() {
+    if (browser.versions.uc) {
+      console.log('UCBrowser')
+      fontLoaded()
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular'],
+        },
+        loading: function () {
+          // 所有字体开始加载
+          // console.log('font loading');
+        },
+        active: function () {
+          // 所有字体已渲染
+          fontLoaded()
+        },
+        inactive: function () {
+          // 字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout')
+          fontLoaded()
+        },
+        timeout: 5000, // Set the timeout to two seconds
+      })
+    }
+  }
+
+  function asyncErr() {
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0]
+    o.src = u
+    if (cb) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          cb(null, e)
+        },
+        false
+      )
+    }
+    if (err) {
+      o.addEventListener(
+        'error',
+        function (e) {
+          err(null, e)
+        },
+        false
+      )
+    }
+    s.parentNode.insertBefore(o, s)
+  }
+
+  var asyncLoadWithFallBack = function (arr, success, reject) {
+    var currReject = function () {
+      reject()
+      arr.shift()
+      if (arr.length) async(arr[0], success, currReject)
+    }
+
+    async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack(
+    [
+      'https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js',
+      'https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js',
+      "/lib/webfontloader.min.js",
+    ],
+    asyncCb,
+    asyncErr
+  )
+</script>
+
+            <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+            <div class="container container-unloaded">
+                <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="在Spring使用MongoDB"><a href="#在Spring使用MongoDB" class="headerlink" title="在Spring使用MongoDB"></a>在Spring使用MongoDB</h1><p>文档地址：<a target="_blank" rel="noopener" href="https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/#mongo.core">https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/#mongo.core</a></p>
+<h2 id="Spring-的MongoDB支持"><a href="#Spring-的MongoDB支持" class="headerlink" title="Spring 的MongoDB支持"></a>Spring 的MongoDB支持</h2><p>MongoTemplate 帮助类和 MongoRepository 支持文档与POJO的对象映射</p>
+<h3 id="基本配置"><a href="#基本配置" class="headerlink" title="基本配置"></a>基本配置</h3><p>Maven</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.data&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-data-mongodb&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;3.0.3.RELEASE&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<p>日志</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">log4j.category.org.springframework.data.mongodb=DEBUG</span><br><span class="line">log4j.appender.stdout.layout.ConversionPattern=%d&#123;ABSOLUTE&#125; %5p %40.40c:%4L - %m%n</span><br></pre></td></tr></table></figure>
+<h2 id="主从配置"><a href="#主从配置" class="headerlink" title="主从配置"></a>主从配置</h2><p>参考链接：<a target="_blank" rel="noopener" href="https://docs.spring.io/spring-boot/docs/2.3.3.RELEASE/reference/htmlsingle/#boot-features-connecting-to-mongodb">https://docs.spring.io/spring-boot/docs/2.3.3.RELEASE/reference/htmlsingle/#boot-features-connecting-to-mongodb</a></p>
+<p>使用 spring.data.mongodb.uri 进行replicaset的配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spring.data.mongodb.uri=mongodb://user:secret@mongo1.example.com:12345,mongo2.example.com:23456/test</span><br></pre></td></tr></table></figure>
+<p>不使用主从时使用以下配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">spring.data.mongodb.host=mongoserver.example.com</span><br><span class="line">spring.data.mongodb.port=27017</span><br><span class="line">spring.data.mongodb.database=test</span><br><span class="line">spring.data.mongodb.username=user</span><br><span class="line">spring.data.mongodb.password=secret</span><br></pre></td></tr></table></figure>
+
+<p>文档地址： <a target="_blank" rel="noopener" href="https://docs.mongodb.com/manual/reference/connection-string/">https://docs.mongodb.com/manual/reference/connection-string/</a></p>
+<p><strong>标准URI String 格式</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongodb://[username:password@]host1[:port1][,...hostN[:portN]][/[defaultauthdb][?options]]</span><br></pre></td></tr></table></figure>
+
+<p><strong>选项配置</strong><br><a target="_blank" rel="noopener" href="https://docs.mongodb.com/manual/reference/connection-string/#connections-connection-options">https://docs.mongodb.com/manual/reference/connection-string/#connections-connection-options</a></p>
+<p><strong>例子</strong><br>复制集配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongodb://db1.example.net:27017,db2.example.net:2500/?replicaSet=test&amp;connectTimeoutMS=300000</span><br></pre></td></tr></table></figure>
+<p>分片集群：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongodb://mongos0.example.com:27017,mongos1.example.com:27017,mongos2.example.com:27017</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="Mongo-shell"><a href="#Mongo-shell" class="headerlink" title="Mongo shell"></a>Mongo shell</h2><p>显示当前数据库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db</span><br></pre></td></tr></table></figure>
+<p>选择数据库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use (database name)</span><br></pre></td></tr></table></figure>
+
+<h2 id="备份与恢复"><a href="#备份与恢复" class="headerlink" title="备份与恢复"></a>备份与恢复</h2><p><strong>mongo dump</strong><br><code>mongodump  --username username --password userpassword --db database</code><br><strong>Mongo restore</strong><br><code>mongorestore --dir database-dump/ -u username -p userpassword</code></p>
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h2><p>MongoDB在保留了JSON k-v对特性的同时增加了其它数据类型的支持。</p>
+<h3 id="总览"><a href="#总览" class="headerlink" title="总览"></a>总览</h3><p><img src="/images/MongoDB.png"></p>
+<h3 id="id-和-ObjectIds"><a href="#id-和-ObjectIds" class="headerlink" title="_id 和 ObjectIds"></a>_id 和 ObjectIds</h3><p>MongoDB内每个文档都必需含有 “_id”这个键，”_id”可以是任意类型，默认是ObjectId。单个集合内的文档必须有唯一的id，不同集合间可以相同。</p>
+<h4 id="ObjectId"><a href="#ObjectId" class="headerlink" title="ObjectId"></a>ObjectId</h4><ul>
+<li>是 “_id”的默认值</li>
+<li>轻量级，容易生成全局唯一值</li>
+<li>因为MongoDB为分布式而设计，所以不仅仅使用自增</li>
+<li>占用12bytes，<strong>换成16进制就是长度为24的16进制字符串</strong></li>
+</ul>
+<p>ObjectId 格式：</p>
+<ul>
+<li>4 bytes：timestamp</li>
+<li>3 bytes: 机器的唯一标签，一般是hostname的hash</li>
+<li>2 bytes：进程的PID</li>
+<li>3 bytes：自增计数器，单个进程最多256^3个唯一ObjectId</li>
+</ul>
+<h2 id="MongoTemplate"><a href="#MongoTemplate" class="headerlink" title="MongoTemplate"></a>MongoTemplate</h2><ul>
+<li>线程安全，可以多个实例复用</li>
+<li>对象与文档的映射通过MongoConverter完成，Spring提供 MappingMongoConverter，也可以自己写。</li>
+</ul>
+<h3 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h3><p>基本使用示例:查询与分页</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">import static org.springframework.data.mongodb.core.query.Criteria.where;</span><br><span class="line">import static org.springframework.data.mongodb.core.query.Update.update;</span><br><span class="line">import static org.springframework.data.mongodb.core.query.Query.query;</span><br><span class="line"></span><br><span class="line">    public Page&lt;MySuperUserDto&gt; getVipUserList(int size, int page) &#123;</span><br><span class="line">        // 查询，排序</span><br><span class="line">        Sort sort = new Sort(Sort.Direction.DESC, &quot;bsUserId&quot;);</span><br><span class="line"></span><br><span class="line">        // 分页，添加排序</span><br><span class="line">        Pageable pageable = PageRequest.of(page, size, sort);</span><br><span class="line"></span><br><span class="line">        List&lt;UserPo&gt; userList = mongoTemplate.find(</span><br><span class="line">                query(where(&quot;BBBBBB&quot;)</span><br><span class="line">                        .is(&quot;TTTTTT&quot;))</span><br><span class="line">                        .with(pageable)</span><br><span class="line">                , UserPo.class);</span><br><span class="line">        userList.forEach(user -&gt; log.info(&quot;user: &quot; + user));</span><br><span class="line"></span><br><span class="line">        // 正则表达式</span><br><span class="line">        userList = mongoTemplate.find(</span><br><span class="line">                query(where(&quot;clientType&quot;)</span><br><span class="line">                        .regex(&quot;TTTTTT.*?&quot;))</span><br><span class="line">                        .with(pageable)</span><br><span class="line">                , UserPo.class);</span><br><span class="line">        userList.forEach(user -&gt; log.info(&quot;user: &quot; + user));</span><br><span class="line"></span><br><span class="line">        // 总数</span><br><span class="line">        long count = mongoTemplate.count(query(where(&quot;clientType&quot;)</span><br><span class="line">                        .regex(&quot;TTTTTT.*?&quot;))</span><br><span class="line">                        .with(pageable)</span><br><span class="line">                , UserPo.class);</span><br><span class="line">        log.info(&quot;Record count: &quot; + count);</span><br><span class="line"></span><br><span class="line">        List&lt;MySuperUserDto&gt; userDtoList = VipUserMapper.INSTANCE.superUserToDto(userList);</span><br><span class="line"></span><br><span class="line">        // 分页实现</span><br><span class="line">        Page&lt;MySuperUserDto&gt; dtoPage = new PageImpl&lt;&gt;(userDtoList, pageable, count);</span><br><span class="line">        // 获取总页数</span><br><span class="line">        dtoPage.getTotalPages();</span><br><span class="line">        // 获取总记录数</span><br><span class="line">        dtoPage.getTotalElements();</span><br><span class="line">        log.info(&quot;Page info: &quot; + dtoPage);</span><br><span class="line"></span><br><span class="line">        // 使用 limit 和 skip的分页方式</span><br><span class="line">        userList = mongoTemplate.find(</span><br><span class="line">                query(where(&quot;clientType&quot;)</span><br><span class="line">                        .regex(&quot;TTTTTT.*?&quot;))</span><br><span class="line">                        .skip(size * page)</span><br><span class="line">                        .limit(size)</span><br><span class="line">                , UserPo.class);</span><br><span class="line">        userList.forEach(user -&gt; log.info(&quot;user: &quot; + user));</span><br><span class="line">        userDtoList = VipUserMapper.INSTANCE.superUserToDto(userList);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h3><blockquote>
+<p><strong>insert</strong>: Inserts an object. If there is an existing document with the same id, an error is generated.</p>
+</blockquote>
+<blockquote>
+<p><strong>insertAll</strong>: Takes a Collection of objects as the first parameter. This method inspects each object and inserts it into the appropriate collection, based on the rules specified earlier.</p>
+</blockquote>
+<blockquote>
+<p><strong>save</strong>: Saves the object, overwriting any object that might have the same id.</p>
+</blockquote>
+<h3 id="更新-update"><a href="#更新-update" class="headerlink" title="更新 update"></a>更新 <code>update</code></h3><ul>
+<li>updateFirst</li>
+</ul>
+<p>支持使用upsert()，即当没有找到文档的时候，执行插入操作</p>
+<ul>
+<li>updateMulti</li>
+</ul>
+<p>Update支持MongoDB的update modifier，详情看文档</p>
+<ul>
+<li>findAndModify</li>
+</ul>
+<p>支持更新文档后返回旧的或是新的文档，使用示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Query query = new Query(Criteria.where(&quot;firstName&quot;).is(&quot;Harry&quot;));</span><br><span class="line">Update update = new Update().inc(&quot;age&quot;, 1);</span><br><span class="line"></span><br><span class="line">Person oldValue = template.update(Person.class)</span><br><span class="line">  .matching(query)</span><br><span class="line">  .apply(update)</span><br><span class="line">  .findAndModifyValue(); // return&#x27;s old person object</span><br><span class="line"></span><br><span class="line">assertThat(oldValue.getFirstName()).isEqualTo(&quot;Harry&quot;);</span><br><span class="line">assertThat(oldValue.getAge()).isEqualTo(23);</span><br><span class="line"></span><br><span class="line">Person newValue = template.query(Person.class)</span><br><span class="line">  .matching(query)</span><br><span class="line">  .findOneValue();</span><br><span class="line"></span><br><span class="line">assertThat(newValue.getAge()).isEqualTo(24);</span><br><span class="line"></span><br><span class="line">Person newestValue = template.update(Person.class)</span><br><span class="line">  .matching(query)</span><br><span class="line">  .apply(update)</span><br><span class="line">  .withOptions(FindAndModifyOptions.options().returnNew(true)) // Now return the newly updated document when updating</span><br><span class="line">  .findAndModifyValue();</span><br><span class="line"></span><br><span class="line">assertThat(newestValue.getAge()).isEqualTo(25);</span><br></pre></td></tr></table></figure>
+
+<p>更多选项</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Person upserted = template.update(Person.class)</span><br><span class="line">  .matching(new Query(Criteria.where(&quot;firstName&quot;).is(&quot;Mary&quot;)))</span><br><span class="line">  .apply(update)</span><br><span class="line">  .withOptions(FindAndModifyOptions.options().upsert(true).returnNew(true))</span><br><span class="line">  .findAndModifyValue()</span><br></pre></td></tr></table></figure>
+
+<h3 id="Aggregation更新"><a href="#Aggregation更新" class="headerlink" title="Aggregation更新"></a>Aggregation更新</h3><p>使用案例，按范围设定值</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">AggregationUpdate update = Aggregation.newUpdate()</span><br><span class="line">    .set(&quot;average&quot;).toValue(ArithmeticOperators.valueOf(&quot;tests&quot;).avg())     </span><br><span class="line">    .set(&quot;grade&quot;).toValue(ConditionalOperators.switchCases(                 </span><br><span class="line">        when(valueOf(&quot;average&quot;).greaterThanEqualToValue(90)).then(&quot;A&quot;),</span><br><span class="line">        when(valueOf(&quot;average&quot;).greaterThanEqualToValue(80)).then(&quot;B&quot;),</span><br><span class="line">        when(valueOf(&quot;average&quot;).greaterThanEqualToValue(70)).then(&quot;C&quot;),</span><br><span class="line">        when(valueOf(&quot;average&quot;).greaterThanEqualToValue(60)).then(&quot;D&quot;))</span><br><span class="line">        .defaultTo(&quot;F&quot;)</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">template.update(Student.class)                                              </span><br><span class="line">    .apply(update)</span><br><span class="line">    .all();    </span><br></pre></td></tr></table></figure>
+
+<h3 id="findAndReplace"><a href="#findAndReplace" class="headerlink" title="findAndReplace"></a>findAndReplace</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Optional&lt;User&gt; result = template.update(Person.class)      </span><br><span class="line">    .matching(query(where(&quot;firstame&quot;).is(&quot;Tom&quot;)))  </span><br><span class="line">    .replaceWith(new Person(&quot;Dick&quot;))</span><br><span class="line">    // 提示：用于replace的对象不要有id，因为替换操作后，旧文档的id会给到新文档上</span><br><span class="line">    .withOptions(FindAndReplaceOptions.options().upsert()) </span><br><span class="line">    // 如果没有就进行插入</span><br><span class="line">    .as(User.class)</span><br><span class="line">    // 支持映射到其它对像</span><br><span class="line">    .findAndReplace();   </span><br></pre></td></tr></table></figure>
+
+<h3 id="乐观锁"><a href="#乐观锁" class="headerlink" title="乐观锁"></a>乐观锁</h3><p>要启用乐观锁，需要在类里面添加 <code>@Version Long version;</code>。<br>示例</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">@Document</span><br><span class="line">class Person &#123;</span><br><span class="line"></span><br><span class="line">  @Id String id;</span><br><span class="line">  String firstname;</span><br><span class="line">  String lastname;</span><br><span class="line">  @Version Long version;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Person daenerys = template.insert(new Person(&quot;Daenerys&quot;));</span><br><span class="line">// 此时version = 0</span><br><span class="line">Person tmp = template.findOne(query(where(&quot;id&quot;).is(daenerys.getId())), Person.class);</span><br><span class="line">// 此时version = 0</span><br><span class="line">daenerys.setLastname(&quot;Targaryen&quot;); // 此时version = 1</span><br><span class="line">template.save(daenerys);</span><br><span class="line">template.save(tmp); // throws OptimisticLockingFailureException </span><br></pre></td></tr></table></figure>
+
+<h3 id="删除-delete"><a href="#删除-delete" class="headerlink" title="删除 delete"></a>删除 <code>delete</code></h3><!--* `limit`-->
+<!--* `dropCollection`-->
+
+<h3 id="类型映射"><a href="#类型映射" class="headerlink" title="类型映射"></a>类型映射</h3><h4 id="id的映射"><a href="#id的映射" class="headerlink" title="_id的映射"></a>_id的映射</h4><ul>
+<li>如果没有提供，将会自动生成</li>
+<li>添加了@Id注解将映射为_id</li>
+<li>命名为id的对象将映射为_id</li>
+</ul>
+<p><strong>类型转换规则</strong></p>
+<ol>
+<li>字符串：如果使用 Converter&lt;String, ObjectId&gt; 可以成功转为 ObjectId， 则存储为ObjectId，否则以字符串格式存储。</li>
+<li>BigInteger用Converter&lt;BigInteger, ObjectId&gt;转换成ObjectId</li>
+</ol>
+<p><strong>@MongoId注解</strong><br>如果数据没有通过Spring Data映射层，该注解提供更多可定制选项</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class PlainStringId &#123;</span><br><span class="line">  @MongoId String id; // The id is treated as String without further conversion.</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class PlainObjectId &#123;</span><br><span class="line">  @MongoId ObjectId id;  // The id is treated as ObjectId</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class StringToObjectId &#123;</span><br><span class="line">  @MongoId(FieldType.OBJECT_ID) String id; // The id is treated as ObjectId if the given String is a valid ObjectId hex, otherwise as String. Corresponds to @Id usage.</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>继续：<br><a target="_blank" rel="noopener" href="https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/#mongo-template">https://docs.spring.io/spring-data/mongodb/docs/current/reference/html/#mongo-template</a><br>11.5.2</p>
+<h4 id="类型映射-1"><a href="#类型映射-1" class="headerlink" title="类型映射"></a>类型映射</h4><p>@TypeAlias 用于不把Java类名写成类型信息而使用key</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@TypeAlias(&quot;pers&quot;)</span><br><span class="line">class Person &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+
+    </article>
+    <!-- license -->
+    
+        <div class="license-wrapper">
+            <p>原文作者：<a href="https://blog.vistazx1.top">Guohao</a>
+            <p>原文链接：<a href="https://blog.vistazx1.top/2020/11/02/2020-11-02%2009:11:11/">https://blog.vistazx1.top/2020/11/02/2020-11-02%2009:11:11/</a>
+            <p>发表日期：<a href="https://blog.vistazx1.top/2020/11/02/2020-11-02%2009:11:11/">November 2nd 2020, 9:11:11 am</a>
+            <p>更新日期：<a href="https://blog.vistazx1.top/2020/11/02/2020-11-02%2009:11:11/">March 5th 2021, 3:48:06 pm</a>
+            <p>版权声明：This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-ND 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nd.svg?ref=chooser-v1" alt=""></a></p>
+        </div>
+    
+    <!-- paginator -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href="/2020/11/13/2020-11-13%2010:09:08/" title="JUnit4 解析（施工中）">
+                    <div class="nextTitle">JUnit4 解析（施工中）</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2020/11/02/2020-11-02%2009:07:45/" title="Maven基础">
+                    <div class="prevTitle">Maven基础</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- comment -->
+    
+        <div class="post-comment">
+            <!-- 来必力 City 版安装代码 -->
+
+
+            
+
+            
+
+            
+
+            <!-- utteranc评论 -->
+
+
+            <!-- partial('_partial/comment/changyan') -->
+            <!--PC版-->
+
+
+            
+            
+
+            
+
+        </div>
+    
+    <!-- timeliness note -->
+    <!-- idea from: https://hexo.fluid-dev.com/posts/hexo-injector/#%E6%96%87%E7%AB%A0%E6%97%B6%E6%95%88%E6%80%A7%E6%8F%90%E7%A4%BA -->
+    
+    <!-- Mathjax -->
+    
+</main>
+
+                <!-- profile -->
+                
+            </div>
+            <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+        <div class="social">
+            
+    
+        
+            
+                <a href="mailto:cheng123xp@gmail.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/VvvvvGH" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+
+        </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- website approve for Chinese user -->
+    
+    <!-- 不蒜子  -->
+    
+        <div class="busuanzi-container">
+            
+             
+                <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+            
+        </div>
+    	
+</footer>
+
+        </div>
+        <!-- toc -->
+        
+            <div class="toc-wrapper toc-wrapper-loding" style=
+
+
+
+
+
+
+
+    top:50vh;
+
+>
+                <div class="toc-catalog">
+                    <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+                </div>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9C%A8Spring%E4%BD%BF%E7%94%A8MongoDB"><span class="toc-number">1.</span> <span class="toc-text">在Spring使用MongoDB</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-%E7%9A%84MongoDB%E6%94%AF%E6%8C%81"><span class="toc-number">1.1.</span> <span class="toc-text">Spring 的MongoDB支持</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE"><span class="toc-number">1.1.1.</span> <span class="toc-text">基本配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E4%BB%8E%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.</span> <span class="toc-text">主从配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mongo-shell"><span class="toc-number">1.3.</span> <span class="toc-text">Mongo shell</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D"><span class="toc-number">1.4.</span> <span class="toc-text">备份与恢复</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.5.</span> <span class="toc-text">数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E8%A7%88"><span class="toc-number">1.5.1.</span> <span class="toc-text">总览</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#id-%E5%92%8C-ObjectIds"><span class="toc-number">1.5.2.</span> <span class="toc-text">_id 和 ObjectIds</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ObjectId"><span class="toc-number">1.5.2.1.</span> <span class="toc-text">ObjectId</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MongoTemplate"><span class="toc-number">1.6.</span> <span class="toc-text">MongoTemplate</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2"><span class="toc-number">1.6.1.</span> <span class="toc-text">查询</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%92%E5%85%A5"><span class="toc-number">1.6.2.</span> <span class="toc-text">插入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%96%B0-update"><span class="toc-number">1.6.3.</span> <span class="toc-text">更新 update</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Aggregation%E6%9B%B4%E6%96%B0"><span class="toc-number">1.6.4.</span> <span class="toc-text">Aggregation更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#findAndReplace"><span class="toc-number">1.6.5.</span> <span class="toc-text">findAndReplace</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B9%90%E8%A7%82%E9%94%81"><span class="toc-number">1.6.6.</span> <span class="toc-text">乐观锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A0%E9%99%A4-delete"><span class="toc-number">1.6.7.</span> <span class="toc-text">删除 delete</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E6%98%A0%E5%B0%84"><span class="toc-number">1.6.8.</span> <span class="toc-text">类型映射</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#id%E7%9A%84%E6%98%A0%E5%B0%84"><span class="toc-number">1.6.8.1.</span> <span class="toc-text">_id的映射</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E6%98%A0%E5%B0%84-1"><span class="toc-number">1.6.8.2.</span> <span class="toc-text">类型映射</span></a></li></ol></li></ol></li></ol></li></ol>
+            </div>
+        
+        <!-- sidebar -->
+        <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+        <div class="sidebar-panel-archives">
+    <!-- 在 ejs 中将 archive 按照时间排序 -->
+    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 68
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+        
+            
+            
+            <div class="archive-year"> 2021 </div>
+            <ul class="year-list">
+            
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/21</span>
+            <a class="archive-post-title" href="/2021/02/21/2021-02-21%2017:38:54/">脚本：下载七牛bucket里的所有文件</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/21</span>
+            <a class="archive-post-title" href="/2021/02/21/2021-02-21%2015:08:35/">利用OneManager 搭建OneDrive图床</a>
+        </li>
+    
+        
+            
+            
+                
+                </ul>
+            
+            <div class="archive-year"> 2020 </div>
+            <ul class="year-list">
+            
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/18</span>
+            <a class="archive-post-title" href="/2020/12/18/2020-12-18%2019:07:01/">Linux命令笔记</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/18</span>
+            <a class="archive-post-title" href="/2020/11/18/2020-11-18%2011:26:14/">GoLand使用代理</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/13</span>
+            <a class="archive-post-title" href="/2020/11/13/2020-11-13%2010:09:08/">JUnit4 解析（施工中）</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/02</span>
+            <a class="archive-post-title" href="/2020/11/02/2020-11-02%2009:07:45/">Maven基础</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/02</span>
+            <a class="archive-post-title" href="/2020/11/02/2020-11-02%2009:11:11/">Mongo基础</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/10</span>
+            <a class="archive-post-title" href="/2020/08/10/2020-08-10%2010:09:07/">图床</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/06</span>
+            <a class="archive-post-title" href="/2020/08/06/2020-08-06%2010:56:08/">Redis</a>
+        </li>
+    
+        
+            
+            
+                
+                </ul>
+            
+            <div class="archive-year"> 2019 </div>
+            <ul class="year-list">
+            
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/02</span>
+            <a class="archive-post-title" href="/2019/03/02/2019-03-02%2002:32:19/">SQL反模式</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/14</span>
+            <a class="archive-post-title" href="/2019/02/14/2019-02-14%2006:29:06/">ubuntu编译最新pytorch记录</a>
+        </li>
+    
+        
+            
+            
+                
+                </ul>
+            
+            <div class="archive-year"> 2018 </div>
+            <ul class="year-list">
+            
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/14</span>
+            <a class="archive-post-title" href="/2018/11/14/2018-11-14%2005:12:16/">将archlinux转移到nvme固态硬盘</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/26</span>
+            <a class="archive-post-title" href="/2018/10/26/2018-10-26%2003:25:38/">时隔一年，又玩了一次CTF</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/14</span>
+            <a class="archive-post-title" href="/2018/10/14/2018-10-14%2009:26:54/">在archlinux里使用安装Python3.6</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/15</span>
+            <a class="archive-post-title" href="/2018/09/15/2018-09-15%2023:06:48/">Learn Vue.js</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/23</span>
+            <a class="archive-post-title" href="/2018/06/23/2018-06-23%2004:37:43/">tesseract验证码识别</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/17</span>
+            <a class="archive-post-title" href="/2018/05/17/2018-05-17%2022:18:30/">初试scrapy + redis 爬虫</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/27</span>
+            <a class="archive-post-title" href="/2018/04/27/2018-04-27%2004:50:01/">入手一台树莓派"杀手"</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/09</span>
+            <a class="archive-post-title" href="/2018/03/09/2018-03-09%2021:35:09/">KMS激活安装在CrossOver上的Office 2010</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/08</span>
+            <a class="archive-post-title" href="/2018/03/08/2018-03-08%2008:56:24/">The art of readable code</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/30</span>
+            <a class="archive-post-title" href="/2018/01/30/2018-01-30%2001:33:54/">串流电脑画面到3DS上</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/06</span>
+            <a class="archive-post-title" href="/2018/01/06/2018-01-06%2007:08:12/">在腾讯云上安装Archlinux</a>
+        </li>
+    
+        
+            
+            
+                
+                </ul>
+            
+            <div class="archive-year"> 2017 </div>
+            <ul class="year-list">
+            
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/06</span>
+            <a class="archive-post-title" href="/2017/12/06/2017-12-06%2001:10:42/">frp内网穿透及加速</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/13</span>
+            <a class="archive-post-title" href="/2017/11/13/2017-11-13%2022:53:47/">希捷2T硬盘</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span>
+            <a class="archive-post-title" href="/2017/11/05/2017-11-05%2021:59:51/">Ubuntu17.10 安装fcitx 和 搜狗输入法</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span>
+            <a class="archive-post-title" href="/2017/11/05/2017-11-05%2020:37:48/">Ubuntu17.10 添加Deepin源</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/03</span>
+            <a class="archive-post-title" href="/2017/11/03/2017-11-03%2022:17:03/">nginx 多站点配置</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/24</span>
+            <a class="archive-post-title" href="/2017/10/24/2017-10-24%2009:33:46/">玩玩CTF</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/05</span>
+            <a class="archive-post-title" href="/2017/10/05/2017-10-05%2008:53:28/">用nginx反向代理处理跨域问题</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/03</span>
+            <a class="archive-post-title" href="/2017/10/03/2017-10-03%2012:16:58/">uwsgi部署flask应用</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/03</span>
+            <a class="archive-post-title" href="/2017/10/03/2017-10-03%2008:53:29/">nginx 413 Request Entity Too Large</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/30</span>
+            <a class="archive-post-title" href="/2017/09/30/2017-09-30%2010:10:07/">使用非对称加密传输登陆密码</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/29</span>
+            <a class="archive-post-title" href="/2017/09/29/2017-09-29%2017:00:01/">Hello World</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span>
+            <a class="archive-post-title" href="/2017/09/21/2017-9-21%2017:39:55/">在vps上安装hexo</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/20</span>
+            <a class="archive-post-title" href="/2017/09/20/2017-9-20%2017:39:55/">更换vps以及相关配置</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/19</span>
+            <a class="archive-post-title" href="/2017/09/19/2017-9-19%2011:19:55/">汇编学习</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/17</span>
+            <a class="archive-post-title" href="/2017/09/17/2017-9-17%2017:39:55/">更新博客</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/08</span>
+            <a class="archive-post-title" href="/2017/08/08/2017-8-08%2020:19:55/">WeChat 玩 Google Assistant</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/26</span>
+            <a class="archive-post-title" href="/2017/05/26/2017-05-26%2020:19:55/">selenium 登陆 blackboard系统 订阅作业更新</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/19</span>
+            <a class="archive-post-title" href="/2017/05/19/2017-05-19%2017:00:00/">Perfect Hackintosh 之FN亮度按键</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/12</span>
+            <a class="archive-post-title" href="/2017/05/12/2017-05-12%2017:00:00/">Flyme6 Patchrom 项目笔记</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/25</span>
+            <a class="archive-post-title" href="/2017/04/25/2017-04-25%2017:00:00/">手机三角架之妙用</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/07</span>
+            <a class="archive-post-title" href="/2017/04/07/2017-04-07%2017:54:25/">MySQL 学习笔记</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/07</span>
+            <a class="archive-post-title" href="/2017/04/07/2017-04-07%2017:27:25/">安装PHP环境</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/30</span>
+            <a class="archive-post-title" href="/2017/03/30/2017-03-30%2017:54:25/">博客切换到HEXO</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/23</span>
+            <a class="archive-post-title" href="/2017/03/23/2017-03-23%2020:03:41/">在OPENSHIFT 上部署Flask 记录</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/19</span>
+            <a class="archive-post-title" href="/2017/03/19/2017-03-19%2017:20:05/">Ubuntu 内核编译&系统配置</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/14</span>
+            <a class="archive-post-title" href="/2017/02/14/2017-02-14%2014:04:59/">Photo</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/14</span>
+            <a class="archive-post-title" href="/2017/02/14/2017-02-14%2014:18:09/">再游溶洞</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/12</span>
+            <a class="archive-post-title" href="/2017/02/12/2017-02-12%2018:19:43/">UEFI 安装Windows7 教程</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/22</span>
+            <a class="archive-post-title" href="/2017/01/22/2017-01-22%2017:25:17/">A huge upgrade</a>
+        </li>
+    
+        
+            
+            
+                
+                </ul>
+            
+            <div class="archive-year"> 2016 </div>
+            <ul class="year-list">
+            
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/29</span>
+            <a class="archive-post-title" href="/2016/12/29/2016-12-29%2015:55:08/">3735F cpu平板搭服务器</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/16</span>
+            <a class="archive-post-title" href="/2016/12/16/2016-12-16%2020:57:51/">Ubuntu 下配置PAC 代理</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/12</span>
+            <a class="archive-post-title" href="/2016/12/12/2016-12-12%2020:56:19/">Ubuntu 搭建LAMP</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/08</span>
+            <a class="archive-post-title" href="/2016/12/08/2016-12-08%2020:16:55/">bash on windows初体验</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/08</span>
+            <a class="archive-post-title" href="/2016/12/08/2016-12-08%2020:19:1/">W650DC 黑苹果</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/06</span>
+            <a class="archive-post-title" href="/2016/12/06/2016-12-06%2022:09:29/">传统BIOS下用windows 引导UBUNTU双系统</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/25</span>
+            <a class="archive-post-title" href="/2016/11/25/2016-11-25%2010:40:14/">Intel RST 配置测试</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/21</span>
+            <a class="archive-post-title" href="/2016/11/21/2016-11-21%2021:30:38/">EZPAD MINI2</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/19</span>
+            <a class="archive-post-title" href="/2016/11/19/2016-11-19%2013:44:38/">博客优化的一点事</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/15</span>
+            <a class="archive-post-title" href="/2016/11/15/2016-11-15%2021:10:22/">linux mentohust 南校区体验</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span>
+            <a class="archive-post-title" href="/2016/11/05/2016-11-05%2015:36:08/">11-05 佛山秋色2</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span>
+            <a class="archive-post-title" href="/2016/11/05/2016-11-05%2015:36:06/">11-05 佛山秋色1</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span>
+            <a class="archive-post-title" href="/2016/11/05/2016-11-05%2015:36:07/">11-05 佛山秋色2</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/08</span>
+            <a class="archive-post-title" href="/2016/02/08/2016-02-08%2020:05:11/">今天无敌的天气</a>
+        </li>
+    
+        
+            
+            
+                
+                </ul>
+            
+            <div class="archive-year"> 2014 </div>
+            <ul class="year-list">
+            
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/15</span>
+            <a class="archive-post-title" href="/2014/08/15/2014-08-15%2020:20:55/">CCTVlen中的雨</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/04</span>
+            <a class="archive-post-title" href="/2014/04/04/2014-04-04%2018:21:02/">昨天-于绿岛湖-JY-G2</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/30</span>
+            <a class="archive-post-title" href="/2014/03/30/2014-03-30%2020:33:26/">Hometown</a>
+        </li>
+    
+    </div>
+</div>
+
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+        
+            <span class="sidebar-tag-name" data-tags="手机 教程">
+                <span class="iconfont-archer">&#xe606;</span>
+                手机 教程
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="跨域 nginx 反向代理">
+                <span class="iconfont-archer">&#xe606;</span>
+                跨域 nginx 反向代理
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="nginx">
+                <span class="iconfont-archer">&#xe606;</span>
+                nginx
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="vps hexo">
+                <span class="iconfont-archer">&#xe606;</span>
+                vps hexo
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="ocr">
+                <span class="iconfont-archer">&#xe606;</span>
+                ocr
+            </span>
+        
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+        缺失模块，请参考主题文档进行安装配置：https://github.com/fi3ework/hexo-theme-archer#%E5%AE%89%E8%A3%85%E4%B8%BB%E9%A2%98
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+
+    </div>
+</div>
+
+        <!-- site-meta -->
+        <script>
+    var siteMetaRoot = "/"
+    if (siteMetaRoot === "undefined") {
+        siteMetaRoot = '/'
+    }
+    var siteMeta = {
+        url: "https://blog.vistazx1.top",
+        root: siteMetaRoot,
+        author: "Guohao"
+    }
+</script>
+
+        <!-- import experimental options here -->
+        <!-- Custom Font -->
+
+
+        <!-- main func -->
+        <script src="/scripts/main.js?v=20211217"></script>
+        <!-- dark mode -->
+        <script src="/scripts/dark.js?v=20211217"></script>
+        <!-- fancybox -->
+        <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" defer></script>
+        <!-- algolia -->
+        
+        <!-- busuanzi -->
+        
+            <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+        
+        <!-- CNZZ -->
+        
+        <!-- async load share.js -->
+        
+            <script src="/scripts/share.js?v=20211217" async></script>
+        
+        <!-- mermaid -->
+        
+    </body>
+</html>

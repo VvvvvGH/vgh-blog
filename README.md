@@ -1,2 +1,0 @@
-# vgh-blog
-# vgh-blog

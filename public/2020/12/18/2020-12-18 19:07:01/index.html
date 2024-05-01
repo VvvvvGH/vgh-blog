@@ -1,0 +1,2460 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <!-- title -->
+
+
+    
+
+<!-- keywords -->
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="author" content="Guohao">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="Guohao">
+    
+        <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content="">
+    <meta name="description" content="Linux 文件系统文件类型查看1ls -l  七种类型一切皆文件 | 名称     | 标识 | 描述                            || 普通文件 | -    |                                 || 目录文件 | d    |                                 || 字符设备 | c    | 串行端口设">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux命令笔记">
+<meta property="og:url" content="https://blog.vistazx1.top/2020/12/18/2020-12-18%2019:07:01/index.html">
+<meta property="og:site_name" content="Vista">
+<meta property="og:description" content="Linux 文件系统文件类型查看1ls -l  七种类型一切皆文件 | 名称     | 标识 | 描述                            || 普通文件 | -    |                                 || 目录文件 | d    |                                 || 字符设备 | c    | 串行端口设">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-12-18T11:07:01.000Z">
+<meta property="article:modified_time" content="2021-03-05T07:48:06.000Z">
+<meta property="article:author" content="Guohao">
+<meta name="twitter:card" content="summary">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="icon" href="/assets/favicon.ico">
+    
+    <title>Linux命令笔记 · Vista</title>
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+    (function (w) {
+        'use strict'
+        // rel=preload support test
+        if (!w.loadCSS) {
+            w.loadCSS = function () {}
+        }
+        // define on the loadCSS obj
+        var rp = (loadCSS.relpreload = {})
+        // rel=preload feature support test
+        // runs once and returns a function for compat purposes
+        rp.support = (function () {
+            var ret
+            try {
+                ret = w.document.createElement('link').relList.supports('preload')
+            } catch (e) {
+                ret = false
+            }
+            return function () {
+                return ret
+            }
+        })()
+
+        // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+        // then change that media back to its intended value on load
+        rp.bindMediaToggle = function (link) {
+            // remember existing media attr for ultimate state, or default to 'all'
+            var finalMedia = link.media || 'all'
+
+            function enableStylesheet() {
+                link.media = finalMedia
+            }
+
+            // bind load handlers to enable media
+            if (link.addEventListener) {
+                link.addEventListener('load', enableStylesheet)
+            } else if (link.attachEvent) {
+                link.attachEvent('onload', enableStylesheet)
+            }
+
+            // Set rel and non-applicable media type to start an async request
+            // note: timeout allows this to happen async to let rendering continue in IE
+            setTimeout(function () {
+                link.rel = 'stylesheet'
+                link.media = 'only x'
+            })
+            // also enable media after 3 seconds,
+            // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+            setTimeout(enableStylesheet, 3000)
+        }
+
+        // loop through link elements in DOM
+        rp.poly = function () {
+            // double check this to prevent external calls from running
+            if (rp.support()) {
+                return
+            }
+            var links = w.document.getElementsByTagName('link')
+            for (var i = 0; i < links.length; i++) {
+                var link = links[i]
+                // qualify links to those with rel=preload and as=style attrs
+                if (
+                    link.rel === 'preload' &&
+                    link.getAttribute('as') === 'style' &&
+                    !link.getAttribute('data-loadcss')
+                ) {
+                    // prevent rerunning on link
+                    link.setAttribute('data-loadcss', true)
+                    // bind listeners to toggle media back
+                    rp.bindMediaToggle(link)
+                }
+            }
+        }
+
+        // if unsupported, run the polyfill
+        if (!rp.support()) {
+            // run once at least
+            rp.poly()
+
+            // rerun poly on an interval until onload
+            var run = w.setInterval(rp.poly, 500)
+            if (w.addEventListener) {
+                w.addEventListener('load', function () {
+                    rp.poly()
+                    w.clearInterval(run)
+                })
+            } else if (w.attachEvent) {
+                w.attachEvent('onload', function () {
+                    rp.poly()
+                    w.clearInterval(run)
+                })
+            }
+        }
+
+        // commonjs
+        if (typeof exports !== 'undefined') {
+            exports.loadCSS = loadCSS
+        } else {
+            w.loadCSS = loadCSS
+        }
+    })(typeof global !== 'undefined' ? global : this)
+</script>
+
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+</style>
+
+    <link rel="preload" href="/css/style.css?v=20211217" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/css/dark.css?v=20211217" as="style">
+    <link rel="stylesheet" href="/css/dark.css">
+    <link rel="stylesheet" href="/css/mobile.css?v=20211217" media="(max-width: 960px)">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" as="script">
+    <link rel="preload" href="/scripts/main.js?v=20211217" as="script">
+    <link rel="preload" href="/scripts/dark.js?v=20211217" as="script">
+    <link rel="preload" href="/font/Oswald-Regular.ttf" as="font" crossorigin>
+    <link rel="preload" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" as="font" crossorigin>
+    <!-- algolia -->
+    
+    <!-- 百度统计  -->
+    
+    <!-- Google tag (gtag.js) -->
+    
+
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ == undefined) {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js" />')
+        }
+    </script>
+    
+        <body class="post-body">
+    
+        <!-- header -->
+        <header class="header header-mobile">
+    <!-- top read progress line -->
+    <div class="header-element">
+        <div class="read-progress"></div>
+    </div>
+    <!-- sidebar menu button -->
+    <div class="header-element">
+        
+            <div class="header-sidebar-menu">
+        
+            
+                <div style="padding-left: 1px;">&#xe775;</div>
+            
+        </div>
+    </div>
+    <!-- header actions -->
+    <div class="header-actions">
+        <!-- theme mode switch button -->
+        <span class="header-theme-btn header-element">
+            <i class="fas fa-adjust"></i>
+        </span>
+        <!-- back to home page text -->
+        <span class="home-link header-element">
+            <a href=/>Vista</a>
+        </span>
+    </div>
+    <!-- toggle banner for post layout -->
+    
+        
+            <div class="banner">
+        
+            <div class="blog-title header-element">
+                <a href="/">Vista</a>
+            </div>
+            <div class="post-title header-element">
+                <a href="#" class="post-name">Linux命令笔记</a>
+            </div>
+        </div>
+    
+</header>
+
+        <!-- fixed footer -->
+        <footer class="footer-fixed">
+    <!-- back to top button -->
+    <div class="footer-fixed-element">
+        
+            <div class="back-top back-top-hidden">
+        
+        
+            <div>&#xe639;</div>
+        
+        </div>
+    </div>
+</footer>
+
+        <!-- wrapper -->
+        <div class="wrapper">
+            <div class="site-intro" style="
+
+
+
+
+
+
+
+    height:50vh;
+
+">
+    
+    <!-- 主页  -->
+    
+        
+    <!-- 404页  -->
+    
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+                Linux命令笔记
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+                
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页 meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+    
+</div>
+
+                
+                <!-- 文章字数统计 -->
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">5.4k</span>阅读时长: <span class="post-count reading-time">23 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <!-- 撰写日期 -->
+                    <span class="iconfont-archer post-intro-calander">&#xe676;</span>
+                    <span class="post-intro-time">2020/12/18</span>
+                    <!-- busuanzi -->
+                    
+                        <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                            <span class="iconfont-archer post-intro-busuanzi">&#xe602;</span>
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    
+                    <!-- 文章分享 -->
+                    <span class="share-wrapper">
+                        <span class="iconfont-archer share-icon">&#xe71d;</span>
+                        <span class="share-text">Share</span>
+                        <ul class="share-list">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+
+            <script>
+  // get user agent
+  function getBrowserVersions() {
+    var u = window.navigator.userAgent
+    return {
+      userAgent: u,
+      trident: u.indexOf('Trident') > -1, //IE内核
+      presto: u.indexOf('Presto') > -1, //opera内核
+      webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+      gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+      mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+      ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+      android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+      iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+      iPad: u.indexOf('iPad') > -1, //是否为iPad
+      webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+      weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+      uc: u.indexOf('UCBrowser') > -1, //是否为android下的UC浏览器
+    }
+  }
+  var browser = {
+    versions: getBrowserVersions(),
+  }
+  console.log('userAgent: ' + browser.versions.userAgent)
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded')
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document
+        .getElementsByClassName('intro-title')[0]
+        .classList.add('intro-fade-in')
+      document
+        .getElementsByClassName('intro-subtitle')[0]
+        .classList.add('intro-fade-in')
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in')
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb() {
+    if (browser.versions.uc) {
+      console.log('UCBrowser')
+      fontLoaded()
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular'],
+        },
+        loading: function () {
+          // 所有字体开始加载
+          // console.log('font loading');
+        },
+        active: function () {
+          // 所有字体已渲染
+          fontLoaded()
+        },
+        inactive: function () {
+          // 字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout')
+          fontLoaded()
+        },
+        timeout: 5000, // Set the timeout to two seconds
+      })
+    }
+  }
+
+  function asyncErr() {
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0]
+    o.src = u
+    if (cb) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          cb(null, e)
+        },
+        false
+      )
+    }
+    if (err) {
+      o.addEventListener(
+        'error',
+        function (e) {
+          err(null, e)
+        },
+        false
+      )
+    }
+    s.parentNode.insertBefore(o, s)
+  }
+
+  var asyncLoadWithFallBack = function (arr, success, reject) {
+    var currReject = function () {
+      reject()
+      arr.shift()
+      if (arr.length) async(arr[0], success, currReject)
+    }
+
+    async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack(
+    [
+      'https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js',
+      'https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js',
+      "/lib/webfontloader.min.js",
+    ],
+    asyncCb,
+    asyncErr
+  )
+</script>
+
+            <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+            <div class="container container-unloaded">
+                <main class="main post-page">
+    <article class="article-entry">
+        <h1 id="Linux-文件系统"><a href="#Linux-文件系统" class="headerlink" title="Linux 文件系统"></a>Linux 文件系统</h1><h2 id="文件类型"><a href="#文件类型" class="headerlink" title="文件类型"></a>文件类型</h2><h3 id="查看"><a href="#查看" class="headerlink" title="查看"></a><strong>查看</strong></h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -l</span><br></pre></td></tr></table></figure>
+
+<h4 id="七种类型"><a href="#七种类型" class="headerlink" title="七种类型"></a><strong>七种类型</strong></h4><p>一切皆文件</p>
+<p>| 名称     | 标识 | 描述                            |<br>| 普通文件 | -    |                                 |<br>| 目录文件 | d    |                                 |<br>| 字符设备 | c    | 串行端口设备，例如键盘鼠标      |<br>| 块设备   | b    | 存储设备接口，例如硬盘&#x2F;dev&#x2F;sda1 |<br>| 套接字   | s    | socket 网络链接                 |<br>| 管道     | p    | 管道文件，常用于进程间通信      |<br>| 链接     | l    |                                 |</p>
+<h4 id="管道"><a href="#管道" class="headerlink" title="管道"></a>管道</h4><p>Linux 进程间通信： <a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1005566">https://cloud.tencent.com/developer/article/1005566</a></p>
+<p>有两类：</p>
+<p>匿名管道与命名管道</p>
+<blockquote>
+<p>这两种管道也叫做有名或无名管道。匿名管道最常见的形态就是我们在shell操作中最常用的”|”。</p>
+<p>它的特点是只能在父子进程中使用，父进程在产生子进程前必须打开一个管道文件，然后fork产生子进程，这样子进程通过拷贝父进程的进程地址空间获得同一个管道文件的描述符，以达到使用同一个管道通信的目的。</p>
+<p>此时除了父子进程外，没人知道这个管道文件的描述符，所以通过这个管道中的信息无法传递给其他进程。这保证了传输数据的安全性，当然也降低了管道了通用性，于是系统还提供了命名管道。</p>
+</blockquote>
+<p>命名管道的创建<code>mkfifo</code>或<code>mknod</code></p>
+<p>管道的读会阻塞，一般写不会阻塞</p>
+<h2 id="文件系统标准"><a href="#文件系统标准" class="headerlink" title="文件系统标准"></a>文件系统标准</h2><p>Linux目录结构</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/huchong/p/9984660.html">https://www.cnblogs.com/huchong/p/9984660.html</a></p>
+<p>File hierarchy standard，目前最新是3.0，由Linux基金会修订</p>
+<p><a target="_blank" rel="noopener" href="https://refspecs.linuxfoundation.org/FHS_3.0/fhs/index.html">https://refspecs.linuxfoundation.org/FHS_3.0/fhs/index.html</a></p>
+<p>中文翻译</p>
+<p><a target="_blank" rel="noopener" href="https://www.itread01.com/content/1545290942.html">https://www.itread01.com/content/1545290942.html</a></p>
+<h1 id="Linux-命令"><a href="#Linux-命令" class="headerlink" title="Linux 命令"></a>Linux 命令</h1><h3 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h3><h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><h3 id="命令"><a href="#命令" class="headerlink" title="命令"></a>命令</h3><h4 id="命令格式"><a href="#命令格式" class="headerlink" title="命令格式"></a>命令格式</h4><h4 id="命令功能"><a href="#命令功能" class="headerlink" title="命令功能"></a>命令功能</h4><h4 id="常用选项参数"><a href="#常用选项参数" class="headerlink" title="常用选项参数"></a>常用选项参数</h4><p>| 选项 | 描述 |<br>|      |      |</p>
+<h4 id="常见范例"><a href="#常见范例" class="headerlink" title="常见范例"></a>常见范例</h4><h1 id="基础命令"><a href="#基础命令" class="headerlink" title="基础命令"></a>基础命令</h1><h2 id="man命令"><a href="#man命令" class="headerlink" title="man命令"></a>man命令</h2><p>Linux命令从哪开始学？man!<br>man命令可阅读Linux下命令行工具的文档，速查命令再也不用找谷歌了</p>
+<p>参考链接：</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/73569548">man用法总结</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.linuxidc.com/Linux/2017-03/142407.htm">Linux man命令的使用方法</a></p>
+<h4 id="命令格式-1"><a href="#命令格式-1" class="headerlink" title="命令格式"></a>命令格式</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">Usage: man [OPTION...] [SECTION] PAGE...</span><br><span class="line"></span><br><span class="line"> Main modes of operation:</span><br><span class="line">  -f, --whatis               与 whatis 相同 ，查询一个命令执行什么功能</span><br><span class="line">  -k, --apropos              与 apropos 相同，关键字查找、定位手册页的名字和描述</span><br><span class="line">  -K, --global-apropos       全局搜索</span><br><span class="line">  -l, --local-file           打开文档文件</span><br><span class="line">  -w, --<span class="built_in">where</span>, --path, --location</span><br><span class="line">                             打印 man page(s) 文件位置</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> Finding manual pages:</span><br><span class="line">  -L, --locale=LOCALE        指定语言</span><br><span class="line">  -m, --systems=SYSTEM       use manual pages from other systems</span><br><span class="line">  -M, --manpath=PATH         <span class="built_in">set</span> search path <span class="keyword">for</span> manual pages to PATH</span><br><span class="line"></span><br><span class="line">  -S, -s, --sections=LIST    use colon separated section list</span><br><span class="line"></span><br><span class="line">  -e, --extension=EXTENSION  <span class="built_in">limit</span> search to extension <span class="built_in">type</span> EXTENSION</span><br><span class="line"></span><br><span class="line">  -i, --ignore-case          忽略大小写 (default)</span><br><span class="line">  -I, --match-case           大小写敏感</span><br><span class="line"></span><br><span class="line">      --regex                展示正则匹配的所有页面</span><br><span class="line">      --wildcard             show all pages matching wildcard</span><br><span class="line"></span><br><span class="line">      --names-only           make --regex and --wildcard 仅匹配页面标题，不匹配名称</span><br><span class="line"></span><br><span class="line">  -a, --all                  查找所有匹配的页面</span><br><span class="line">  -u, --update               强制更新缓存</span><br><span class="line"></span><br><span class="line">      --no-subpages          don<span class="string">&#x27;t try subpages, e.g. &#x27;</span>man foo bar<span class="string">&#x27; =&gt; &#x27;</span>man</span><br><span class="line">                             foo-bar<span class="string">&#x27;</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
+
+<h4 id="命令功能-1"><a href="#命令功能-1" class="headerlink" title="命令功能"></a>命令功能</h4><p>man 手册章节的section分类：</p>
+<p>要准确找到一份man文档，需要找到 <strong>文档名+section</strong>。通常可用 man -w 命令 查询</p>
+<p>| 代码 | 功能                                                         |<br>| 1    | 标准用户命令（Executable programs or shell commands）        |<br>| 2    | 系统调用（System calls）functions provided by the kernel     |<br>| 3    | 库调用（Library call）functions within program libraries     |<br>| 4    | 特殊文件（设备文件）的访问入口（&#x2F;dev）Special files (usually found in &#x2F;dev) |<br>| 5    | 文件格式（配置文件的语法），指定程序的运行特性 File formats and conventions |<br>| 6    | 游戏（Games）                                                |<br>| 7    | 杂项（Miscellaneous）including macro packages and conventions |<br>| 8    | 管理命令 System administration commands                      |<br>| 9    | 跟kernel有关的文件 Kernel routines                           |</p>
+<p>man手册文本的格式：</p>
+<p>| 章节        | 解释                                         |<br>| NAME        | 命令名称及功能简要说明                       |<br>| SYNOPSIS    | 用法说明，包括可用的选项                     |<br>| DESCRIPTION | 命令功能的详细说明，可能包括每一个选项的意义 |<br>| OPTIONS     | 说明每一项的意义                             |<br>| FILES       | 此命令相关的配置文件                         |<br>| BUGS        | BUGS                                         |<br>| EXAMPLES    | 使用示例                                     |<br>| SEE ALSO    | 参考内容                                     |</p>
+<p>SYNOPSIS 语法格式简介，一般为EBNF格式</p>
+<ul>
+<li>[-abc] ：表示中括号内任一一个 option 都是可选的。</li>
+<li>-a|-b：竖线分隔的 option 不可同时出现</li>
+<li>… ：表示可重复的</li>
+<li>{choice1,choice2,choice3} 表示可选内容</li>
+<li>&lt;&gt;：表示必选</li>
+</ul>
+<p>示例，pwd命令的手册。非常简单</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">NAME</span><br><span class="line">       pwd - print name of current/working directory</span><br><span class="line">SYNOPSIS</span><br><span class="line">       pwd [OPTION]...</span><br><span class="line">DESCRIPTION</span><br><span class="line">       Print the full filename of the current working directory.</span><br><span class="line">       -L, --logical</span><br><span class="line">              use PWD from environment, even if it contains symlinks</span><br><span class="line">       -P, --physical</span><br><span class="line">              avoid all symlinks</span><br><span class="line">       --help display this help and exit</span><br><span class="line">       --version</span><br><span class="line">              output version information and exit</span><br><span class="line">       NOTE:  your  shell  may  have  its  own version of pwd, which usually supersedes the version described here.  Please refer to your shell&#x27;s documentation for details about the</span><br><span class="line">       options it supports.</span><br><span class="line">       GNU coreutils online help: &lt;http://www.gnu.org/software/coreutils/&gt; Report pwd translation bugs to &lt;http://translationproject.org/team/&gt;</span><br><span class="line">AUTHOR</span><br><span class="line">COPYRIGHT</span><br><span class="line">SEE ALSO</span><br></pre></td></tr></table></figure>
+
+<p>man文档默认存储位置：</p>
+<ul>
+<li>压缩的文档：&#x2F;usr&#x2F;share&#x2F;man</li>
+<li>文本文档：&#x2F;usr&#x2F;local&#x2F;man&#x2F;</li>
+</ul>
+<h4 id="常用选项参数-1"><a href="#常用选项参数-1" class="headerlink" title="常用选项参数"></a>常用选项参数</h4><p>| 参数 | 描述                                    |<br>| -w   | 定位文档文件的位置                      |<br>| -l   | 打开指定的文档文件                      |<br>| -k   | 模糊查询一个命令，可使用正则表达式      |<br>| -f   | 与 whatis 相同 ，查询一个命令有什么功能 |<br>| -K   | 全局文本搜索                            |<br>| -L   | 指定语言                                |</p>
+<h4 id="常见范例-1"><a href="#常见范例-1" class="headerlink" title="常见范例"></a>常见范例</h4><ul>
+<li><p>查询某个命令的手册。例如查询man命令自己的文档</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ man man</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>打开man的中文文档</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ man -L zh_CN man</span><br><span class="line">MAN(1)                                                                             手册分页显示工具                                                                            MAN(1)</span><br><span class="line"></span><br><span class="line">名称</span><br><span class="line">       man - 在线参考手册的接口</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过描述模糊查询一个命令，支持正则表达式</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ man -k <span class="string">&quot;a programmer&#x27;s.*?editor&quot;</span></span><br><span class="line">ex (1)               - Vi IMproved, a programmer<span class="string">&#x27;s text editor</span></span><br><span class="line"><span class="string">rview (1)            - Vi IMproved, a programmer&#x27;</span>s text editor</span><br><span class="line">rvim (1)             - Vi IMproved, a programmer<span class="string">&#x27;s text editor</span></span><br><span class="line"><span class="string">vi (1)               - Vi IMproved, a programmer&#x27;</span>s text editor</span><br><span class="line">view (1)             - Vi IMproved, a programmer<span class="string">&#x27;s text editor</span></span><br><span class="line"><span class="string">vim (1)              - Vi IMproved, a programmer&#x27;</span>s text editor</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查找文档的位置</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ man -w bash                     </span><br><span class="line">/usr/share/man/man1/bash.1.gz</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查询命令描述</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ man -f <span class="built_in">read</span></span><br><span class="line"><span class="built_in">read</span> (2)             - <span class="built_in">read</span> from a file descriptor</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="目录文件命令"><a href="#目录文件命令" class="headerlink" title="目录文件命令"></a>目录文件命令</h2><h3 id="ls-命令"><a href="#ls-命令" class="headerlink" title="ls 命令"></a>ls 命令</h3><h4 id="命令格式-2"><a href="#命令格式-2" class="headerlink" title="命令格式"></a>命令格式</h4><p>ls [OPTION]… [FILE]…</p>
+<h4 id="命令功能-2"><a href="#命令功能-2" class="headerlink" title="命令功能"></a>命令功能</h4><p>列出目录的文件信息（默认是当前目录）。默认按字母排序。</p>
+<h4 id="常用选项参数-2"><a href="#常用选项参数-2" class="headerlink" title="常用选项参数"></a>常用选项参数</h4><p>| 参数          | 描述                                                         |<br>| -a            | 不忽略 “.”开头的文件（显示隐藏文件）                         |<br>| -A            | 类似-a，但是忽略”.”（当前目录）和”..”（父目录）              |<br>| -l            | 显示文件权限、硬链接个数、useruser、所属的group、文件或目录的大小、修改时间、名 |<br>| –block-size&#x3D; | 文件大小的格式 K &#x3D; Kilobyte 、 M &#x3D; Megabyte 、G &#x3D; Gigabyte   |<br>| -h            | 文件大小显示可读的格式                                       |<br>| -f            | 不排序                                                       |<br>| -F            | 文件分类 (one of *&#x2F;&#x3D;&gt;@)                                      |<br>| –format&#x3D;     | 格式化                                                       |<br>| -g            | -l 不显示owner                                               |<br>| -G            | -l 不显示group                                               |<br>| -i            | 打印index number (inode)                                     |<br>| -X            | 根据扩展名排序                                               |<br>| -S            | 根据文件大小排序                                             |<br>| -r            | 反顺序                                                       |<br>| -t            | 按时间排序                                                   |<br>| -R            | recursive：显示所有文件                                      |<br>| -p            | 目录显示&#x2F;                                                    |<br>| -d            | 列出目录                                                     |</p>
+<p><strong>-l 输出解释：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">drwxr-xr-x  2 root root   4096 Jun 18 17:37 auto_upload</span><br><span class="line">drwxr-xr-x  8 plex plex   4096 Jun 27  2018 blog</span><br><span class="line">drwxr-xr-x  2 plex plex   4096 Feb 10  2018 BLOG_PHOTO</span><br></pre></td></tr></table></figure>
+
+<p>| 文件权限   | 硬链接个数 | user | user所属的group | 文件或目录的大小 | 修改时间     | 名          |<br>| drwxr-xr-x | 2          | root | root            | 4096             | Jun 27  2018 | auto_upload |</p>
+<p>​	<strong>drwxr-xr-x 解释：</strong></p>
+<p>​		第1位是文件类型</p>
+<p>| 文件类型标识 | 文件类型 |<br>| -            | 普通文件 |<br>| d            | 目录     |<br>| l            | 符号链接 |<br>| s（伪文件）  | 套接字   |<br>| b（伪文件）  | 块设备   |<br>| c（伪文件）  | 字符设备 |<br>| p（伪文件）  | 管道     |</p>
+<p>​		<strong>余下9位分别代表User、Group、及Other的权限</strong></p>
+<p>​		<strong>权限位解释</strong>：rwx (r读4、w写2、x运行1、-无）</p>
+<h4 id="常见范例-2"><a href="#常见范例-2" class="headerlink" title="常见范例"></a>常见范例</h4><p>列出文件夹下所有文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -lR</span><br></pre></td></tr></table></figure>
+
+<p>仅列出目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -d */</span><br></pre></td></tr></table></figure>
+
+<p>文件搜索</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -lR hello*</span><br></pre></td></tr></table></figure>
+
+<p>根据时间排序</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -lt</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="cd-命令"><a href="#cd-命令" class="headerlink" title="cd 命令"></a>cd 命令</h3><p>cd 命令是shell 的内置命令，可用man builtins查询。这里的用法是zsh的shell</p>
+<h4 id="命令格式-3"><a href="#命令格式-3" class="headerlink" title="命令格式"></a>命令格式</h4><p>cd [-L|[-P [-e]] [-@]] [dir]</p>
+<h4 id="命令功能-3"><a href="#命令功能-3" class="headerlink" title="命令功能"></a>命令功能</h4><h4 id="常用选项参数-3"><a href="#常用选项参数-3" class="headerlink" title="常用选项参数"></a>常用选项参数</h4><p>环境变量 CDPATH，在该变量下的文件夹都可以随意cd进去。如果不想进入该变量的文件夹，用&#x2F;开头</p>
+<h4 id="常见范例-3"><a href="#常见范例-3" class="headerlink" title="常见范例"></a>常见范例</h4><p>主目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd ~</span><br></pre></td></tr></table></figure>
+
+<p>上一个目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd -</span><br></pre></td></tr></table></figure>
+
+<p>cd到真正目录而不是软目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd -P [symbolic link-name]</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="ln-命令"><a href="#ln-命令" class="headerlink" title="ln 命令"></a>ln 命令</h3><p>ln命令用于文件链接</p>
+<h4 id="命令格式-4"><a href="#命令格式-4" class="headerlink" title="命令格式"></a>命令格式</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ln [OPTION]... [-T] TARGET LINK_NAME</span><br><span class="line">ln [OPTION]... TARGET</span><br><span class="line">ln [OPTION]... TARGET... DIRECTORY</span><br><span class="line">ln [OPTION]... -t DIRECTORY TARGET...</span><br></pre></td></tr></table></figure>
+
+<h4 id="命令功能-4"><a href="#命令功能-4" class="headerlink" title="命令功能"></a>命令功能</h4><p>先了解文件系统链接的概念</p>
+<p>| 名称                 | 描述                                                         | 跨文件系统 | 链接不存在的文件 | 链接目录 | 使用场景                                                     |<br>| 软连接 symbolic link | 软链接，以路径的形式存在。类似于Windows操作系统中的快捷方式。软链接可以  ，硬链接不可以。 软链接可以对一个不存在的文件名进行链接。软链接可以对目录进行链接。 | ✔          | ✔                | ✔        | 使用场景：<br/>1.在文件系统中多处共享同一个较大文件时，使用软链接就可以避免创建多个副本。<br/>2.维护动态库文件的版本时，使用软链接，在升级库文件后，只需修改软链接的源文件，而使用该库的程序则不需要修改。 |<br>| 硬链接  hardlink     | 硬链接，以文件副本的形式存在。但不占用实际空间。 不允许给目录创建硬链接 。硬链接只有在同一个文件系统中才能创建。像一个指针，不分配inode。 | X          | X                | X        |                                                              |</p>
+<h4 id="常用选项参数-4"><a href="#常用选项参数-4" class="headerlink" title="常用选项参数"></a>常用选项参数</h4><p>| 选项 | 描述                                 |<br>| -b   | 删除，覆盖以前建立的链接             |<br>| -d   | 允许超级用户制作目录的硬链接         |<br>| -f   | 强制执行                             |<br>| -i   | 交互模式，文件存在则提示用户是否覆盖 |<br>| -n   | 把符号链接视为一般目录               |<br>| -s   | 软链接(符号链接)                     |<br>| -v   | 显示详细的处理过程                   |</p>
+<h4 id="常见范例-4"><a href="#常见范例-4" class="headerlink" title="常见范例"></a>常见范例</h4><p><strong>硬链接</strong></p>
+<p>制作某文件的硬链接，可以看到，硬链接文件的属性与原文件一致</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ ln aria.sh aria1.sh</span><br><span class="line">-rwxr-xr-x  2 plex plex  437 Feb  4  2020 aria1.sh</span><br><span class="line">-rwxr-xr-x  2 plex plex  437 Feb  4  2020 aria.sh</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>而且，硬链接文件并不会随原文件被删除而消失</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ rm aria.sh </span><br><span class="line">➜  ~ cat aria1.sh </span><br><span class="line">aria2c --enable-rpc \</span><br><span class="line">    --rpc-listen-all \</span><br><span class="line">    --rpc-allow-origin-all \</span><br><span class="line">    --dir ./files \</span><br></pre></td></tr></table></figure>
+
+<p><strong>软链接</strong></p>
+<p>软链接的属性不一样</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ ln -s aria.sh aria-link.sh</span><br><span class="line">➜  ~ ll</span><br><span class="line">total 140K</span><br><span class="line">lrwxrwxrwx  1 root root    7 Nov  2 09:50 aria-link.sh -&gt; aria.sh</span><br><span class="line">-rwxr-xr-x  1 plex plex  437 Feb  4  2020 aria.sh</span><br></pre></td></tr></table></figure>
+
+<p>而且软链接在原文件被删除后就会失效</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ rm aria.sh </span><br><span class="line">➜  ~ ll  </span><br><span class="line">total 140K</span><br><span class="line">-rwxr-xr-x  1 root root  437 Nov  2 09:51 aria.bak.sh</span><br><span class="line">lrwxrwxrwx  1 root root    7 Nov  2 09:50 aria-link.sh -&gt; aria.sh</span><br><span class="line">drwxr-xr-x  2 root root 4.0K Jun 18 17:37 auto_upload</span><br><span class="line">➜  ~ cat aria-link.sh</span><br><span class="line">cat: aria-link.sh: No such file or directory</span><br></pre></td></tr></table></figure>
+
+<h3 id="pwd-命令"><a href="#pwd-命令" class="headerlink" title="pwd 命令"></a>pwd 命令</h3><h4 id="命令格式-5"><a href="#命令格式-5" class="headerlink" title="命令格式"></a>命令格式</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pwd [OPTION]...</span><br></pre></td></tr></table></figure>
+
+<h4 id="命令功能-5"><a href="#命令功能-5" class="headerlink" title="命令功能"></a>命令功能</h4><p>打印当前工作目录，全目录</p>
+<h4 id="常用选项参数-5"><a href="#常用选项参数-5" class="headerlink" title="常用选项参数"></a>常用选项参数</h4><p>| 选项 | 描述                                 |<br>| -L   | Logical：使用环境的PWD，包含符号链接 |<br>| -P   | Physical：避开所有符号链接           |</p>
+<h4 id="常见范例-5"><a href="#常见范例-5" class="headerlink" title="常见范例"></a>常见范例</h4><p>创建temp目录与符号链接</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">➜  /tmp mkdir temp</span><br><span class="line">➜  /tmp ln -s temp temp2</span><br><span class="line">drwxr-xr-x 2 root root 4.0K Nov  4 09:20 temp</span><br><span class="line">lrwxrwxrwx 1 root root    4 Nov  4 09:20 temp2 -&gt; temp</span><br></pre></td></tr></table></figure>
+
+<p>添加<code>-L</code>或<code>-P</code>选项，默认显示符号链接的目录。</p>
+<p>添加-P 显示真实的路径</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@vistazx1:/tmp/temp2# pwd -L</span><br><span class="line">/tmp/temp2</span><br><span class="line">root@vistazx1:/tmp/temp2# pwd -P</span><br><span class="line">/tmp/temp</span><br></pre></td></tr></table></figure>
+
+<h3 id="mkdir命令"><a href="#mkdir命令" class="headerlink" title="mkdir命令"></a>mkdir命令</h3><h4 id="命令格式-6"><a href="#命令格式-6" class="headerlink" title="命令格式"></a>命令格式</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir [OPTION]... DIRECTORY...</span><br></pre></td></tr></table></figure>
+
+<h4 id="命令功能-6"><a href="#命令功能-6" class="headerlink" title="命令功能"></a>命令功能</h4><p>创建目录，支持创建父目录，支持指定文件权限，支持SELinux</p>
+<h4 id="常用选项参数-6"><a href="#常用选项参数-6" class="headerlink" title="常用选项参数"></a>常用选项参数</h4><p>| 选项 | 描述                         |<br>| -m   | 设置文件模式，同chmod        |<br>| -p   | 创建父目录，如果存在则不创建 |</p>
+<h4 id="常见范例-6"><a href="#常见范例-6" class="headerlink" title="常见范例"></a>常见范例</h4><p>创建目录，包含父目录</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p user/root/desktop</span><br></pre></td></tr></table></figure>
+
+<p>指定目录文件模式</p>
+<p>​		<strong>User、Group、及Other的权限</strong></p>
+<p>​		<strong>权限位解释</strong>：rwx (r读4、w写2、x运行1、-无）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">➜  temp mkdir -m 777 dir1</span><br><span class="line">➜  temp mkdir -m 600 dir2</span><br><span class="line">➜  temp ll</span><br><span class="line">total 8.0K</span><br><span class="line">drwxrwxrwx 2 root root 4.0K Nov  4 09:36 dir1</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="rm-命令"><a href="#rm-命令" class="headerlink" title="rm 命令"></a>rm 命令</h3><h4 id="命令格式-7"><a href="#命令格式-7" class="headerlink" title="命令格式"></a>命令格式</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm [OPTION]... [FILE]..</span><br></pre></td></tr></table></figure>
+
+<h4 id="命令功能-7"><a href="#命令功能-7" class="headerlink" title="命令功能"></a>命令功能</h4><p>删除文件或目录。支持删除整个目录、强制删除、交互模式。注意被删除的文件通过一定的技术手段有可能还原，要更安全地删除文件，使用<code>shred</code>。</p>
+<h4 id="常用选项参数-7"><a href="#常用选项参数-7" class="headerlink" title="常用选项参数"></a>常用选项参数</h4><p>| 选项                  | 描述                               |<br>| -f                    | 不提示，忽略不存在的文件。强制删除 |<br>| -i                    | 每个文件删除前提醒                 |<br>| -I                    | 删除前提醒一次，侵入性较弱         |<br>| –one-file-system     | 仅删除在同一文件系统的文件         |<br>| –no-preserve-root    | 不区别对待”&#x2F;“                      |<br>| –preserve-root[&#x3D;all] |                                    |<br>| -d                    | 删除空目录                         |<br>| -r                    | 删除整个目录                       |</p>
+<h4 id="常见范例-7"><a href="#常见范例-7" class="headerlink" title="常见范例"></a>常见范例</h4><p><strong>切勿执行</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm -rf /</span><br></pre></td></tr></table></figure>
+
+<h3 id="mv命令"><a href="#mv命令" class="headerlink" title="mv命令"></a>mv命令</h3><h4 id="命令格式-8"><a href="#命令格式-8" class="headerlink" title="命令格式"></a>命令格式</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SYNOPSIS</span><br><span class="line">       mv [OPTION]... [-T] SOURCE DEST</span><br><span class="line">       mv [OPTION]... SOURCE... DIRECTORY</span><br><span class="line">       mv [OPTION]... -t DIRECTORY SOURCE...</span><br></pre></td></tr></table></figure>
+
+<h4 id="命令功能-8"><a href="#命令功能-8" class="headerlink" title="命令功能"></a>命令功能</h4><p>文件移动，覆盖，备份</p>
+<h4 id="常用选项参数-8"><a href="#常用选项参数-8" class="headerlink" title="常用选项参数"></a>常用选项参数</h4><p>| 选项               | 描述                                                         |<br>| -b                 | 如果目标文件已存在，则创建备份                               |<br>| –backup&#x3D;[control] | 备份，接收选项<br/>      none, off<br/>              never make backups (even if –backup is given)<br/><br/>       numbered, t<br/>              make numbered backups<br/><br/>       existing, nil<br/>              numbered if numbered backups exist, simple otherwise<br/><br/>       simple, never<br/>              always make simple backups |<br>| -f                 | 覆盖前不提醒                                                 |<br>| -i                 | 覆盖前提醒                                                   |<br>| -n                 | 不要覆盖文件                                                 |<br>| -u                 | 如果源文件更新或目标文件不存在的时候移动 （增量更新）        |</p>
+<h4 id="常见范例-8"><a href="#常见范例-8" class="headerlink" title="常见范例"></a>常见范例</h4><p>文件移动</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv hello hi</span><br></pre></td></tr></table></figure>
+
+<p>支持备份，创建了后缀为~的备份文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">➜  /tmp mv -b hello hi</span><br><span class="line">➜  /tmp ll</span><br><span class="line">total 36K</span><br><span class="line">-rw-r--r-- 1 root root    0 Nov  5 09:46 hi</span><br><span class="line">-rw-r--r-- 1 root root    9 Nov  5 09:46 hi~</span><br></pre></td></tr></table></figure>
+
+<h3 id="cp命令"><a href="#cp命令" class="headerlink" title="cp命令"></a>cp命令</h3><h4 id="命令格式-9"><a href="#命令格式-9" class="headerlink" title="命令格式"></a>命令格式</h4><pre><code>   cp [OPTION]... [-T] SOURCE DEST
+   cp [OPTION]... SOURCE... DIRECTORY
+   cp [OPTION]... -t DIRECTORY SOURCE...
+</code></pre>
+<h4 id="命令功能-9"><a href="#命令功能-9" class="headerlink" title="命令功能"></a>命令功能</h4><p>复制文件与文件夹</p>
+<p>支持选择文件参数</p>
+<h4 id="常用选项参数-9"><a href="#常用选项参数-9" class="headerlink" title="常用选项参数"></a>常用选项参数</h4><p>| 选项    | 描述                                                         |<br>| -a      | 此选项通常在复制目录时使用，它保留链接、文件属性，并复制目录下的所有内容。效果相当于 <code>-dR --preserve=all</code> |<br>| -b      | 备份已存在的文件                                             |<br>| -d      | 复制时保留链接                                               |<br>| -f      | 强制。如果目标文件无法打开，则删除再重试                     |<br>| -i      | 提醒覆盖                                                     |<br>| -n      | 不要覆盖                                                     |<br>| -p      | –preserve ,除复制文件的内容外，还保留源文件或目录的属性，包括所有者、所属组、权限与修改时间也复制到新文件中。 |<br>| -P      | –parents ,保留源文件或目录的路径，此路径可以是绝对路径或相对路径，且目的目录必须已经存在 |<br>| -r 和-R | 若给出的源文件是一个目录文件，此时将复制该目录下所有的子目录和文件。 |<br>| -x      | 仅在此文件系统                                               |<br>| -u      | 增量。当源文件更新或目标文件不存在时复制                     |<br>| -s      | 不复制，只创建符号链接                                       |<br>| -l      | 不复制，只创建硬链接                                         |</p>
+<h4 id="常见范例-9"><a href="#常见范例-9" class="headerlink" title="常见范例"></a>常见范例</h4><p>复制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">➜  /tmp cp -r source target </span><br><span class="line">➜  /tmp ll source </span><br><span class="line">total 1.4M</span><br><span class="line">-rw-r--r-- 1 root root  137 Jun 30 10:12 ca.txt</span><br><span class="line">-rw-r--r-- 1 root root  120 Jun 30 10:12 server.txt</span><br><span class="line">drwxr-xr-x 3 1001 1001 4.0K Jun 30 10:12 trojan</span><br><span class="line">-rw-r--r-- 1 root root 1.4M Jan 17  2019 trojan.xz</span><br><span class="line">➜  /tmp ll target </span><br><span class="line">total 1.4M</span><br><span class="line">-rw-r--r-- 1 root root  137 Nov  9 15:23 ca.txt</span><br><span class="line">-rw-r--r-- 1 root root  120 Nov  9 15:23 server.txt</span><br><span class="line">drwxr-xr-x 3 root root 4.0K Nov  9 15:23 trojan</span><br><span class="line">-rw-r--r-- 1 root root 1.4M Nov  9 15:23 trojan.xz</span><br></pre></td></tr></table></figure>
+
+<p>添加<code>-a</code>选项后，时间等属性都被复制过来了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">➜  /tmp cp -r -a source target</span><br><span class="line">➜  /tmp ll target </span><br><span class="line">total 1.4M</span><br><span class="line">-rw-r--r-- 1 root root  137 Nov  9 15:23 ca.txt</span><br><span class="line">-rw-r--r-- 1 root root  120 Nov  9 15:23 server.txt</span><br><span class="line">drwxr-xr-x 3 root root 4.0K Nov  9 15:23 trojan</span><br><span class="line">-rw-r--r-- 1 root root 1.4M Nov  9 15:23 trojan.xz</span><br></pre></td></tr></table></figure>
+
+<h3 id="touch命令"><a href="#touch命令" class="headerlink" title="touch命令"></a>touch命令</h3><h4 id="命令格式-10"><a href="#命令格式-10" class="headerlink" title="命令格式"></a>命令格式</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch [OPTION]... FILE..</span><br></pre></td></tr></table></figure>
+
+<h4 id="命令功能-10"><a href="#命令功能-10" class="headerlink" title="命令功能"></a>命令功能</h4><p>修改文件的访问时间和修改时间</p>
+<ul>
+<li>当文件不存在时会创建新文件</li>
+</ul>
+<h4 id="常用选项参数-10"><a href="#常用选项参数-10" class="headerlink" title="常用选项参数"></a>常用选项参数</h4><p>| 选项 | 描述                                     |<br>| -c   | 不要创建新文件                           |<br>| -t   | 传入时间戳                               |<br>| -d   | –date&#x3D;STRING，使用指定的时间            |<br>| -h   | 修改符号链接的时间，而不是链接文件的时间 |<br>| -a   | 仅修改访问时间                           |<br>| -m   | 仅变化修改时间                           |</p>
+<h4 id="常见范例-10"><a href="#常见范例-10" class="headerlink" title="常见范例"></a>常见范例</h4><p>修改访问时间</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">➜  temp <span class="built_in">stat</span> file1</span><br><span class="line">  File: file1</span><br><span class="line">  Size: 0         	Blocks: 0          IO Block: 4096   regular empty file</span><br><span class="line">Device: 802h/2050d	Inode: 122791      Links: 1</span><br><span class="line">Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)</span><br><span class="line">Access: 2020-11-10 09:15:04.769531724 +0800</span><br><span class="line">Modify: 2020-11-10 09:15:04.769531724 +0800</span><br><span class="line">Change: 2020-11-10 09:15:04.769531724 +0800</span><br><span class="line"> Birth: -</span><br><span class="line">➜  temp <span class="built_in">touch</span> -a file1 </span><br><span class="line">➜  temp <span class="built_in">stat</span> file1</span><br><span class="line">  File: file1</span><br><span class="line">  Size: 0         	Blocks: 0          IO Block: 4096   regular empty file</span><br><span class="line">Device: 802h/2050d	Inode: 122791      Links: 1</span><br><span class="line">Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)</span><br><span class="line">Access: 2020-11-10 09:16:52.826117263 +0800</span><br><span class="line">Modify: 2020-11-10 09:15:04.769531724 +0800</span><br><span class="line">Change: 2020-11-10 09:16:52.826117263 +0800</span><br><span class="line"> Birth: -</span><br></pre></td></tr></table></figure>
+
+<p>修改修改时间</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">➜  temp <span class="built_in">touch</span> -m file1 </span><br><span class="line">➜  temp <span class="built_in">stat</span> file1 </span><br><span class="line">  File: file1</span><br><span class="line">  Size: 0         	Blocks: 0          IO Block: 4096   regular empty file</span><br><span class="line">Device: 802h/2050d	Inode: 122791      Links: 1</span><br><span class="line">Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)</span><br><span class="line">Access: 2020-11-10 09:16:52.826117263 +0800</span><br><span class="line">Modify: 2020-11-10 09:17:29.474315829 +0800</span><br><span class="line">Change: 2020-11-10 09:17:29.474315829 +0800</span><br></pre></td></tr></table></figure>
+
+<h3 id="cat命令"><a href="#cat命令" class="headerlink" title="cat命令"></a>cat命令</h3><h4 id="命令格式-11"><a href="#命令格式-11" class="headerlink" title="命令格式"></a>命令格式</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat [OPTION]... [FILE]...</span><br></pre></td></tr></table></figure>
+
+<h4 id="命令功能-11"><a href="#命令功能-11" class="headerlink" title="命令功能"></a>命令功能</h4><p>将文件串联，打印到终端</p>
+<h4 id="常用选项参数-11"><a href="#常用选项参数-11" class="headerlink" title="常用选项参数"></a>常用选项参数</h4><p>| 选项 | 描述             |<br>| -v   | 展示非可读字符   |<br>| -E   | <code>$</code> 行结尾       |<br>| -T   | <code>^I</code>展示TAB      |<br>| -A   | 等价于-vET       |<br>| -b   | 给非空行加上编号 |<br>| -n   | 编号所有行       |</p>
+<h4 id="常见范例-11"><a href="#常见范例-11" class="headerlink" title="常见范例"></a>常见范例</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  temp cat file1 -b</span><br><span class="line">     1	Hello, my friend</span><br><span class="line">     2	Let&#x27;s code</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  temp cat file1 -A</span><br><span class="line">Hello, my friend$</span><br><span class="line">Let&#x27;s code$</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="less-命令"><a href="#less-命令" class="headerlink" title="less 命令"></a>less 命令</h3><h4 id="命令格式-12"><a href="#命令格式-12" class="headerlink" title="命令格式"></a>命令格式</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">SYNOPSIS</span><br><span class="line">       less -?</span><br><span class="line">       less --<span class="built_in">help</span></span><br><span class="line">       less -V</span><br><span class="line">       less --version</span><br><span class="line">       less [-[+]aABcCdeEfFgGiIJKLmMnNqQrRsSuUVwWX~]</span><br><span class="line">            [-b space] [-h lines] [-j line] [-k keyfile]</span><br><span class="line">            [-&#123;oO&#125; logfile] [-p pattern] [-P prompt] [-t tag]</span><br><span class="line">            [-T tagsfile] [-x tab,...] [-y lines] [-[z] lines]</span><br><span class="line">            [-<span class="comment"># shift] [+[+]cmd] [--] [filename]...</span></span><br><span class="line">       (See the OPTIONS section <span class="keyword">for</span> alternate option syntax with long option names.)</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="命令功能-12"><a href="#命令功能-12" class="headerlink" title="命令功能"></a>命令功能</h4><p>less像more，但是有更多功能。命名是more和vi的结合。less不需要读取整个文件，所以大文件打开速度更快。</p>
+<h4 id="常用选项参数-12"><a href="#常用选项参数-12" class="headerlink" title="常用选项参数"></a>常用选项参数</h4><p>| 选项                | 描述                             |<br>| h                   | 帮助                             |<br>| page up &#x2F; page down | 向上&#x2F;下翻页                      |<br>| g开头，G结尾        | 跳到开头、结尾                   |<br>| &#x2F;      | 向前搜索                         |<br>| ?      | 向后搜索                         |<br>| F                   | 跟踪当前文件的新增，功能如同tail |<br>| v                   | 在编辑器中打开该文件             |</p>
+<p>个人觉得文本编辑器只需要学会一个就行了。vim基本能覆盖less的功能。</p>
+<h3 id="head命令"><a href="#head命令" class="headerlink" title="head命令"></a>head命令</h3><h4 id="命令格式-13"><a href="#命令格式-13" class="headerlink" title="命令格式"></a>命令格式</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">head [OPTION]... [FILE]...</span><br></pre></td></tr></table></figure>
+
+<h4 id="命令功能-13"><a href="#命令功能-13" class="headerlink" title="命令功能"></a>命令功能</h4><p>输出文件的前一部分</p>
+<h4 id="常用选项参数-13"><a href="#常用选项参数-13" class="headerlink" title="常用选项参数"></a>常用选项参数</h4><p>| 选项               | 描述                                                         |<br>| -c, –bytes&#x3D;[-]NUM | 打印文件的前一部分，指定读取的大小，如果带<code>-</code>则不打印最后一部分 |<br>| -n, –lines&#x3D;[-]NUM | 打印文件的前几行，如果带<code>-</code>则不打印最后的几行                |</p>
+<blockquote>
+<p>NUM may have a multiplier suffix: b 512, kB 1000, K 1024, MB 1000<em>1000, M 1024</em>1024, GB 1000<em>1000</em>1000, G 1024<em>1024</em>1024, and so on for T, P, E, Z, Y.</p>
+</blockquote>
+<h4 id="常见范例-12"><a href="#常见范例-12" class="headerlink" title="常见范例"></a>常见范例</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- Output the first few lines of a file:</span><br><span class="line">  head -n &#123;&#123;count_of_lines&#125;&#125; &#123;&#123;filename&#125;&#125;</span><br><span class="line"></span><br><span class="line">- Output the first few bytes of a file:</span><br><span class="line">  head -c &#123;&#123;size_in_bytes&#125;&#125; &#123;&#123;filename&#125;&#125;</span><br><span class="line"></span><br><span class="line">- Output everything but the last few lines of a file:</span><br><span class="line">  head -n -&#123;&#123;count_of_lines&#125;&#125; &#123;&#123;filename&#125;&#125;</span><br><span class="line"></span><br><span class="line">- Output everything but the last few bytes of a file:</span><br><span class="line">  head -c -&#123;&#123;size_in_bytes&#125;&#125; &#123;&#123;filename&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="tail-命令"><a href="#tail-命令" class="headerlink" title="tail 命令"></a>tail 命令</h3><h4 id="命令格式-14"><a href="#命令格式-14" class="headerlink" title="命令格式"></a>命令格式</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail [OPTION]... [FILE]...</span><br></pre></td></tr></table></figure>
+
+<h4 id="命令功能-14"><a href="#命令功能-14" class="headerlink" title="命令功能"></a>命令功能</h4><p>打印文件的最后一部分</p>
+<h4 id="常用选项参数-14"><a href="#常用选项参数-14" class="headerlink" title="常用选项参数"></a>常用选项参数</h4><p>| 选项               | 描述                                                         |<br>| -c, –bytes&#x3D;[+]NUM | 打印文件的最后NUM bytes， 添加<code>+</code>则跳过前NUM byte            |<br>| -n, –lines&#x3D;[+]NUM | 打印文件的最后几行，添加<code>+</code>跳过前几行                        |<br>| –pid&#x3D;PID          | 配合<code>-f</code>使用，在进程PID结束后退出                            |<br>| -f                 | 输出添加的内容                                               |<br>| -F                 | 同<code>-f</code>，重试，文件无法访问时会不断重试                       |<br>| -s                 | 配合<code>-f</code>使用，睡眠一段时间。配合<code>-pid</code>可以实现每隔几秒检查一次线程 |</p>
+<h4 id="常见范例-13"><a href="#常见范例-13" class="headerlink" title="常见范例"></a>常见范例</h4><p>打印文件尾部，同时每一秒检查进程是否在运行，若进程不在执行，则退出</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail -s 1 -f --pid 4921 xxx.log</span><br></pre></td></tr></table></figure>
+
+<h2 id="文件查找相关命令"><a href="#文件查找相关命令" class="headerlink" title="文件查找相关命令"></a>文件查找相关命令</h2><h3 id="which命令"><a href="#which命令" class="headerlink" title="which命令"></a>which命令</h3><h4 id="命令格式-15"><a href="#命令格式-15" class="headerlink" title="命令格式"></a>命令格式</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">which - locate a command</span><br></pre></td></tr></table></figure>
+
+<h4 id="命令功能-15"><a href="#命令功能-15" class="headerlink" title="命令功能"></a>命令功能</h4><p>返回当前环境可执行命令的目录名或链接</p>
+<h4 id="常用选项参数-15"><a href="#常用选项参数-15" class="headerlink" title="常用选项参数"></a>常用选项参数</h4><p>| 选项 | 描述                   |<br>| -a   | 打印所有匹配到的目录名 |</p>
+<h4 id="常见范例-14"><a href="#常见范例-14" class="headerlink" title="常见范例"></a>常见范例</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ which top</span><br><span class="line">/usr/bin/top</span><br></pre></td></tr></table></figure>
+
+<h3 id="whereis命令"><a href="#whereis命令" class="headerlink" title="whereis命令"></a>whereis命令</h3><h4 id="命令格式-16"><a href="#命令格式-16" class="headerlink" title="命令格式"></a>命令格式</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">whereis [options] [-BMS directory... -f] name...</span><br></pre></td></tr></table></figure>
+
+<h4 id="命令功能-16"><a href="#命令功能-16" class="headerlink" title="命令功能"></a>命令功能</h4><p>查找命令对应的手册、二进制、源码</p>
+<h4 id="常用选项参数-16"><a href="#常用选项参数-16" class="headerlink" title="常用选项参数"></a>常用选项参数</h4><p>| 选项 | 描述                 |<br>| -b   | 搜索二进制           |<br>| -m   | 搜索手册             |<br>| -s   | 搜索源码             |<br>| -B   | 指定二进制的搜索路径 |<br>| -M   | 指定手册的搜索路径   |<br>| -S   | 指定源码的搜索路径   |<br>| -l   | 列出所有搜索路径     |</p>
+<h4 id="常见范例-15"><a href="#常见范例-15" class="headerlink" title="常见范例"></a>常见范例</h4><p>查找ssh命令的二进制、手册、源码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ whereis ssh</span><br><span class="line">ssh: /usr/bin/ssh /etc/ssh /usr/share/man/man1/ssh.1.gz</span><br></pre></td></tr></table></figure>
+
+<p>查找不正常的二进制  (少于一或多于一个二进制的命令):</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ whereis -u *</span><br><span class="line">dmesg: /bin/dmesg /usr/share/man/man1/dmesg.1.gz</span><br></pre></td></tr></table></figure>
+
+<p>在<code>/usr/bin</code>下查找gcc</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ whereis -b -B /usr/bin -f gcc</span><br><span class="line">gcc: /usr/bin/gcc</span><br></pre></td></tr></table></figure>
+
+<h3 id="find命令"><a href="#find命令" class="headerlink" title="find命令"></a>find命令</h3><h4 id="命令格式-17"><a href="#命令格式-17" class="headerlink" title="命令格式"></a>命令格式</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find [-H] [-L] [-P] [-D debugopts] [-Olevel] [starting-point...] [expression]</span><br></pre></td></tr></table></figure>
+
+<h4 id="命令功能-17"><a href="#命令功能-17" class="headerlink" title="命令功能"></a>命令功能</h4><p>在目录中搜索文件</p>
+<h4 id="常用选项参数-17"><a href="#常用选项参数-17" class="headerlink" title="常用选项参数"></a>常用选项参数</h4><p>| 选项          | 描述                                   |<br>| -name, -iname | 文件名，支持pattern，iname大小写不敏感 |<br>| -path         | 目录                                   |<br>| -type         | 文件类型，详情见文档                   |<br>| -size         | 文件大小                               |<br>| -exec         | 执行命令                               |<br>| -mtime        | 修改时间                               |<br>| -or, -not     |                                        |<br>| -delete       | 删除文件（不要轻易使用）               |</p>
+<h4 id="常见范例-16"><a href="#常见范例-16" class="headerlink" title="常见范例"></a>常见范例</h4><p>在目录下查找扩展名为log的文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ find . -name <span class="string">&quot;*.log&quot;</span></span><br><span class="line">./v2rayUpdate.<span class="built_in">log</span></span><br><span class="line">./dmesg.log</span><br><span class="line">./frp/frps.2020-03-13.<span class="built_in">log</span></span><br></pre></td></tr></table></figure>
+
+<p>支持多种匹配方式</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ find . -name <span class="string">&quot;*.log&quot;</span> -or -name <span class="string">&quot;*.db&quot;</span></span><br><span class="line">./v2rayUpdate.<span class="built_in">log</span></span><br><span class="line">./IAD_Pages/ch4/images/Thumbs.db</span><br><span class="line">./IAD_Pages/ch5/images/travel/tiny/Thumbs.db</span><br></pre></td></tr></table></figure>
+
+<p>查找目录（type d），大小写不敏感</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ find . -<span class="built_in">type</span> d -iname .config</span><br><span class="line">./.oh-my-zsh/plugins/zsh-navigation-tools/.config</span><br><span class="line">./.config</span><br></pre></td></tr></table></figure>
+
+<p>查找符合某模式的目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ find . -path &#x27;**/art/**&#x27;          </span><br><span class="line">./IAD_Pages/ch5/images/art/tiny</span><br><span class="line">./IAD_Pages/ch5/images/art/tiny/116010.jpg</span><br></pre></td></tr></table></figure>
+
+<p>查找文件，排除目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ find . -name <span class="string">&quot;*.db&quot;</span> -not -path <span class="string">&quot;**/art/**&quot;</span> </span><br><span class="line">./IAD_Pages/ch4/images/Thumbs.db</span><br><span class="line">./IAD_Pages/ch5/images/travel/tiny/Thumbs.db</span><br></pre></td></tr></table></figure>
+
+<p>查找符合大小范围的文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ find . -size &#x27;+500k&#x27; -size &#x27;-10M&#x27;</span><br><span class="line">./IAD_Pages/ch2&amp;ch3/images/related-large1.jpg</span><br><span class="line">./IAD_Pages/ch2&amp;ch3/images/large-central-park.jpg</span><br><span class="line">./IAD_Pages/ch2&amp;ch3/images/related-large3.jpg</span><br></pre></td></tr></table></figure>
+
+<p>查找文件并执行命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ find . -name <span class="string">&quot;*.log&quot;</span> -<span class="built_in">exec</span> <span class="built_in">wc</span> -l &#123;&#125; \;</span><br><span class="line">0 ./v2rayUpdate.<span class="built_in">log</span></span><br><span class="line">895 ./dmesg.log</span><br><span class="line">0 ./frp/frps.2020-03-13.<span class="built_in">log</span></span><br><span class="line">0 ./frp/frps.2020-03-14.<span class="built_in">log</span></span><br><span class="line">0 ./frp/frps.log</span><br><span class="line">2 ./virt-sysprep-firstboot.log</span><br><span class="line">15 ./files/_gsdata_/2020-0421-154918-DESKTOP-F40K3GF-BWH_SSH.<span class="built_in">log</span></span><br><span class="line">5 ./files/_gsdata_/2020-0422-123447-DESKTOP-F40K3GF-BWH_SSH.<span class="built_in">log</span></span><br><span class="line">4 ./files/_gsdata_/2020-0424-161203-DESKTOP-F40K3GF-BWH_SSH.<span class="built_in">log</span></span><br></pre></td></tr></table></figure>
+
+
+    </article>
+    <!-- license -->
+    
+        <div class="license-wrapper">
+            <p>原文作者：<a href="https://blog.vistazx1.top">Guohao</a>
+            <p>原文链接：<a href="https://blog.vistazx1.top/2020/12/18/2020-12-18%2019:07:01/">https://blog.vistazx1.top/2020/12/18/2020-12-18%2019:07:01/</a>
+            <p>发表日期：<a href="https://blog.vistazx1.top/2020/12/18/2020-12-18%2019:07:01/">December 18th 2020, 7:07:01 pm</a>
+            <p>更新日期：<a href="https://blog.vistazx1.top/2020/12/18/2020-12-18%2019:07:01/">March 5th 2021, 3:48:06 pm</a>
+            <p>版权声明：This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-ND 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nd.svg?ref=chooser-v1" alt=""></a></p>
+        </div>
+    
+    <!-- paginator -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href="/2021/02/21/2021-02-21%2015:08:35/" title="利用OneManager 搭建OneDrive图床">
+                    <div class="nextTitle">利用OneManager 搭建OneDrive图床</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2020/11/18/2020-11-18%2011:26:14/" title="GoLand使用代理">
+                    <div class="prevTitle">GoLand使用代理</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- comment -->
+    
+        <div class="post-comment">
+            <!-- 来必力 City 版安装代码 -->
+
+
+            
+
+            
+
+            
+
+            <!-- utteranc评论 -->
+
+
+            <!-- partial('_partial/comment/changyan') -->
+            <!--PC版-->
+
+
+            
+            
+
+            
+
+        </div>
+    
+    <!-- timeliness note -->
+    <!-- idea from: https://hexo.fluid-dev.com/posts/hexo-injector/#%E6%96%87%E7%AB%A0%E6%97%B6%E6%95%88%E6%80%A7%E6%8F%90%E7%A4%BA -->
+    
+    <!-- Mathjax -->
+    
+</main>
+
+                <!-- profile -->
+                
+            </div>
+            <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+        <div class="social">
+            
+    
+        
+            
+                <a href="mailto:cheng123xp@gmail.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/VvvvvGH" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+
+        </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- website approve for Chinese user -->
+    
+    <!-- 不蒜子  -->
+    
+        <div class="busuanzi-container">
+            
+             
+                <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+            
+        </div>
+    	
+</footer>
+
+        </div>
+        <!-- toc -->
+        
+            <div class="toc-wrapper toc-wrapper-loding" style=
+
+
+
+
+
+
+
+    top:50vh;
+
+>
+                <div class="toc-catalog">
+                    <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+                </div>
+                <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.</span> <span class="toc-text">Linux 文件系统</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.1.</span> <span class="toc-text">文件类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B"><span class="toc-number">1.1.1.</span> <span class="toc-text">查看</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%83%E7%A7%8D%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">七种类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%A1%E9%81%93"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">管道</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%A0%87%E5%87%86"><span class="toc-number">1.2.</span> <span class="toc-text">文件系统标准</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux-%E5%91%BD%E4%BB%A4"><span class="toc-number">2.</span> <span class="toc-text">Linux 命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E6%9D%BF"><span class="toc-number">2.0.1.</span> <span class="toc-text">模板</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E7%B1%BB"><span class="toc-number">2.1.</span> <span class="toc-text">分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4"><span class="toc-number">2.1.1.</span> <span class="toc-text">命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%A0%BC%E5%BC%8F"><span class="toc-number">2.1.1.1.</span> <span class="toc-text">命令格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E5%8A%9F%E8%83%BD"><span class="toc-number">2.1.1.2.</span> <span class="toc-text">命令功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9%E5%8F%82%E6%95%B0"><span class="toc-number">2.1.1.3.</span> <span class="toc-text">常用选项参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E8%8C%83%E4%BE%8B"><span class="toc-number">2.1.1.4.</span> <span class="toc-text">常见范例</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E5%91%BD%E4%BB%A4"><span class="toc-number">3.</span> <span class="toc-text">基础命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#man%E5%91%BD%E4%BB%A4"><span class="toc-number">3.1.</span> <span class="toc-text">man命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%A0%BC%E5%BC%8F-1"><span class="toc-number">3.1.0.1.</span> <span class="toc-text">命令格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E5%8A%9F%E8%83%BD-1"><span class="toc-number">3.1.0.2.</span> <span class="toc-text">命令功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9%E5%8F%82%E6%95%B0-1"><span class="toc-number">3.1.0.3.</span> <span class="toc-text">常用选项参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E8%8C%83%E4%BE%8B-1"><span class="toc-number">3.1.0.4.</span> <span class="toc-text">常见范例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E6%96%87%E4%BB%B6%E5%91%BD%E4%BB%A4"><span class="toc-number">3.2.</span> <span class="toc-text">目录文件命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ls-%E5%91%BD%E4%BB%A4"><span class="toc-number">3.2.1.</span> <span class="toc-text">ls 命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%A0%BC%E5%BC%8F-2"><span class="toc-number">3.2.1.1.</span> <span class="toc-text">命令格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E5%8A%9F%E8%83%BD-2"><span class="toc-number">3.2.1.2.</span> <span class="toc-text">命令功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9%E5%8F%82%E6%95%B0-2"><span class="toc-number">3.2.1.3.</span> <span class="toc-text">常用选项参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E8%8C%83%E4%BE%8B-2"><span class="toc-number">3.2.1.4.</span> <span class="toc-text">常见范例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cd-%E5%91%BD%E4%BB%A4"><span class="toc-number">3.2.2.</span> <span class="toc-text">cd 命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%A0%BC%E5%BC%8F-3"><span class="toc-number">3.2.2.1.</span> <span class="toc-text">命令格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E5%8A%9F%E8%83%BD-3"><span class="toc-number">3.2.2.2.</span> <span class="toc-text">命令功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9%E5%8F%82%E6%95%B0-3"><span class="toc-number">3.2.2.3.</span> <span class="toc-text">常用选项参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E8%8C%83%E4%BE%8B-3"><span class="toc-number">3.2.2.4.</span> <span class="toc-text">常见范例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ln-%E5%91%BD%E4%BB%A4"><span class="toc-number">3.2.3.</span> <span class="toc-text">ln 命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%A0%BC%E5%BC%8F-4"><span class="toc-number">3.2.3.1.</span> <span class="toc-text">命令格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E5%8A%9F%E8%83%BD-4"><span class="toc-number">3.2.3.2.</span> <span class="toc-text">命令功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9%E5%8F%82%E6%95%B0-4"><span class="toc-number">3.2.3.3.</span> <span class="toc-text">常用选项参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E8%8C%83%E4%BE%8B-4"><span class="toc-number">3.2.3.4.</span> <span class="toc-text">常见范例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pwd-%E5%91%BD%E4%BB%A4"><span class="toc-number">3.2.4.</span> <span class="toc-text">pwd 命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%A0%BC%E5%BC%8F-5"><span class="toc-number">3.2.4.1.</span> <span class="toc-text">命令格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E5%8A%9F%E8%83%BD-5"><span class="toc-number">3.2.4.2.</span> <span class="toc-text">命令功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9%E5%8F%82%E6%95%B0-5"><span class="toc-number">3.2.4.3.</span> <span class="toc-text">常用选项参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E8%8C%83%E4%BE%8B-5"><span class="toc-number">3.2.4.4.</span> <span class="toc-text">常见范例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mkdir%E5%91%BD%E4%BB%A4"><span class="toc-number">3.2.5.</span> <span class="toc-text">mkdir命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%A0%BC%E5%BC%8F-6"><span class="toc-number">3.2.5.1.</span> <span class="toc-text">命令格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E5%8A%9F%E8%83%BD-6"><span class="toc-number">3.2.5.2.</span> <span class="toc-text">命令功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9%E5%8F%82%E6%95%B0-6"><span class="toc-number">3.2.5.3.</span> <span class="toc-text">常用选项参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E8%8C%83%E4%BE%8B-6"><span class="toc-number">3.2.5.4.</span> <span class="toc-text">常见范例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rm-%E5%91%BD%E4%BB%A4"><span class="toc-number">3.2.6.</span> <span class="toc-text">rm 命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%A0%BC%E5%BC%8F-7"><span class="toc-number">3.2.6.1.</span> <span class="toc-text">命令格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E5%8A%9F%E8%83%BD-7"><span class="toc-number">3.2.6.2.</span> <span class="toc-text">命令功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9%E5%8F%82%E6%95%B0-7"><span class="toc-number">3.2.6.3.</span> <span class="toc-text">常用选项参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E8%8C%83%E4%BE%8B-7"><span class="toc-number">3.2.6.4.</span> <span class="toc-text">常见范例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mv%E5%91%BD%E4%BB%A4"><span class="toc-number">3.2.7.</span> <span class="toc-text">mv命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%A0%BC%E5%BC%8F-8"><span class="toc-number">3.2.7.1.</span> <span class="toc-text">命令格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E5%8A%9F%E8%83%BD-8"><span class="toc-number">3.2.7.2.</span> <span class="toc-text">命令功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9%E5%8F%82%E6%95%B0-8"><span class="toc-number">3.2.7.3.</span> <span class="toc-text">常用选项参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E8%8C%83%E4%BE%8B-8"><span class="toc-number">3.2.7.4.</span> <span class="toc-text">常见范例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cp%E5%91%BD%E4%BB%A4"><span class="toc-number">3.2.8.</span> <span class="toc-text">cp命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%A0%BC%E5%BC%8F-9"><span class="toc-number">3.2.8.1.</span> <span class="toc-text">命令格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E5%8A%9F%E8%83%BD-9"><span class="toc-number">3.2.8.2.</span> <span class="toc-text">命令功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9%E5%8F%82%E6%95%B0-9"><span class="toc-number">3.2.8.3.</span> <span class="toc-text">常用选项参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E8%8C%83%E4%BE%8B-9"><span class="toc-number">3.2.8.4.</span> <span class="toc-text">常见范例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#touch%E5%91%BD%E4%BB%A4"><span class="toc-number">3.2.9.</span> <span class="toc-text">touch命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%A0%BC%E5%BC%8F-10"><span class="toc-number">3.2.9.1.</span> <span class="toc-text">命令格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E5%8A%9F%E8%83%BD-10"><span class="toc-number">3.2.9.2.</span> <span class="toc-text">命令功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9%E5%8F%82%E6%95%B0-10"><span class="toc-number">3.2.9.3.</span> <span class="toc-text">常用选项参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E8%8C%83%E4%BE%8B-10"><span class="toc-number">3.2.9.4.</span> <span class="toc-text">常见范例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cat%E5%91%BD%E4%BB%A4"><span class="toc-number">3.2.10.</span> <span class="toc-text">cat命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%A0%BC%E5%BC%8F-11"><span class="toc-number">3.2.10.1.</span> <span class="toc-text">命令格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E5%8A%9F%E8%83%BD-11"><span class="toc-number">3.2.10.2.</span> <span class="toc-text">命令功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9%E5%8F%82%E6%95%B0-11"><span class="toc-number">3.2.10.3.</span> <span class="toc-text">常用选项参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E8%8C%83%E4%BE%8B-11"><span class="toc-number">3.2.10.4.</span> <span class="toc-text">常见范例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#less-%E5%91%BD%E4%BB%A4"><span class="toc-number">3.2.11.</span> <span class="toc-text">less 命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%A0%BC%E5%BC%8F-12"><span class="toc-number">3.2.11.1.</span> <span class="toc-text">命令格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E5%8A%9F%E8%83%BD-12"><span class="toc-number">3.2.11.2.</span> <span class="toc-text">命令功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9%E5%8F%82%E6%95%B0-12"><span class="toc-number">3.2.11.3.</span> <span class="toc-text">常用选项参数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#head%E5%91%BD%E4%BB%A4"><span class="toc-number">3.2.12.</span> <span class="toc-text">head命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%A0%BC%E5%BC%8F-13"><span class="toc-number">3.2.12.1.</span> <span class="toc-text">命令格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E5%8A%9F%E8%83%BD-13"><span class="toc-number">3.2.12.2.</span> <span class="toc-text">命令功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9%E5%8F%82%E6%95%B0-13"><span class="toc-number">3.2.12.3.</span> <span class="toc-text">常用选项参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E8%8C%83%E4%BE%8B-12"><span class="toc-number">3.2.12.4.</span> <span class="toc-text">常见范例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tail-%E5%91%BD%E4%BB%A4"><span class="toc-number">3.2.13.</span> <span class="toc-text">tail 命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%A0%BC%E5%BC%8F-14"><span class="toc-number">3.2.13.1.</span> <span class="toc-text">命令格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E5%8A%9F%E8%83%BD-14"><span class="toc-number">3.2.13.2.</span> <span class="toc-text">命令功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9%E5%8F%82%E6%95%B0-14"><span class="toc-number">3.2.13.3.</span> <span class="toc-text">常用选项参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E8%8C%83%E4%BE%8B-13"><span class="toc-number">3.2.13.4.</span> <span class="toc-text">常见范例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4"><span class="toc-number">3.3.</span> <span class="toc-text">文件查找相关命令</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#which%E5%91%BD%E4%BB%A4"><span class="toc-number">3.3.1.</span> <span class="toc-text">which命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%A0%BC%E5%BC%8F-15"><span class="toc-number">3.3.1.1.</span> <span class="toc-text">命令格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E5%8A%9F%E8%83%BD-15"><span class="toc-number">3.3.1.2.</span> <span class="toc-text">命令功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9%E5%8F%82%E6%95%B0-15"><span class="toc-number">3.3.1.3.</span> <span class="toc-text">常用选项参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E8%8C%83%E4%BE%8B-14"><span class="toc-number">3.3.1.4.</span> <span class="toc-text">常见范例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#whereis%E5%91%BD%E4%BB%A4"><span class="toc-number">3.3.2.</span> <span class="toc-text">whereis命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%A0%BC%E5%BC%8F-16"><span class="toc-number">3.3.2.1.</span> <span class="toc-text">命令格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E5%8A%9F%E8%83%BD-16"><span class="toc-number">3.3.2.2.</span> <span class="toc-text">命令功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9%E5%8F%82%E6%95%B0-16"><span class="toc-number">3.3.2.3.</span> <span class="toc-text">常用选项参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E8%8C%83%E4%BE%8B-15"><span class="toc-number">3.3.2.4.</span> <span class="toc-text">常见范例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#find%E5%91%BD%E4%BB%A4"><span class="toc-number">3.3.3.</span> <span class="toc-text">find命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%A0%BC%E5%BC%8F-17"><span class="toc-number">3.3.3.1.</span> <span class="toc-text">命令格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E5%8A%9F%E8%83%BD-17"><span class="toc-number">3.3.3.2.</span> <span class="toc-text">命令功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E9%80%89%E9%A1%B9%E5%8F%82%E6%95%B0-17"><span class="toc-number">3.3.3.3.</span> <span class="toc-text">常用选项参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E8%8C%83%E4%BE%8B-16"><span class="toc-number">3.3.3.4.</span> <span class="toc-text">常见范例</span></a></li></ol></li></ol></li></ol></li></ol>
+            </div>
+        
+        <!-- sidebar -->
+        <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+        <div class="sidebar-panel-archives">
+    <!-- 在 ejs 中将 archive 按照时间排序 -->
+    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 68
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+        
+            
+            
+            <div class="archive-year"> 2021 </div>
+            <ul class="year-list">
+            
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/21</span>
+            <a class="archive-post-title" href="/2021/02/21/2021-02-21%2017:38:54/">脚本：下载七牛bucket里的所有文件</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/21</span>
+            <a class="archive-post-title" href="/2021/02/21/2021-02-21%2015:08:35/">利用OneManager 搭建OneDrive图床</a>
+        </li>
+    
+        
+            
+            
+                
+                </ul>
+            
+            <div class="archive-year"> 2020 </div>
+            <ul class="year-list">
+            
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/18</span>
+            <a class="archive-post-title" href="/2020/12/18/2020-12-18%2019:07:01/">Linux命令笔记</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/18</span>
+            <a class="archive-post-title" href="/2020/11/18/2020-11-18%2011:26:14/">GoLand使用代理</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/13</span>
+            <a class="archive-post-title" href="/2020/11/13/2020-11-13%2010:09:08/">JUnit4 解析（施工中）</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/02</span>
+            <a class="archive-post-title" href="/2020/11/02/2020-11-02%2009:07:45/">Maven基础</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/02</span>
+            <a class="archive-post-title" href="/2020/11/02/2020-11-02%2009:11:11/">Mongo基础</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/10</span>
+            <a class="archive-post-title" href="/2020/08/10/2020-08-10%2010:09:07/">图床</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/06</span>
+            <a class="archive-post-title" href="/2020/08/06/2020-08-06%2010:56:08/">Redis</a>
+        </li>
+    
+        
+            
+            
+                
+                </ul>
+            
+            <div class="archive-year"> 2019 </div>
+            <ul class="year-list">
+            
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/02</span>
+            <a class="archive-post-title" href="/2019/03/02/2019-03-02%2002:32:19/">SQL反模式</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/14</span>
+            <a class="archive-post-title" href="/2019/02/14/2019-02-14%2006:29:06/">ubuntu编译最新pytorch记录</a>
+        </li>
+    
+        
+            
+            
+                
+                </ul>
+            
+            <div class="archive-year"> 2018 </div>
+            <ul class="year-list">
+            
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/14</span>
+            <a class="archive-post-title" href="/2018/11/14/2018-11-14%2005:12:16/">将archlinux转移到nvme固态硬盘</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/26</span>
+            <a class="archive-post-title" href="/2018/10/26/2018-10-26%2003:25:38/">时隔一年，又玩了一次CTF</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/14</span>
+            <a class="archive-post-title" href="/2018/10/14/2018-10-14%2009:26:54/">在archlinux里使用安装Python3.6</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/15</span>
+            <a class="archive-post-title" href="/2018/09/15/2018-09-15%2023:06:48/">Learn Vue.js</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/23</span>
+            <a class="archive-post-title" href="/2018/06/23/2018-06-23%2004:37:43/">tesseract验证码识别</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/17</span>
+            <a class="archive-post-title" href="/2018/05/17/2018-05-17%2022:18:30/">初试scrapy + redis 爬虫</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/27</span>
+            <a class="archive-post-title" href="/2018/04/27/2018-04-27%2004:50:01/">入手一台树莓派"杀手"</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/09</span>
+            <a class="archive-post-title" href="/2018/03/09/2018-03-09%2021:35:09/">KMS激活安装在CrossOver上的Office 2010</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/08</span>
+            <a class="archive-post-title" href="/2018/03/08/2018-03-08%2008:56:24/">The art of readable code</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/30</span>
+            <a class="archive-post-title" href="/2018/01/30/2018-01-30%2001:33:54/">串流电脑画面到3DS上</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/06</span>
+            <a class="archive-post-title" href="/2018/01/06/2018-01-06%2007:08:12/">在腾讯云上安装Archlinux</a>
+        </li>
+    
+        
+            
+            
+                
+                </ul>
+            
+            <div class="archive-year"> 2017 </div>
+            <ul class="year-list">
+            
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/06</span>
+            <a class="archive-post-title" href="/2017/12/06/2017-12-06%2001:10:42/">frp内网穿透及加速</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/13</span>
+            <a class="archive-post-title" href="/2017/11/13/2017-11-13%2022:53:47/">希捷2T硬盘</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span>
+            <a class="archive-post-title" href="/2017/11/05/2017-11-05%2021:59:51/">Ubuntu17.10 安装fcitx 和 搜狗输入法</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span>
+            <a class="archive-post-title" href="/2017/11/05/2017-11-05%2020:37:48/">Ubuntu17.10 添加Deepin源</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/03</span>
+            <a class="archive-post-title" href="/2017/11/03/2017-11-03%2022:17:03/">nginx 多站点配置</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/24</span>
+            <a class="archive-post-title" href="/2017/10/24/2017-10-24%2009:33:46/">玩玩CTF</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/05</span>
+            <a class="archive-post-title" href="/2017/10/05/2017-10-05%2008:53:28/">用nginx反向代理处理跨域问题</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/03</span>
+            <a class="archive-post-title" href="/2017/10/03/2017-10-03%2012:16:58/">uwsgi部署flask应用</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/03</span>
+            <a class="archive-post-title" href="/2017/10/03/2017-10-03%2008:53:29/">nginx 413 Request Entity Too Large</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/30</span>
+            <a class="archive-post-title" href="/2017/09/30/2017-09-30%2010:10:07/">使用非对称加密传输登陆密码</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/29</span>
+            <a class="archive-post-title" href="/2017/09/29/2017-09-29%2017:00:01/">Hello World</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/21</span>
+            <a class="archive-post-title" href="/2017/09/21/2017-9-21%2017:39:55/">在vps上安装hexo</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/20</span>
+            <a class="archive-post-title" href="/2017/09/20/2017-9-20%2017:39:55/">更换vps以及相关配置</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/19</span>
+            <a class="archive-post-title" href="/2017/09/19/2017-9-19%2011:19:55/">汇编学习</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/17</span>
+            <a class="archive-post-title" href="/2017/09/17/2017-9-17%2017:39:55/">更新博客</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/08</span>
+            <a class="archive-post-title" href="/2017/08/08/2017-8-08%2020:19:55/">WeChat 玩 Google Assistant</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/26</span>
+            <a class="archive-post-title" href="/2017/05/26/2017-05-26%2020:19:55/">selenium 登陆 blackboard系统 订阅作业更新</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/19</span>
+            <a class="archive-post-title" href="/2017/05/19/2017-05-19%2017:00:00/">Perfect Hackintosh 之FN亮度按键</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/12</span>
+            <a class="archive-post-title" href="/2017/05/12/2017-05-12%2017:00:00/">Flyme6 Patchrom 项目笔记</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/25</span>
+            <a class="archive-post-title" href="/2017/04/25/2017-04-25%2017:00:00/">手机三角架之妙用</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/07</span>
+            <a class="archive-post-title" href="/2017/04/07/2017-04-07%2017:54:25/">MySQL 学习笔记</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/07</span>
+            <a class="archive-post-title" href="/2017/04/07/2017-04-07%2017:27:25/">安装PHP环境</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/30</span>
+            <a class="archive-post-title" href="/2017/03/30/2017-03-30%2017:54:25/">博客切换到HEXO</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/23</span>
+            <a class="archive-post-title" href="/2017/03/23/2017-03-23%2020:03:41/">在OPENSHIFT 上部署Flask 记录</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/19</span>
+            <a class="archive-post-title" href="/2017/03/19/2017-03-19%2017:20:05/">Ubuntu 内核编译&系统配置</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/14</span>
+            <a class="archive-post-title" href="/2017/02/14/2017-02-14%2014:04:59/">Photo</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/14</span>
+            <a class="archive-post-title" href="/2017/02/14/2017-02-14%2014:18:09/">再游溶洞</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/12</span>
+            <a class="archive-post-title" href="/2017/02/12/2017-02-12%2018:19:43/">UEFI 安装Windows7 教程</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/22</span>
+            <a class="archive-post-title" href="/2017/01/22/2017-01-22%2017:25:17/">A huge upgrade</a>
+        </li>
+    
+        
+            
+            
+                
+                </ul>
+            
+            <div class="archive-year"> 2016 </div>
+            <ul class="year-list">
+            
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/29</span>
+            <a class="archive-post-title" href="/2016/12/29/2016-12-29%2015:55:08/">3735F cpu平板搭服务器</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/16</span>
+            <a class="archive-post-title" href="/2016/12/16/2016-12-16%2020:57:51/">Ubuntu 下配置PAC 代理</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/12</span>
+            <a class="archive-post-title" href="/2016/12/12/2016-12-12%2020:56:19/">Ubuntu 搭建LAMP</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/08</span>
+            <a class="archive-post-title" href="/2016/12/08/2016-12-08%2020:16:55/">bash on windows初体验</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/08</span>
+            <a class="archive-post-title" href="/2016/12/08/2016-12-08%2020:19:1/">W650DC 黑苹果</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/06</span>
+            <a class="archive-post-title" href="/2016/12/06/2016-12-06%2022:09:29/">传统BIOS下用windows 引导UBUNTU双系统</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/25</span>
+            <a class="archive-post-title" href="/2016/11/25/2016-11-25%2010:40:14/">Intel RST 配置测试</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/21</span>
+            <a class="archive-post-title" href="/2016/11/21/2016-11-21%2021:30:38/">EZPAD MINI2</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/19</span>
+            <a class="archive-post-title" href="/2016/11/19/2016-11-19%2013:44:38/">博客优化的一点事</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/15</span>
+            <a class="archive-post-title" href="/2016/11/15/2016-11-15%2021:10:22/">linux mentohust 南校区体验</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span>
+            <a class="archive-post-title" href="/2016/11/05/2016-11-05%2015:36:08/">11-05 佛山秋色2</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span>
+            <a class="archive-post-title" href="/2016/11/05/2016-11-05%2015:36:06/">11-05 佛山秋色1</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span>
+            <a class="archive-post-title" href="/2016/11/05/2016-11-05%2015:36:07/">11-05 佛山秋色2</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/08</span>
+            <a class="archive-post-title" href="/2016/02/08/2016-02-08%2020:05:11/">今天无敌的天气</a>
+        </li>
+    
+        
+            
+            
+                
+                </ul>
+            
+            <div class="archive-year"> 2014 </div>
+            <ul class="year-list">
+            
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/15</span>
+            <a class="archive-post-title" href="/2014/08/15/2014-08-15%2020:20:55/">CCTVlen中的雨</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/04</span>
+            <a class="archive-post-title" href="/2014/04/04/2014-04-04%2018:21:02/">昨天-于绿岛湖-JY-G2</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/30</span>
+            <a class="archive-post-title" href="/2014/03/30/2014-03-30%2020:33:26/">Hometown</a>
+        </li>
+    
+    </div>
+</div>
+
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+        
+            <span class="sidebar-tag-name" data-tags="手机 教程">
+                <span class="iconfont-archer">&#xe606;</span>
+                手机 教程
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="跨域 nginx 反向代理">
+                <span class="iconfont-archer">&#xe606;</span>
+                跨域 nginx 反向代理
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="nginx">
+                <span class="iconfont-archer">&#xe606;</span>
+                nginx
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="vps hexo">
+                <span class="iconfont-archer">&#xe606;</span>
+                vps hexo
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="ocr">
+                <span class="iconfont-archer">&#xe606;</span>
+                ocr
+            </span>
+        
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+        缺失模块，请参考主题文档进行安装配置：https://github.com/fi3ework/hexo-theme-archer#%E5%AE%89%E8%A3%85%E4%B8%BB%E9%A2%98
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+
+    </div>
+</div>
+
+        <!-- site-meta -->
+        <script>
+    var siteMetaRoot = "/"
+    if (siteMetaRoot === "undefined") {
+        siteMetaRoot = '/'
+    }
+    var siteMeta = {
+        url: "https://blog.vistazx1.top",
+        root: siteMetaRoot,
+        author: "Guohao"
+    }
+</script>
+
+        <!-- import experimental options here -->
+        <!-- Custom Font -->
+
+
+        <!-- main func -->
+        <script src="/scripts/main.js?v=20211217"></script>
+        <!-- dark mode -->
+        <script src="/scripts/dark.js?v=20211217"></script>
+        <!-- fancybox -->
+        <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" defer></script>
+        <!-- algolia -->
+        
+        <!-- busuanzi -->
+        
+            <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+        
+        <!-- CNZZ -->
+        
+        <!-- async load share.js -->
+        
+            <script src="/scripts/share.js?v=20211217" async></script>
+        
+        <!-- mermaid -->
+        
+    </body>
+</html>
