@@ -4,7 +4,6 @@ tmp/
 *.log
 .idea/
 yarn.lock
-package-lock.json
 pnpm-lock.yaml
 .nyc_output/
 coverage/
