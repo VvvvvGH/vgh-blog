@@ -22,19 +22,19 @@
     <meta name="description" content="利用OneManager 搭建OneDrive图床项目地址：https:&#x2F;&#x2F;github.com&#x2F;qkqpttgf&#x2F;OneManager-php 前段时间七牛的域名没了，图床没了，博客图片没地方放。只好再找个地方安置我的博客图片。 对图片存储，我有以下需求：  上传简单 不易丢失 容易同步  看了一遍，选择了 OneManager + herokuapp 的方案。图片链接用nginx反代 迁移过去">
 <meta property="og:type" content="article">
 <meta property="og:title" content="利用OneManager 搭建OneDrive图床">
-<meta property="og:url" content="https://blog.vistazx1.top/2021/02/21/2021-02-21%2015:08:35/index.html">
+<meta property="og:url" content="https://vistazx1.top/2021/02/21/2021-02-21%2015:08:35/index.html">
 <meta property="og:site_name" content="Vista">
 <meta property="og:description" content="利用OneManager 搭建OneDrive图床项目地址：https:&#x2F;&#x2F;github.com&#x2F;qkqpttgf&#x2F;OneManager-php 前段时间七牛的域名没了，图床没了，博客图片没地方放。只好再找个地方安置我的博客图片。 对图片存储，我有以下需求：  上传简单 不易丢失 容易同步  看了一遍，选择了 OneManager + herokuapp 的方案。图片链接用nginx反代 迁移过去">
 <meta property="og:locale">
-<meta property="og:image" content="https://vistazx1.top/images/f96e9da54eb12478b0423de5402340da.jpg">
-<meta property="og:image" content="https://vistazx1.top/images/a162d473ec80f35bad2214052a8c61ec.jpg">
-<meta property="og:image" content="https://vistazx1.top/images/5fad153805a0c08489a1d6942b0a23ed.jpg">
-<meta property="og:image" content="https://vistazx1.top/images/860f438cd45792827a2026c438d6414d.jpg">
+<meta property="og:image" content="/images/f96e9da54eb12478b0423de5402340da.jpg">
+<meta property="og:image" content="/images/a162d473ec80f35bad2214052a8c61ec.jpg">
+<meta property="og:image" content="/images/5fad153805a0c08489a1d6942b0a23ed.jpg">
+<meta property="og:image" content="/images/860f438cd45792827a2026c438d6414d.jpg">
 <meta property="article:published_time" content="2021-02-21T07:08:35.000Z">
 <meta property="article:modified_time" content="2021-03-05T07:48:06.000Z">
 <meta property="article:author" content="Guohao">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://vistazx1.top/images/f96e9da54eb12478b0423de5402340da.jpg">
+<meta name="twitter:image" content="/images/f96e9da54eb12478b0423de5402340da.jpg">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="icon" href="/assets/favicon.ico">
@@ -346,11 +346,6 @@
                     <span class="post-intro-time">2021/02/21</span>
                     <!-- busuanzi -->
                     
-                        <span id="busuanzi_container_page_pv" class="busuanzi-pv">
-                            <span class="iconfont-archer post-intro-busuanzi">&#xe602;</span>
-                            <span id="busuanzi_value_page_pv"></span>
-                        </span>
-                    
                     <!-- 文章分享 -->
                     <span class="share-wrapper">
                         <span class="iconfont-archer share-icon">&#xe71d;</span>
@@ -510,15 +505,15 @@
 <p>步骤：</p>
 <ol>
 <li>打开 <a target="_blank" rel="noopener" href="https://github.com/qkqpttgf/OneManager-php">https://github.com/qkqpttgf/OneManager-php</a> 点击按钮部署 app</li>
-<li><img src="https://vistazx1.top/images/f96e9da54eb12478b0423de5402340da.jpg" alt="image"></li>
+<li><img src="/images/f96e9da54eb12478b0423de5402340da.jpg" alt="image"></li>
 </ol>
 <p>选择deploy app</p>
-<p><img src="https://vistazx1.top/images/a162d473ec80f35bad2214052a8c61ec.jpg" alt="image"></p>
+<p><img src="/images/a162d473ec80f35bad2214052a8c61ec.jpg" alt="image"></p>
 <ol start="2">
 <li>配置OneManager，登录OneDrive账号。设置OneManager的游客上传功能</li>
 </ol>
-<p><img src="https://vistazx1.top/images/5fad153805a0c08489a1d6942b0a23ed.jpg" alt="image"></p>
-<p>配置完成即可上传图片到onedrive，实际使用过程中，本地onedrive同步会有一定延迟，可以接受。<br><img src="https://vistazx1.top/images/860f438cd45792827a2026c438d6414d.jpg" alt="image"></p>
+<p><img src="/images/5fad153805a0c08489a1d6942b0a23ed.jpg" alt="image"></p>
+<p>配置完成即可上传图片到onedrive，实际使用过程中，本地onedrive同步会有一定延迟，可以接受。<br><img src="/images/860f438cd45792827a2026c438d6414d.jpg" alt="image"></p>
 <ol start="3">
 <li>配置nginx反向代理，很简单</li>
 </ol>
@@ -528,10 +523,10 @@
     <!-- license -->
     
         <div class="license-wrapper">
-            <p>原文作者：<a href="https://blog.vistazx1.top">Guohao</a>
-            <p>原文链接：<a href="https://blog.vistazx1.top/2021/02/21/2021-02-21%2015:08:35/">https://blog.vistazx1.top/2021/02/21/2021-02-21%2015:08:35/</a>
-            <p>发表日期：<a href="https://blog.vistazx1.top/2021/02/21/2021-02-21%2015:08:35/">February 21st 2021, 3:08:35 pm</a>
-            <p>更新日期：<a href="https://blog.vistazx1.top/2021/02/21/2021-02-21%2015:08:35/">March 5th 2021, 3:48:06 pm</a>
+            <p>原文作者：<a href="https://vistazx1.top">Guohao</a>
+            <p>原文链接：<a href="https://vistazx1.top/2021/02/21/2021-02-21%2015:08:35/">https://vistazx1.top/2021/02/21/2021-02-21%2015:08:35/</a>
+            <p>发表日期：<a href="https://vistazx1.top/2021/02/21/2021-02-21%2015:08:35/">February 21st 2021, 3:08:35 pm</a>
+            <p>更新日期：<a href="https://vistazx1.top/2021/02/21/2021-02-21%2015:08:35/">March 5th 2021, 3:48:06 pm</a>
             <p>版权声明：This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-ND 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nd.svg?ref=chooser-v1" alt=""></a></p>
         </div>
     
@@ -655,13 +650,6 @@
     <!-- website approve for Chinese user -->
     
     <!-- 不蒜子  -->
-    
-        <div class="busuanzi-container">
-            
-             
-                <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
-            
-        </div>
     	
 </footer>
 
@@ -1643,10 +1631,6 @@
         
         
         
-        
-        
-        
-        
     
     
     
@@ -1958,13 +1942,13 @@
         
         <li class="archive-post-item">
             <span class="archive-post-date">04/07</span>
-            <a class="archive-post-title" href="/2017/04/07/2017-04-07%2017:54:25/">MySQL 学习笔记</a>
+            <a class="archive-post-title" href="/2017/04/07/2017-04-07%2017:27:25/">安装PHP环境</a>
         </li>
     
         
         <li class="archive-post-item">
             <span class="archive-post-date">04/07</span>
-            <a class="archive-post-title" href="/2017/04/07/2017-04-07%2017:27:25/">安装PHP环境</a>
+            <a class="archive-post-title" href="/2017/04/07/2017-04-07%2017:54:25/">MySQL 学习笔记</a>
         </li>
     
         
@@ -2081,12 +2065,6 @@
         
         <li class="archive-post-item">
             <span class="archive-post-date">11/05</span>
-            <a class="archive-post-title" href="/2016/11/05/2016-11-05%2015:36:08/">11-05 佛山秋色2</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/05</span>
             <a class="archive-post-title" href="/2016/11/05/2016-11-05%2015:36:06/">11-05 佛山秋色1</a>
         </li>
     
@@ -2094,6 +2072,12 @@
         <li class="archive-post-item">
             <span class="archive-post-date">11/05</span>
             <a class="archive-post-title" href="/2016/11/05/2016-11-05%2015:36:07/">11-05 佛山秋色2</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span>
+            <a class="archive-post-title" href="/2016/11/05/2016-11-05%2015:36:08/">11-05 佛山秋色2</a>
         </li>
     
         
@@ -2140,14 +2124,14 @@
                 手机 教程
             </span>
         
-            <span class="sidebar-tag-name" data-tags="跨域 nginx 反向代理">
-                <span class="iconfont-archer">&#xe606;</span>
-                跨域 nginx 反向代理
-            </span>
-        
             <span class="sidebar-tag-name" data-tags="nginx">
                 <span class="iconfont-archer">&#xe606;</span>
                 nginx
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="跨域 nginx 反向代理">
+                <span class="iconfont-archer">&#xe606;</span>
+                跨域 nginx 反向代理
             </span>
         
             <span class="sidebar-tag-name" data-tags="vps hexo">
@@ -2186,7 +2170,7 @@
         siteMetaRoot = '/'
     }
     var siteMeta = {
-        url: "https://blog.vistazx1.top",
+        url: "https://vistazx1.top",
         root: siteMetaRoot,
         author: "Guohao"
     }
@@ -2205,8 +2189,6 @@
         <!-- algolia -->
         
         <!-- busuanzi -->
-        
-            <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
         
         <!-- CNZZ -->
         

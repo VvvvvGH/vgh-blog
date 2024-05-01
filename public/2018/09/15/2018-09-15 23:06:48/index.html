@@ -22,7 +22,7 @@
     <meta name="description" content="学习vue考虑到这学期选的课需要用Vue.js做项目，就预习一下Vue.js，基本上是边学边用，不做深入的学习。顺便记录下笔记。基本上是根据官网的中文文档学习的，所以笔记其实和官网文档差不多。要快速学习最好是边学边用，所以就做了一个显示任天堂游戏的页面 https:&#x2F;&#x2F;vistazx1.top&#x2F;static&#x2F;learn-vue&#x2F;GamePage.html一边学一边做，发现Vue.js是个好东西，比">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Learn Vue.js">
-<meta property="og:url" content="https://blog.vistazx1.top/2018/09/15/2018-09-15%2023:06:48/index.html">
+<meta property="og:url" content="https://vistazx1.top/2018/09/15/2018-09-15%2023:06:48/index.html">
 <meta property="og:site_name" content="Vista">
 <meta property="og:description" content="学习vue考虑到这学期选的课需要用Vue.js做项目，就预习一下Vue.js，基本上是边学边用，不做深入的学习。顺便记录下笔记。基本上是根据官网的中文文档学习的，所以笔记其实和官网文档差不多。要快速学习最好是边学边用，所以就做了一个显示任天堂游戏的页面 https:&#x2F;&#x2F;vistazx1.top&#x2F;static&#x2F;learn-vue&#x2F;GamePage.html一边学一边做，发现Vue.js是个好东西，比">
 <meta property="og:locale">
@@ -341,11 +341,6 @@
                     <span class="post-intro-time">2018/09/15</span>
                     <!-- busuanzi -->
                     
-                        <span id="busuanzi_container_page_pv" class="busuanzi-pv">
-                            <span class="iconfont-archer post-intro-busuanzi">&#xe602;</span>
-                            <span id="busuanzi_value_page_pv"></span>
-                        </span>
-                    
                     <!-- 文章分享 -->
                     <span class="share-wrapper">
                         <span class="iconfont-archer share-icon">&#xe71d;</span>
@@ -493,7 +488,7 @@
             <div class="container container-unloaded">
                 <main class="main post-page">
     <article class="article-entry">
-        <h1 id="学习vue"><a href="#学习vue" class="headerlink" title="学习vue"></a>学习vue</h1><p>考虑到这学期选的课需要用Vue.js做项目，就预习一下Vue.js，基本上是边学边用，不做深入的学习。顺便记录下笔记。基本上是根据官网的中文文档学习的，所以笔记其实和官网文档差不多。<br>要快速学习最好是边学边用，所以就做了一个显示任天堂游戏的页面 <a target="_blank" rel="noopener" href="https://vistazx1.top/static/learn-vue/GamePage.html">https://vistazx1.top/static/learn-vue/GamePage.html</a><br>一边学一边做，发现Vue.js是个好东西，比起以前自己写不熟悉的JS爽多了。vue的使用体验其实相当不错，新手能拿来用，但是要做大工程就还是要认真补好基础。<br>安装：我选了直接用<code> &lt;script&gt;</code> 引入开发环境的版本。文档说不推荐新手用vue-cli，而且我对Node.js了解不多，于是避开这个坑。</p>
+        <h1 id="学习vue"><a href="#学习vue" class="headerlink" title="学习vue"></a>学习vue</h1><p>考虑到这学期选的课需要用Vue.js做项目，就预习一下Vue.js，基本上是边学边用，不做深入的学习。顺便记录下笔记。基本上是根据官网的中文文档学习的，所以笔记其实和官网文档差不多。<br>要快速学习最好是边学边用，所以就做了一个显示任天堂游戏的页面 <a href="https://vistazx1.top/static/learn-vue/GamePage.html">https://vistazx1.top/static/learn-vue/GamePage.html</a><br>一边学一边做，发现Vue.js是个好东西，比起以前自己写不熟悉的JS爽多了。vue的使用体验其实相当不错，新手能拿来用，但是要做大工程就还是要认真补好基础。<br>安装：我选了直接用<code> &lt;script&gt;</code> 引入开发环境的版本。文档说不推荐新手用vue-cli，而且我对Node.js了解不多，于是避开这个坑。</p>
 <p>代码：<br>图片列表的实现用了Vue.js的组件，每一幅图片就是一个组件。小型，独立，可复用。<br>导航栏也是用了组件，添加内容非常方便。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;card-container&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--游戏图片列表--&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">game-image-card</span></span></span><br><span class="line"><span class="tag">            <span class="attr">v-for</span>=<span class="string">&quot;game in game_list&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">v-bind:game</span>=<span class="string">&quot;game&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">v-bind:key</span>=<span class="string">&quot;game.id&quot;</span></span></span><br><span class="line"><span class="tag">    &gt;</span><span class="tag">&lt;/<span class="name">game-image-card</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
@@ -502,10 +497,10 @@
     <!-- license -->
     
         <div class="license-wrapper">
-            <p>原文作者：<a href="https://blog.vistazx1.top">Guohao</a>
-            <p>原文链接：<a href="https://blog.vistazx1.top/2018/09/15/2018-09-15%2023:06:48/">https://blog.vistazx1.top/2018/09/15/2018-09-15%2023:06:48/</a>
-            <p>发表日期：<a href="https://blog.vistazx1.top/2018/09/15/2018-09-15%2023:06:48/">September 15th 2018, 11:06:48 pm</a>
-            <p>更新日期：<a href="https://blog.vistazx1.top/2018/09/15/2018-09-15%2023:06:48/">March 5th 2021, 3:48:06 pm</a>
+            <p>原文作者：<a href="https://vistazx1.top">Guohao</a>
+            <p>原文链接：<a href="https://vistazx1.top/2018/09/15/2018-09-15%2023:06:48/">https://vistazx1.top/2018/09/15/2018-09-15%2023:06:48/</a>
+            <p>发表日期：<a href="https://vistazx1.top/2018/09/15/2018-09-15%2023:06:48/">September 15th 2018, 11:06:48 pm</a>
+            <p>更新日期：<a href="https://vistazx1.top/2018/09/15/2018-09-15%2023:06:48/">March 5th 2021, 3:48:06 pm</a>
             <p>版权声明：This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-ND 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nd.svg?ref=chooser-v1" alt=""></a></p>
         </div>
     
@@ -629,13 +624,6 @@
     <!-- website approve for Chinese user -->
     
     <!-- 不蒜子  -->
-    
-        <div class="busuanzi-container">
-            
-             
-                <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
-            
-        </div>
     	
 </footer>
 
@@ -1617,10 +1605,6 @@
         
         
         
-        
-        
-        
-        
     
     
     
@@ -1932,13 +1916,13 @@
         
         <li class="archive-post-item">
             <span class="archive-post-date">04/07</span>
-            <a class="archive-post-title" href="/2017/04/07/2017-04-07%2017:54:25/">MySQL 学习笔记</a>
+            <a class="archive-post-title" href="/2017/04/07/2017-04-07%2017:27:25/">安装PHP环境</a>
         </li>
     
         
         <li class="archive-post-item">
             <span class="archive-post-date">04/07</span>
-            <a class="archive-post-title" href="/2017/04/07/2017-04-07%2017:27:25/">安装PHP环境</a>
+            <a class="archive-post-title" href="/2017/04/07/2017-04-07%2017:54:25/">MySQL 学习笔记</a>
         </li>
     
         
@@ -2055,12 +2039,6 @@
         
         <li class="archive-post-item">
             <span class="archive-post-date">11/05</span>
-            <a class="archive-post-title" href="/2016/11/05/2016-11-05%2015:36:08/">11-05 佛山秋色2</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/05</span>
             <a class="archive-post-title" href="/2016/11/05/2016-11-05%2015:36:06/">11-05 佛山秋色1</a>
         </li>
     
@@ -2068,6 +2046,12 @@
         <li class="archive-post-item">
             <span class="archive-post-date">11/05</span>
             <a class="archive-post-title" href="/2016/11/05/2016-11-05%2015:36:07/">11-05 佛山秋色2</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span>
+            <a class="archive-post-title" href="/2016/11/05/2016-11-05%2015:36:08/">11-05 佛山秋色2</a>
         </li>
     
         
@@ -2114,14 +2098,14 @@
                 手机 教程
             </span>
         
-            <span class="sidebar-tag-name" data-tags="跨域 nginx 反向代理">
-                <span class="iconfont-archer">&#xe606;</span>
-                跨域 nginx 反向代理
-            </span>
-        
             <span class="sidebar-tag-name" data-tags="nginx">
                 <span class="iconfont-archer">&#xe606;</span>
                 nginx
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="跨域 nginx 反向代理">
+                <span class="iconfont-archer">&#xe606;</span>
+                跨域 nginx 反向代理
             </span>
         
             <span class="sidebar-tag-name" data-tags="vps hexo">
@@ -2160,7 +2144,7 @@
         siteMetaRoot = '/'
     }
     var siteMeta = {
-        url: "https://blog.vistazx1.top",
+        url: "https://vistazx1.top",
         root: siteMetaRoot,
         author: "Guohao"
     }
@@ -2179,8 +2163,6 @@
         <!-- algolia -->
         
         <!-- busuanzi -->
-        
-            <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
         
         <!-- CNZZ -->
         

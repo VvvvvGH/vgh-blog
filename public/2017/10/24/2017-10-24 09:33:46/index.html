@@ -22,7 +22,7 @@
     <meta name="description" content="Xp0int大家庭 Xp0int日常，跑一下我们在干什么？  网上搜索发现是aaencode所以试试在chrome的console运行。得到flag 弗拉戈在哪里？ 小明整蛊舍友，将他舍友的兰博基尼钥匙锁在zip里面了，你能帮他找回钥匙吗？           提示： 在zip里面 1.zip 拖进UltraEdit 搜索flag 发现一段base64，于是解码。应该也能用strings命令看到b">
 <meta property="og:type" content="article">
 <meta property="og:title" content="玩玩CTF">
-<meta property="og:url" content="https://blog.vistazx1.top/2017/10/24/2017-10-24%2009:33:46/index.html">
+<meta property="og:url" content="https://vistazx1.top/2017/10/24/2017-10-24%2009:33:46/index.html">
 <meta property="og:site_name" content="Vista">
 <meta property="og:description" content="Xp0int大家庭 Xp0int日常，跑一下我们在干什么？  网上搜索发现是aaencode所以试试在chrome的console运行。得到flag 弗拉戈在哪里？ 小明整蛊舍友，将他舍友的兰博基尼钥匙锁在zip里面了，你能帮他找回钥匙吗？           提示： 在zip里面 1.zip 拖进UltraEdit 搜索flag 发现一段base64，于是解码。应该也能用strings命令看到b">
 <meta property="og:locale">
@@ -345,11 +345,6 @@
                     <span class="post-intro-time">2017/10/24</span>
                     <!-- busuanzi -->
                     
-                        <span id="busuanzi_container_page_pv" class="busuanzi-pv">
-                            <span class="iconfont-archer post-intro-busuanzi">&#xe602;</span>
-                            <span id="busuanzi_value_page_pv"></span>
-                        </span>
-                    
                     <!-- 文章分享 -->
                     <span class="share-wrapper">
                         <span class="iconfont-archer share-icon">&#xe71d;</span>
@@ -571,13 +566,13 @@
 </ol>
 <p>打算用ProcessMonitor看它的行为。<br>运行后收集到了相关的行为。把收集到的行为保存格式是csv。恶意软件的主要进程是</p>
 <blockquote>
-<p><a href="mailto:&#49;&#x2e;&#54;&#46;&#x34;&#64;&#51;&#x30;&#x32;&#x5f;&#x31;&#49;&#x31;&#48;&#x38;&#53;&#46;&#x65;&#x78;&#x65;">&#49;&#x2e;&#54;&#46;&#x34;&#64;&#51;&#x30;&#x32;&#x5f;&#x31;&#49;&#x31;&#48;&#x38;&#53;&#46;&#x65;&#x78;&#x65;</a>  </p>
+<p><a href="mailto:&#49;&#46;&#54;&#x2e;&#x34;&#64;&#51;&#48;&#50;&#x5f;&#x31;&#x31;&#49;&#48;&#x38;&#x35;&#46;&#x65;&#x78;&#101;">&#49;&#46;&#54;&#x2e;&#x34;&#64;&#51;&#48;&#50;&#x5f;&#x31;&#x31;&#49;&#48;&#x38;&#x35;&#46;&#x65;&#x78;&#101;</a>  </p>
 </blockquote>
 <p>用python简单过滤处理下</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import csv</span><br><span class="line"></span><br><span class="line">names = [&#x27;1.6.4@302_111085.exe&#x27;]</span><br><span class="line">output = open(&#x27;output.csv&#x27;,&#x27;wb&#x27;)</span><br><span class="line">write_csv = csv.writer(output)</span><br><span class="line">read_csv= csv.reader(open(&#x27;Logfile2.csv&#x27;,&#x27;r&#x27;))</span><br><span class="line">for row in read_csv:</span><br><span class="line">    for i in names:</span><br><span class="line">        if row[1] == i:</span><br><span class="line">            write_csv.writerow(row)</span><br></pre></td></tr></table></figure>
 
 <p>为了分析的方便，用excel对数据进行处理，重点是上传下载，将相应的行为标记上颜色。<br><img src="http://7xkmnm.com1.z0.glb.clouddn.com/xls1.PNG" alt="image"></p>
-<p><a href="mailto:&#x31;&#x2e;&#54;&#46;&#52;&#64;&#51;&#48;&#x32;&#x5f;&#49;&#x31;&#49;&#48;&#x38;&#x35;&#46;&#x65;&#x78;&#x65;">&#x31;&#x2e;&#54;&#46;&#52;&#64;&#51;&#48;&#x32;&#x5f;&#49;&#x31;&#49;&#48;&#x38;&#x35;&#46;&#x65;&#x78;&#x65;</a><br>打开后没有操作的情况下频繁地对系统文件进行读写操作，未经用户同意释放软件安装包，恶意软件无疑。</p>
+<p><a href="mailto:&#49;&#46;&#x36;&#x2e;&#52;&#64;&#51;&#x30;&#x32;&#x5f;&#x31;&#49;&#x31;&#x30;&#56;&#x35;&#x2e;&#101;&#120;&#101;">&#49;&#46;&#x36;&#x2e;&#52;&#64;&#51;&#x30;&#x32;&#x5f;&#x31;&#49;&#x31;&#x30;&#56;&#x35;&#x2e;&#101;&#120;&#101;</a><br>打开后没有操作的情况下频繁地对系统文件进行读写操作，未经用户同意释放软件安装包，恶意软件无疑。</p>
 <p>发现一个很可疑的ip<br><img src="http://7xkmnm.com1.z0.glb.clouddn.com/xls2.PNG" alt="image"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">VM-PC:49160 -&gt; 121.43.97.175:http</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
@@ -609,10 +604,10 @@
     <!-- license -->
     
         <div class="license-wrapper">
-            <p>原文作者：<a href="https://blog.vistazx1.top">Guohao</a>
-            <p>原文链接：<a href="https://blog.vistazx1.top/2017/10/24/2017-10-24%2009:33:46/">https://blog.vistazx1.top/2017/10/24/2017-10-24%2009:33:46/</a>
-            <p>发表日期：<a href="https://blog.vistazx1.top/2017/10/24/2017-10-24%2009:33:46/">October 24th 2017, 9:33:46 am</a>
-            <p>更新日期：<a href="https://blog.vistazx1.top/2017/10/24/2017-10-24%2009:33:46/">March 5th 2021, 3:48:06 pm</a>
+            <p>原文作者：<a href="https://vistazx1.top">Guohao</a>
+            <p>原文链接：<a href="https://vistazx1.top/2017/10/24/2017-10-24%2009:33:46/">https://vistazx1.top/2017/10/24/2017-10-24%2009:33:46/</a>
+            <p>发表日期：<a href="https://vistazx1.top/2017/10/24/2017-10-24%2009:33:46/">October 24th 2017, 9:33:46 am</a>
+            <p>更新日期：<a href="https://vistazx1.top/2017/10/24/2017-10-24%2009:33:46/">March 5th 2021, 3:48:06 pm</a>
             <p>版权声明：This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-ND 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nd.svg?ref=chooser-v1" alt=""></a></p>
         </div>
     
@@ -736,13 +731,6 @@
     <!-- website approve for Chinese user -->
     
     <!-- 不蒜子  -->
-    
-        <div class="busuanzi-container">
-            
-             
-                <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
-            
-        </div>
     	
 </footer>
 
@@ -1724,10 +1712,6 @@
         
         
         
-        
-        
-        
-        
     
     
     
@@ -2039,13 +2023,13 @@
         
         <li class="archive-post-item">
             <span class="archive-post-date">04/07</span>
-            <a class="archive-post-title" href="/2017/04/07/2017-04-07%2017:54:25/">MySQL 学习笔记</a>
+            <a class="archive-post-title" href="/2017/04/07/2017-04-07%2017:27:25/">安装PHP环境</a>
         </li>
     
         
         <li class="archive-post-item">
             <span class="archive-post-date">04/07</span>
-            <a class="archive-post-title" href="/2017/04/07/2017-04-07%2017:27:25/">安装PHP环境</a>
+            <a class="archive-post-title" href="/2017/04/07/2017-04-07%2017:54:25/">MySQL 学习笔记</a>
         </li>
     
         
@@ -2162,12 +2146,6 @@
         
         <li class="archive-post-item">
             <span class="archive-post-date">11/05</span>
-            <a class="archive-post-title" href="/2016/11/05/2016-11-05%2015:36:08/">11-05 佛山秋色2</a>
-        </li>
-    
-        
-        <li class="archive-post-item">
-            <span class="archive-post-date">11/05</span>
             <a class="archive-post-title" href="/2016/11/05/2016-11-05%2015:36:06/">11-05 佛山秋色1</a>
         </li>
     
@@ -2175,6 +2153,12 @@
         <li class="archive-post-item">
             <span class="archive-post-date">11/05</span>
             <a class="archive-post-title" href="/2016/11/05/2016-11-05%2015:36:07/">11-05 佛山秋色2</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span>
+            <a class="archive-post-title" href="/2016/11/05/2016-11-05%2015:36:08/">11-05 佛山秋色2</a>
         </li>
     
         
@@ -2221,14 +2205,14 @@
                 手机 教程
             </span>
         
-            <span class="sidebar-tag-name" data-tags="跨域 nginx 反向代理">
-                <span class="iconfont-archer">&#xe606;</span>
-                跨域 nginx 反向代理
-            </span>
-        
             <span class="sidebar-tag-name" data-tags="nginx">
                 <span class="iconfont-archer">&#xe606;</span>
                 nginx
+            </span>
+        
+            <span class="sidebar-tag-name" data-tags="跨域 nginx 反向代理">
+                <span class="iconfont-archer">&#xe606;</span>
+                跨域 nginx 反向代理
             </span>
         
             <span class="sidebar-tag-name" data-tags="vps hexo">
@@ -2267,7 +2251,7 @@
         siteMetaRoot = '/'
     }
     var siteMeta = {
-        url: "https://blog.vistazx1.top",
+        url: "https://vistazx1.top",
         root: siteMetaRoot,
         author: "Guohao"
     }
@@ -2286,8 +2270,6 @@
         <!-- algolia -->
         
         <!-- busuanzi -->
-        
-            <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
         
         <!-- CNZZ -->
         
