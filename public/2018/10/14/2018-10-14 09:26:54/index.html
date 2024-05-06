@@ -212,7 +212,118 @@
     <!-- Google tag (gtag.js) -->
     
 
-<meta name="generator" content="Hexo 7.2.0"></head>
+<meta name="generator" content="Hexo 7.2.0"><style>.lazyload-outer-wrap .caption{
+    width: 100%;
+    text-align: center;
+    display: block;
+  }
+  .lazyload-outer-wrap{
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+  .lazyload-wrap {
+    position: relative;
+    display: block;
+    border-radius: 0.1em;
+  }
+  .lazyload-wrap .placeholder {
+    width: 100%;
+    height: 0;
+    display: block;
+    padding-bottom: 66.66667%;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-image: url(https://i.loli.wiki/public/240207/loading.svg);
+  }
+  .lazyload-wrap .placeholder canvas{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .lazyload-wrap .inner-wrap video, .lazyload-wrap .inner-wrap iframe{
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+  }
+  .lazyload-wrap .inner-wrap, .lazyload-wrap .error-wrap{
+    opacity: 0;
+    transition: opacity ease-in-out 0.3s;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    will-change: opacity;
+    border-radius: inherit;
+  }
+  .lazyload-wrap .gallery-item{
+    border-radius: inherit;
+  }
+  .lazyload-wrap .inner-wrap.loaded{
+    opacity: 1;
+  }
+  .lazyload-wrap img{
+    object-fit: contain;
+    display: block;
+    margin: 0 auto !important;
+    height: 100% !important;
+    border-radius: inherit;
+  }
+  .lazyload-wrap .placeholder.loaded {
+    background-image: none !important;
+    background-color: unset !important;
+  }
+  .lazyload-wrap.loaded .inner-wrap {
+    opacity: 1;
+  }
+  .lazyload-wrap .error-wrap{
+    background-color: #f5f5f5;
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .lazyload-wrap .error-wrap .error-tip{
+    width: 60%;
+    background-size: cover;
+    background-image: url(https://i.loli.wiki/public/240201/error-tip.svg);
+  }
+  .lazyload-wrap .error-wrap .error-tip::before{
+    content: '';
+    display: block;
+    width: 100%;
+    padding-top: 26.79640719%;
+  }
+  .lazyload-wrap .error-wrap .retry-btn{
+    margin-top: 2em;
+    background-image: linear-gradient(#f7f8fa ,#e7e9ec);
+    border-color: #adb1b8 #a2a6ac #8d9096;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 3px;
+    box-shadow: rgba(255,255,255,.6) 0 1px 0 inset;
+    box-sizing: border-box;
+    color: #0f1111;
+    display: inline-block;
+    font-family: "Amazon Ember",Arial,sans-serif;
+    font-size: 14px;
+    height: 29px;
+    font-size: 13px;
+    outline: 0;
+    overflow: hidden;
+    padding: 0 11px;
+    text-align: center;
+  }</style>
+  <script>
+  var $lazyload = {
+    intersectionRatio: 0.25
+ }
+ </script>
+  <link rel="preload" as="image" href="https://i.loli.wiki/public/240207/loading.svg" /><link rel="preload" as="image" href="https://i.loli.wiki/public/240201/error-tip.svg" /></head>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script type="text/javascript">
@@ -227,7 +338,7 @@
         <!-- header -->
         <header class="header header-mobile">
     <!-- top read progress line -->
-    <div class="header-element">
+    <noscript><style>.lazyload-wrap {display: none;}</style></noscript><div class="header-element">
         <div class="read-progress"></div>
     </div>
     <!-- sidebar menu button -->
@@ -496,14 +607,6 @@
 
     </article>
     <!-- license -->
-    
-        <div class="license-wrapper">
-            <p>原文作者：<a href="https://vistazx1.top">Guohao</a>
-            <p>原文链接：<a href="https://vistazx1.top/2018/10/14/2018-10-14%2009:26:54/">https://vistazx1.top/2018/10/14/2018-10-14%2009:26:54/</a>
-            <p>发表日期：<a href="https://vistazx1.top/2018/10/14/2018-10-14%2009:26:54/">October 14th 2018, 9:26:54 am</a>
-            <p>更新日期：<a href="https://vistazx1.top/2018/10/14/2018-10-14%2009:26:54/">March 5th 2021, 3:48:06 pm</a>
-            <p>版权声明：This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-ND 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nd.svg?ref=chooser-v1" alt=""></a></p>
-        </div>
     
     <!-- paginator -->
     <ul class="post-paginator">
@@ -1594,18 +1697,6 @@
         
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
     
     
     
@@ -1998,13 +2089,13 @@
         
         <li class="archive-post-item">
             <span class="archive-post-date">12/08</span>
-            <a class="archive-post-title" href="/2016/12/08/2016-12-08%2020:16:55/">bash on windows初体验</a>
+            <a class="archive-post-title" href="/2016/12/08/2016-12-08%2020:19:1/">W650DC 黑苹果</a>
         </li>
     
         
         <li class="archive-post-item">
             <span class="archive-post-date">12/08</span>
-            <a class="archive-post-title" href="/2016/12/08/2016-12-08%2020:19:1/">W650DC 黑苹果</a>
+            <a class="archive-post-title" href="/2016/12/08/2016-12-08%2020:16:55/">bash on windows初体验</a>
         </li>
     
         
@@ -2173,5 +2264,5 @@
         
         <!-- mermaid -->
         
-    </body>
+    <script>"use strict";!function(){function S(e){return~~(1227e-8<e?q*H(e,.416666)-13.025:e*U+1)}function T(e){for(e+=M/2;M<e;)e-=n;var t=1.27323954*e-.405284735*O(e);return.225*(O(t)-t)+t}var o="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz#$%*+,-.:;=?@[]^_{|}~",x=function(e,t,n){for(var r=0;t<n;)r=(r*=83)+o.indexOf(e[t++]);return r},H=Math.pow,M=Math.PI,n=2*M,U=3294.6,q=269.025,O=function(e){return(e<0?-1:1)*e*e};function e(e,t,n,r){for(var o,a,d,i,c,l,s,u,p=x(e,0,1),h=p%9+1,f=1+~~(p/9),v=h*f,m=0,w=0,g=0,C=0,y=0,b=0,I=0,L=(x(e,1,2)+1)/13446*(1|r),D=new Float64Array(3*v),E=[(p=x(p=e,2,6))>>16,p>>8&255,255&p],m=0;m<3;m++)D[m]=10.31475<(u=E[m])?H(u/q+.052132,2.4):u/U;for(m=1;m<v;m++)s=x(e,4+2*m,6+2*m),D[3*m]=O(~~(s/361)-9)*L,D[3*m+1]=O(~~(s/19)%19-9)*L,D[3*m+2]=O(s%19-9)*L;for(var A=4*t,R=new Uint8ClampedArray(A*n),C=0;C<n;C++)for(c=M*C/n,g=0;g<t;g++){for(l=M*g/t,w=I=b=y=0;w<f;w++)for(a=T(c*w),m=0;m<h;m++)o=T(l*m)*a,y+=D[d=3*(m+w*h)]*o,b+=D[1+d]*o,I+=D[2+d]*o;R[i=4*g+C*A]=S(y),R[1+i]=S(b),R[2+i]=S(I),R[3+i]=255}return R}"undefined"!=typeof window&&(window.blurhash={decodeBlurHash:e})}(),function(){if("undefined"!=typeof window){var d=function(e){var t=document.createElement("div");return t.innerHTML=e,t.classList.add("inner-wrap"),t},e=function(e){var t,n,r=document.createElement("div"),o=decodeURIComponent(e.dataset.content).replace("<img","<div"),o=(r.innerHTML=o,r.children[0]),r=function(e){var t={};if(!e)return"";try{var n=/\$placeholder=(\S+)=placeholder/gi.exec(e);n&&n[1]&&(t.placeholderImage=n[1])}catch(e){console.log(e)}return t}(o.getAttribute("alt")),o=o.dataset.placeholderimg||r.placeholderImage;o&&/blurhash:/.test(o)&&(r=document.createElement("canvas"),o=blurhash.decodeBlurHash(o.replace("blurhash:",""),32,32),t=r.getContext("2d"),r.width=32,r.height=32,(n=t.createImageData(32,32)).data.set(o),t.putImageData(n,0,0),o=r,e.children[0].appendChild(o)),e.dataset.content=e.dataset.content.replace(/%24placeholder%3D(\S+)%3Dplaceholder/gi,"").replace(/%24aspect-ratio%3D(\S+)%3Daspect-ratio/gi,"")},r=function(n){function r(e){n.classList.remove("loaded"),e.preventDefault(),e.stopPropagation(),(e=n.querySelectorAll(".error-wrap")[0])&&n.removeChild(e),e=n.children[1],n.removeChild(e),e=d(t),o(e),a(e),n.appendChild(e)}var t=decodeURIComponent(n.dataset.content),e=d(t),o=function(e){e.children[0].onload=function(){setTimeout(function(){n.classList.add("loaded")},100);var e=n.querySelectorAll(".error-wrap")[0];e&&n.removeChild(e)},e.ontransitionend=function(){n.children[0].classList.add("loaded")},/<video/.test(t)&&setTimeout(function(){n.classList.add("loaded")},100)},a=function(e){e.children[0].onerror=function(){var e=document.createElement("div"),t=(e.classList.add("error-wrap"),document.createElement("span")),t=(t.classList.add("error-tip"),e.appendChild(t),document.createElement("button"));t.innerText="Retry",t.classList.add("retry-btn"),t.onclick=r,e.appendChild(t),n.appendChild(e)}};o(e),a(e),n.appendChild(e)},t=document.querySelectorAll(".lazyload-wrap");if(window.IntersectionObserver)for(var n,o,a=0;a<t.length;a++)e(c=t[a]),!function(t){var n=new IntersectionObserver(function(e){e.forEach(function(e){e.intersectionRatio>=window.$lazyload.intersectionRatio&&(r(t),n.disconnect())})},{root:document,threshold:[0,.2,.4,.6,.8,1]});n.observe(t)}(c);else for(var i=0;i<t.length;i++){var c=t[i];n=c,o=void 0,o=decodeURIComponent(n.dataset.content),n.appendChild(d(o))}}}();</script></body>
 </html>

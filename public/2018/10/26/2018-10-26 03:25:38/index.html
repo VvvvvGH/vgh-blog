@@ -230,7 +230,118 @@
     <!-- Google tag (gtag.js) -->
     
 
-<meta name="generator" content="Hexo 7.2.0"></head>
+<meta name="generator" content="Hexo 7.2.0"><style>.lazyload-outer-wrap .caption{
+    width: 100%;
+    text-align: center;
+    display: block;
+  }
+  .lazyload-outer-wrap{
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+  .lazyload-wrap {
+    position: relative;
+    display: block;
+    border-radius: 0.1em;
+  }
+  .lazyload-wrap .placeholder {
+    width: 100%;
+    height: 0;
+    display: block;
+    padding-bottom: 66.66667%;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-image: url(https://i.loli.wiki/public/240207/loading.svg);
+  }
+  .lazyload-wrap .placeholder canvas{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .lazyload-wrap .inner-wrap video, .lazyload-wrap .inner-wrap iframe{
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+  }
+  .lazyload-wrap .inner-wrap, .lazyload-wrap .error-wrap{
+    opacity: 0;
+    transition: opacity ease-in-out 0.3s;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    will-change: opacity;
+    border-radius: inherit;
+  }
+  .lazyload-wrap .gallery-item{
+    border-radius: inherit;
+  }
+  .lazyload-wrap .inner-wrap.loaded{
+    opacity: 1;
+  }
+  .lazyload-wrap img{
+    object-fit: contain;
+    display: block;
+    margin: 0 auto !important;
+    height: 100% !important;
+    border-radius: inherit;
+  }
+  .lazyload-wrap .placeholder.loaded {
+    background-image: none !important;
+    background-color: unset !important;
+  }
+  .lazyload-wrap.loaded .inner-wrap {
+    opacity: 1;
+  }
+  .lazyload-wrap .error-wrap{
+    background-color: #f5f5f5;
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .lazyload-wrap .error-wrap .error-tip{
+    width: 60%;
+    background-size: cover;
+    background-image: url(https://i.loli.wiki/public/240201/error-tip.svg);
+  }
+  .lazyload-wrap .error-wrap .error-tip::before{
+    content: '';
+    display: block;
+    width: 100%;
+    padding-top: 26.79640719%;
+  }
+  .lazyload-wrap .error-wrap .retry-btn{
+    margin-top: 2em;
+    background-image: linear-gradient(#f7f8fa ,#e7e9ec);
+    border-color: #adb1b8 #a2a6ac #8d9096;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 3px;
+    box-shadow: rgba(255,255,255,.6) 0 1px 0 inset;
+    box-sizing: border-box;
+    color: #0f1111;
+    display: inline-block;
+    font-family: "Amazon Ember",Arial,sans-serif;
+    font-size: 14px;
+    height: 29px;
+    font-size: 13px;
+    outline: 0;
+    overflow: hidden;
+    padding: 0 11px;
+    text-align: center;
+  }</style>
+  <script>
+  var $lazyload = {
+    intersectionRatio: 0.25
+ }
+ </script>
+  <link rel="preload" as="image" href="https://i.loli.wiki/public/240207/loading.svg" /><link rel="preload" as="image" href="https://i.loli.wiki/public/240201/error-tip.svg" /></head>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script type="text/javascript">
@@ -245,7 +356,7 @@
         <!-- header -->
         <header class="header header-mobile">
     <!-- top read progress line -->
-    <div class="header-element">
+    <noscript><style>.lazyload-wrap {display: none;}</style></noscript><div class="header-element">
         <div class="read-progress"></div>
     </div>
     <!-- sidebar menu button -->
@@ -512,9 +623,9 @@
 <p>IDA打开，发现程序对比输入是否是0xbabababa。</p>
 <p>于是</p>
 <p><code>sh.sendline(p32(0xbabababa))</code>即可</p>
-<p><img src="http://qiniu.vistazx1.top/ctfctf_pwn.png" alt="qiniu.vistazx1.top"></p>
+<p><span class="lazyload-outer-wrap" style="width: 100%;"><a class="gallery-item" href="http://qiniu.vistazx1.top/ctfctf_pwn.png" target="_blank" rel="noopener" ><noscript><img src="http://qiniu.vistazx1.top/ctfctf_pwn.png" alt="qiniu.vistazx1.top"></noscript><span class="lazyload-wrap" data-content="%3Cimg%20src%3D%22http%3A%2F%2Fqiniu.vistazx1.top%2Fctfctf_pwn.png%22%20alt%3D%22qiniu.vistazx1.top%22%3E" ><span class="placeholder" ></span></span></a><span class="caption">qiniu.vistazx1.top</span></span></p>
 <h3 id="Tutorial2"><a href="#Tutorial2" class="headerlink" title="Tutorial2"></a>Tutorial2</h3><p>IDA打开，提示WhereToGo，当然是到backdoor啦，于是输入backdoor函数的地址。即可得到flag。</p>
-<p><img src="http://qiniu.vistazx1.top/ctfctf_pwn2.PNG" alt="qiniu.vistazx1.top"></p>
+<p><span class="lazyload-outer-wrap" style="width: 100%;"><a class="gallery-item" href="http://qiniu.vistazx1.top/ctfctf_pwn2.PNG" target="_blank" rel="noopener" ><noscript><img src="http://qiniu.vistazx1.top/ctfctf_pwn2.PNG" alt="qiniu.vistazx1.top"></noscript><span class="lazyload-wrap" data-content="%3Cimg%20src%3D%22http%3A%2F%2Fqiniu.vistazx1.top%2Fctfctf_pwn2.PNG%22%20alt%3D%22qiniu.vistazx1.top%22%3E" ><span class="placeholder" ></span></span></a><span class="caption">qiniu.vistazx1.top</span></span></p>
 <h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="fakelogin"><a href="#fakelogin" class="headerlink" title="fakelogin"></a>fakelogin</h3><p>F12发现auth不是很对。</p>
 <p>看了一下像base64。</p>
 <p>原来flag藏在这里</p>
@@ -551,12 +662,12 @@
 <p>本来的提示很有用：Flag stored in .&#x2F;flag&#x2F;seed.txt :)</p>
 <p>找到flag</p>
 <p><code>http://119.29.191.200:81/flag/1540051390.txt</code></p>
-<p> <img src="http://qiniu.vistazx1.top/ctfphp_md_seed.PNG" alt="qiniu.vistazx1.top"></p>
+<p> <span class="lazyload-outer-wrap" style="width: 100%;"><a class="gallery-item" href="http://qiniu.vistazx1.top/ctfphp_md_seed.PNG" target="_blank" rel="noopener" ><noscript><img src="http://qiniu.vistazx1.top/ctfphp_md_seed.PNG" alt="qiniu.vistazx1.top"></noscript><span class="lazyload-wrap" data-content="%3Cimg%20src%3D%22http%3A%2F%2Fqiniu.vistazx1.top%2Fctfphp_md_seed.PNG%22%20alt%3D%22qiniu.vistazx1.top%22%3E" ><span class="placeholder" ></span></span></a><span class="caption">qiniu.vistazx1.top</span></span></p>
 <h3 id="networktest"><a href="#networktest" class="headerlink" title="networktest"></a>networktest</h3><p>首先看了下，好像用了ping。</p>
 <p>然后想办法执行命令。参考：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_27446553/article/details/73927518">https://blog.csdn.net/qq_27446553/article/details/73927518</a></p>
 <p>试了ls，发现目录有index.php。</p>
 <p>然后输入 <code>|cat&lt;index.php</code> 看到了index.php的内容。</p>
-<p><img src="http://qiniu.vistazx1.top/ctfnetwork_test.PNG" alt="qiniu.vistazx1.top"></p>
+<p><span class="lazyload-outer-wrap" style="width: 100%;"><a class="gallery-item" href="http://qiniu.vistazx1.top/ctfnetwork_test.PNG" target="_blank" rel="noopener" ><noscript><img src="http://qiniu.vistazx1.top/ctfnetwork_test.PNG" alt="qiniu.vistazx1.top"></noscript><span class="lazyload-wrap" data-content="%3Cimg%20src%3D%22http%3A%2F%2Fqiniu.vistazx1.top%2Fctfnetwork_test.PNG%22%20alt%3D%22qiniu.vistazx1.top%22%3E" ><span class="placeholder" ></span></span></a><span class="caption">qiniu.vistazx1.top</span></span></p>
 <p>虽然好像没有什么帮助。发现空格不行，在网上搜绕过空格的方法</p>
 <p>输入 <code>$IFS$9</code>  可以代替空格。用ls命令发现其实flag在上级目录。</p>
 <p>最终结果：</p>
@@ -570,7 +681,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sqlmap.py -r <span class="string">&quot;C:\Users\TOPSECTET\Desktop\fakelogin1&quot;</span> --dbs</span><br><span class="line"></span><br><span class="line">sqlmap.py -r <span class="string">&quot;C:\Users\Desktop\fakelogin1&quot;</span> -D fakelogin1 -T fffflllaaaaagggggg369 --columns</span><br><span class="line"></span><br><span class="line">sqlmap.py<span class="string">&quot; -r &quot;</span>C:\Users\TOPSECRET\Desktop\fakelogin1<span class="string">&quot; -D fakelogin1 -T fffflllaaaaagggggg369 -C flagcolcol --dump</span></span><br></pre></td></tr></table></figure></li>
 </ol>
 <p>得到flag</p>
-<p><img src="http://qiniu.vistazx1.top/ctffakelogin1-2.PNG" alt="qiniu.vistazx1.top"></p>
+<p><span class="lazyload-outer-wrap" style="width: 100%;"><a class="gallery-item" href="http://qiniu.vistazx1.top/ctffakelogin1-2.PNG" target="_blank" rel="noopener" ><noscript><img src="http://qiniu.vistazx1.top/ctffakelogin1-2.PNG" alt="qiniu.vistazx1.top"></noscript><span class="lazyload-wrap" data-content="%3Cimg%20src%3D%22http%3A%2F%2Fqiniu.vistazx1.top%2Fctffakelogin1-2.PNG%22%20alt%3D%22qiniu.vistazx1.top%22%3E" ><span class="placeholder" ></span></span></a><span class="caption">qiniu.vistazx1.top</span></span></p>
 <h2 id="Crpyto"><a href="#Crpyto" class="headerlink" title="Crpyto"></a>Crpyto</h2><h3 id="Toddler-RSA"><a href="#Toddler-RSA" class="headerlink" title="Toddler RSA"></a>Toddler RSA</h3><p><a target="_blank" rel="noopener" href="http://factordb.com/index.php?query=35916913381799169598047392904148491391161620899816360736005775761561238969291">http://factordb.com/index.php?query=35916913381799169598047392904148491391161620899816360736005775761561238969291</a></p>
 <p>用factordb分解N，发现分解出多个素数。到网上搜索，发现RSA支持多个素数(Multi prime RSA)。</p>
 <p>计算d的方式也是一样的。</p>
@@ -608,7 +719,7 @@
 <li><p>根据objdump的结果直接编辑十六进制，将里面的内容完全修改成题目的样子。</p>
 </li>
 <li><p>然后写个c程序调用div()函数。先用一个大数来除，然后看结果不断缩小范围，最终找到N。</p>
-<p><img src="http://qiniu.vistazx1.top/ctfctf_div.png" alt="qiniu.vistazx1.top"></p>
+<p><span class="lazyload-outer-wrap" style="width: 100%;"><a class="gallery-item" href="http://qiniu.vistazx1.top/ctfctf_div.png" target="_blank" rel="noopener" ><noscript><img src="http://qiniu.vistazx1.top/ctfctf_div.png" alt="qiniu.vistazx1.top"></noscript><span class="lazyload-wrap" data-content="%3Cimg%20src%3D%22http%3A%2F%2Fqiniu.vistazx1.top%2Fctfctf_div.png%22%20alt%3D%22qiniu.vistazx1.top%22%3E" ><span class="placeholder" ></span></span></a><span class="caption">qiniu.vistazx1.top</span></span></p>
 <p>附上代码：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">long</span> <span class="type">long</span> <span class="title function_">div</span><span class="params">(<span class="type">long</span> <span class="type">long</span> x)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> result = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">long</span> <span class="type">long</span> i=<span class="number">974873638400001</span>;i&lt;<span class="number">974873638500001</span>;i+=<span class="number">1</span>) &#123;</span><br><span class="line">        result = div(i);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%lld %lld\n&quot;</span>,i, result);</span><br><span class="line">        <span class="keyword">if</span> (result==<span class="number">1</span>) &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;%lld\n&quot;</span>,i);</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ol>
@@ -627,26 +738,26 @@
 <h3 id="假的，都是假的"><a href="#假的，都是假的" class="headerlink" title="假的，都是假的"></a>假的，都是假的</h3><p>Zip伪加密</p>
 <p>用HxD将第48位改为00。 或者找现成的工具也行。比如 <code>ZipCenOp.jar</code></p>
 <h3 id="真的，这次来真的。"><a href="#真的，这次来真的。" class="headerlink" title="真的，这次来真的。"></a>真的，这次来真的。</h3><p>AZPR暴力破解。密码居然只是5位数字。</p>
-<p><img src="http://qiniu.vistazx1.top/ctfazpr.PNG" alt="qiniu.vistazx1.top"></p>
+<p><span class="lazyload-outer-wrap" style="width: 100%;"><a class="gallery-item" href="http://qiniu.vistazx1.top/ctfazpr.PNG" target="_blank" rel="noopener" ><noscript><img src="http://qiniu.vistazx1.top/ctfazpr.PNG" alt="qiniu.vistazx1.top"></noscript><span class="lazyload-wrap" data-content="%3Cimg%20src%3D%22http%3A%2F%2Fqiniu.vistazx1.top%2Fctfazpr.PNG%22%20alt%3D%22qiniu.vistazx1.top%22%3E" ><span class="placeholder" ></span></span></a><span class="caption">qiniu.vistazx1.top</span></span></p>
 <h3 id="怀旧"><a href="#怀旧" class="headerlink" title="怀旧"></a>怀旧</h3><p>提示：这只是一个普通的压缩包</p>
 <p>打开发现secret.png的文件头被破坏了。 用强大的101 editor 一看，被修改的地方清晰清晰可见。</p>
 <p>把7A改成74 即可解压出文件。</p>
-<p><img src="http://qiniu.vistazx1.top/ctfanime.PNG" alt="qiniu.vistazx1.top"></p>
+<p><span class="lazyload-outer-wrap" style="width: 100%;"><a class="gallery-item" href="http://qiniu.vistazx1.top/ctfanime.PNG" target="_blank" rel="noopener" ><noscript><img src="http://qiniu.vistazx1.top/ctfanime.PNG" alt="qiniu.vistazx1.top"></noscript><span class="lazyload-wrap" data-content="%3Cimg%20src%3D%22http%3A%2F%2Fqiniu.vistazx1.top%2Fctfanime.PNG%22%20alt%3D%22qiniu.vistazx1.top%22%3E" ><span class="placeholder" ></span></span></a><span class="caption">qiniu.vistazx1.top</span></span></p>
 <p>用stegsolve发现是GIF文件。找来找去只发现了半张二维码。</p>
 <p>后来发现frame是2。于是保存下来。再使用PhotoShop大法拼成一张。成功。</p>
-<p><img src="http://qiniu.vistazx1.top/ctfanime1.PNG" alt="qiniu.vistazx1.top"></p>
+<p><span class="lazyload-outer-wrap" style="width: 100%;"><a class="gallery-item" href="http://qiniu.vistazx1.top/ctfanime1.PNG" target="_blank" rel="noopener" ><noscript><img src="http://qiniu.vistazx1.top/ctfanime1.PNG" alt="qiniu.vistazx1.top"></noscript><span class="lazyload-wrap" data-content="%3Cimg%20src%3D%22http%3A%2F%2Fqiniu.vistazx1.top%2Fctfanime1.PNG%22%20alt%3D%22qiniu.vistazx1.top%22%3E" ><span class="placeholder" ></span></span></a><span class="caption">qiniu.vistazx1.top</span></span></p>
 <h3 id="这好像是一个图片"><a href="#这好像是一个图片" class="headerlink" title="这好像是一个图片"></a>这好像是一个图片</h3><p>是个不完整的二维码</p>
 <p>用Photoshop拼接回去。</p>
 <p>再从别的二维码内切出三个正方形，用手机扫描即可。</p>
 <p>(PS:忘了保存成品，只找到个半成品留下来。)</p>
-<p> <img src="http://qiniu.vistazx1.top/ctfctfqr.jpg" alt="qiniu.vistazx1.top"></p>
+<p> <span class="lazyload-outer-wrap" style="width: 100%;"><a class="gallery-item" href="http://qiniu.vistazx1.top/ctfctfqr.jpg" target="_blank" rel="noopener" ><noscript><img src="http://qiniu.vistazx1.top/ctfctfqr.jpg" alt="qiniu.vistazx1.top"></noscript><span class="lazyload-wrap" data-content="%3Cimg%20src%3D%22http%3A%2F%2Fqiniu.vistazx1.top%2Fctfctfqr.jpg%22%20alt%3D%22qiniu.vistazx1.top%22%3E" ><span class="placeholder" ></span></span></a><span class="caption">qiniu.vistazx1.top</span></span></p>
 <h3 id="柯哀"><a href="#柯哀" class="headerlink" title="柯哀"></a>柯哀</h3><p>Stegsolve 发现a.png 里面blue 通道有盲水印，得知网上有很多工具可解。</p>
 <p>遂找工具解决 <a target="_blank" rel="noopener" href="https://github.com/linyacool/blind-watermark">https://github.com/linyacool/blind-watermark</a></p>
-<p> <img src="http://qiniu.vistazx1.top/ctfblind-watermark.PNG" alt="qiniu.vistazx1.top"></p>
-<p> <img src="http://qiniu.vistazx1.top/ctfblind-watermark1.PNG" alt="qiniu.vistazx1.top"></p>
+<p> <span class="lazyload-outer-wrap" style="width: 100%;"><a class="gallery-item" href="http://qiniu.vistazx1.top/ctfblind-watermark.PNG" target="_blank" rel="noopener" ><noscript><img src="http://qiniu.vistazx1.top/ctfblind-watermark.PNG" alt="qiniu.vistazx1.top"></noscript><span class="lazyload-wrap" data-content="%3Cimg%20src%3D%22http%3A%2F%2Fqiniu.vistazx1.top%2Fctfblind-watermark.PNG%22%20alt%3D%22qiniu.vistazx1.top%22%3E" ><span class="placeholder" ></span></span></a><span class="caption">qiniu.vistazx1.top</span></span></p>
+<p> <span class="lazyload-outer-wrap" style="width: 100%;"><a class="gallery-item" href="http://qiniu.vistazx1.top/ctfblind-watermark1.PNG" target="_blank" rel="noopener" ><noscript><img src="http://qiniu.vistazx1.top/ctfblind-watermark1.PNG" alt="qiniu.vistazx1.top"></noscript><span class="lazyload-wrap" data-content="%3Cimg%20src%3D%22http%3A%2F%2Fqiniu.vistazx1.top%2Fctfblind-watermark1.PNG%22%20alt%3D%22qiniu.vistazx1.top%22%3E" ><span class="placeholder" ></span></span></a><span class="caption">qiniu.vistazx1.top</span></span></p>
 <h3 id=""><a href="#" class="headerlink" title="++__++"></a>++__++</h3><p>下载文件，用16进制编辑器查看发现是数据包。</p>
 <p>用wireshark打开。过滤器输入tcp追踪tcp流，发现http请求一个rar压缩包</p>
-<p><img src="http://qiniu.vistazx1.top/ctf++__++1.PNG" alt="qiniu.vistazx1.top"></p>
+<p><span class="lazyload-outer-wrap" style="width: 100%;"><a class="gallery-item" href="http://qiniu.vistazx1.top/ctf++__++1.PNG" target="_blank" rel="noopener" ><noscript><img src="http://qiniu.vistazx1.top/ctf++__++1.PNG" alt="qiniu.vistazx1.top"></noscript><span class="lazyload-wrap" data-content="%3Cimg%20src%3D%22http%3A%2F%2Fqiniu.vistazx1.top%2Fctf%2B%2B__%2B%2B1.PNG%22%20alt%3D%22qiniu.vistazx1.top%22%3E" ><span class="placeholder" ></span></span></a><span class="caption">qiniu.vistazx1.top</span></span></p>
 <p>用python保存。发现压缩包被加密。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">rar_file = bytearray([0x52, 0x61, 0x72, 0x21, 0x1a, 0x07, 0x01, 0x00,</span><br><span class="line">0x33, 0x92, 0xb5, 0xe5, 0x0a, 0x01, 0x05, 0x06,</span><br><span class="line">0x00, 0x05, 0x01, 0x01, 0x80, 0x80, 0x00, 0x76,</span><br><span class="line">0xcd, 0x9a, 0xb5, 0x55, 0x02, 0x03, 0x3c, 0xb0,</span><br><span class="line">0x00, 0x04, 0x96, 0x00, 0x20, 0x2c, 0x37, 0x52,</span><br><span class="line">0x5a, 0x80, 0x03, 0x00, 0x08, 0x66, 0x6c, 0x61,</span><br><span class="line">0x67, 0x2e, 0x74, 0x78, 0x74, 0x30, 0x01, 0x00,</span><br><span class="line">0x03, 0x0f, 0x92, 0x2d, 0x6d, 0xd5, 0x6c, 0xf4,</span><br><span class="line">0x0a, 0x07, 0xb5, 0x6f, 0x11, 0x2d, 0xff, 0xca,</span><br><span class="line">0x5b, 0x56, 0x19, 0x2b, 0x06, 0xd3, 0xe8, 0x22,</span><br><span class="line">0xbd, 0xa2, 0xb3, 0xf7, 0xed, 0x99, 0x0b, 0x8a,</span><br><span class="line">0x2e, 0xae, 0x9d, 0xcc, 0xb4, 0x1a, 0xcf, 0xf0,</span><br><span class="line">0x6a, 0x79, 0xa9, 0x4b, 0xc1, 0x3b, 0x0a, 0x03,</span><br><span class="line">0x02, 0x04, 0xfa, 0xd8, 0x28, 0x34, 0x0b, 0xd3,</span><br><span class="line">0x01, 0xa8, 0x63, 0x68, 0x72, 0x51, 0xba, 0x96,</span><br><span class="line">0x49, 0xaa, 0x23, 0x6b, 0xd3, 0x4a, 0x05, 0x1d,</span><br><span class="line">0xd5, 0x7b, 0xc5, 0x03, 0xa2, 0x2a, 0xb2, 0x1a,</span><br><span class="line">0xe8, 0xd8, 0x00, 0x7b, 0x3d, 0x04, 0x15, 0xec,</span><br><span class="line">0x27, 0xbf, 0xa3, 0xb3, 0xde, 0xce, 0xa5, 0xe9,</span><br><span class="line">0x15, 0x8b, 0x8f, 0x10, 0xd2, 0x27, 0xfa, 0x9e,</span><br><span class="line">0x1a, 0x1d, 0x77, 0x56, 0x51, 0x03, 0x05, 0x04,</span><br><span class="line">0x00])</span><br><span class="line">with open(&quot;flag.rar&quot;,&#x27;wb&#x27;) as file:</span><br><span class="line">    file.write(rar_file)</span><br></pre></td></tr></table></figure>
 
@@ -654,9 +765,9 @@
 <p>发现一段与telnet相关的数据，追踪tcp流，发现一个程序和一段base64。</p>
 <p>直接用里面提供的程序解密即可。</p>
 <p>解密后发现密码。</p>
-<p><img src="http://qiniu.vistazx1.top/ctf++__++4.PNG" alt="qiniu.vistazx1.top"></p>
-<p><img src="http://qiniu.vistazx1.top/ctf++__++3.PNG" alt="qiniu.vistazx1.top"></p>
-<p><img src="http://qiniu.vistazx1.top/ctf++__++5.PNG" alt="qiniu.vistazx1.top"></p>
+<p><span class="lazyload-outer-wrap" style="width: 100%;"><a class="gallery-item" href="http://qiniu.vistazx1.top/ctf++__++4.PNG" target="_blank" rel="noopener" ><noscript><img src="http://qiniu.vistazx1.top/ctf++__++4.PNG" alt="qiniu.vistazx1.top"></noscript><span class="lazyload-wrap" data-content="%3Cimg%20src%3D%22http%3A%2F%2Fqiniu.vistazx1.top%2Fctf%2B%2B__%2B%2B4.PNG%22%20alt%3D%22qiniu.vistazx1.top%22%3E" ><span class="placeholder" ></span></span></a><span class="caption">qiniu.vistazx1.top</span></span></p>
+<p><span class="lazyload-outer-wrap" style="width: 100%;"><a class="gallery-item" href="http://qiniu.vistazx1.top/ctf++__++3.PNG" target="_blank" rel="noopener" ><noscript><img src="http://qiniu.vistazx1.top/ctf++__++3.PNG" alt="qiniu.vistazx1.top"></noscript><span class="lazyload-wrap" data-content="%3Cimg%20src%3D%22http%3A%2F%2Fqiniu.vistazx1.top%2Fctf%2B%2B__%2B%2B3.PNG%22%20alt%3D%22qiniu.vistazx1.top%22%3E" ><span class="placeholder" ></span></span></a><span class="caption">qiniu.vistazx1.top</span></span></p>
+<p><span class="lazyload-outer-wrap" style="width: 100%;"><a class="gallery-item" href="http://qiniu.vistazx1.top/ctf++__++5.PNG" target="_blank" rel="noopener" ><noscript><img src="http://qiniu.vistazx1.top/ctf++__++5.PNG" alt="qiniu.vistazx1.top"></noscript><span class="lazyload-wrap" data-content="%3Cimg%20src%3D%22http%3A%2F%2Fqiniu.vistazx1.top%2Fctf%2B%2B__%2B%2B5.PNG%22%20alt%3D%22qiniu.vistazx1.top%22%3E" ><span class="placeholder" ></span></span></a><span class="caption">qiniu.vistazx1.top</span></span></p>
 <h3 id="slots"><a href="#slots" class="headerlink" title="slots"></a>slots</h3><p>题目有源码</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">def line():</span><br><span class="line">	return [random.choice(FRUITS) for i in range(3)]</span><br><span class="line"></span><br><span class="line">def payout(line):</span><br><span class="line">	for fruit in line:</span><br><span class="line">		combo = fruit + str(line.count(fruit))</span><br><span class="line">		if combo in COMBOS:</span><br><span class="line">			return COMBOS[combo]</span><br><span class="line">	return 0</span><br><span class="line">	</span><br><span class="line"># 因为有这一行，玩家永远赢不到一分钱。这个循环保证line2的payout是0</span><br><span class="line">while payout(line2):</span><br><span class="line">	line2 = line()</span><br></pre></td></tr></table></figure>
 
@@ -667,18 +778,10 @@
 <p>那个float()肯定有问题。随去查文档<a target="_blank" rel="noopener" href="https://docs.python.org/3/library/functions.html#float">https://docs.python.org/3/library/functions.html#float</a></p>
 <p>然后发现NaN的运算结果一定是NaN。</p>
 <p>输入nan得到flag</p>
-<p><img src="http://qiniu.vistazx1.top/ctfslots.PNG" alt="qiniu.vistazx1.top"></p>
+<p><span class="lazyload-outer-wrap" style="width: 100%;"><a class="gallery-item" href="http://qiniu.vistazx1.top/ctfslots.PNG" target="_blank" rel="noopener" ><noscript><img src="http://qiniu.vistazx1.top/ctfslots.PNG" alt="qiniu.vistazx1.top"></noscript><span class="lazyload-wrap" data-content="%3Cimg%20src%3D%22http%3A%2F%2Fqiniu.vistazx1.top%2Fctfslots.PNG%22%20alt%3D%22qiniu.vistazx1.top%22%3E" ><span class="placeholder" ></span></span></a><span class="caption">qiniu.vistazx1.top</span></span></p>
 
     </article>
     <!-- license -->
-    
-        <div class="license-wrapper">
-            <p>原文作者：<a href="https://vistazx1.top">Guohao</a>
-            <p>原文链接：<a href="https://vistazx1.top/2018/10/26/2018-10-26%2003:25:38/">https://vistazx1.top/2018/10/26/2018-10-26%2003:25:38/</a>
-            <p>发表日期：<a href="https://vistazx1.top/2018/10/26/2018-10-26%2003:25:38/">October 26th 2018, 3:25:38 am</a>
-            <p>更新日期：<a href="https://vistazx1.top/2018/10/26/2018-10-26%2003:25:38/">March 5th 2021, 3:48:06 pm</a>
-            <p>版权声明：This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-ND 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1" alt=""><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nd.svg?ref=chooser-v1" alt=""></a></p>
-        </div>
     
     <!-- paginator -->
     <ul class="post-paginator">
@@ -1769,18 +1872,6 @@
         
         
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
     
     
     
@@ -2173,13 +2264,13 @@
         
         <li class="archive-post-item">
             <span class="archive-post-date">12/08</span>
-            <a class="archive-post-title" href="/2016/12/08/2016-12-08%2020:16:55/">bash on windows初体验</a>
+            <a class="archive-post-title" href="/2016/12/08/2016-12-08%2020:19:1/">W650DC 黑苹果</a>
         </li>
     
         
         <li class="archive-post-item">
             <span class="archive-post-date">12/08</span>
-            <a class="archive-post-title" href="/2016/12/08/2016-12-08%2020:19:1/">W650DC 黑苹果</a>
+            <a class="archive-post-title" href="/2016/12/08/2016-12-08%2020:16:55/">bash on windows初体验</a>
         </li>
     
         
@@ -2348,5 +2439,5 @@
         
         <!-- mermaid -->
         
-    </body>
+    <script>"use strict";!function(){function S(e){return~~(1227e-8<e?q*H(e,.416666)-13.025:e*U+1)}function T(e){for(e+=M/2;M<e;)e-=n;var t=1.27323954*e-.405284735*O(e);return.225*(O(t)-t)+t}var o="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz#$%*+,-.:;=?@[]^_{|}~",x=function(e,t,n){for(var r=0;t<n;)r=(r*=83)+o.indexOf(e[t++]);return r},H=Math.pow,M=Math.PI,n=2*M,U=3294.6,q=269.025,O=function(e){return(e<0?-1:1)*e*e};function e(e,t,n,r){for(var o,a,d,i,c,l,s,u,p=x(e,0,1),h=p%9+1,f=1+~~(p/9),v=h*f,m=0,w=0,g=0,C=0,y=0,b=0,I=0,L=(x(e,1,2)+1)/13446*(1|r),D=new Float64Array(3*v),E=[(p=x(p=e,2,6))>>16,p>>8&255,255&p],m=0;m<3;m++)D[m]=10.31475<(u=E[m])?H(u/q+.052132,2.4):u/U;for(m=1;m<v;m++)s=x(e,4+2*m,6+2*m),D[3*m]=O(~~(s/361)-9)*L,D[3*m+1]=O(~~(s/19)%19-9)*L,D[3*m+2]=O(s%19-9)*L;for(var A=4*t,R=new Uint8ClampedArray(A*n),C=0;C<n;C++)for(c=M*C/n,g=0;g<t;g++){for(l=M*g/t,w=I=b=y=0;w<f;w++)for(a=T(c*w),m=0;m<h;m++)o=T(l*m)*a,y+=D[d=3*(m+w*h)]*o,b+=D[1+d]*o,I+=D[2+d]*o;R[i=4*g+C*A]=S(y),R[1+i]=S(b),R[2+i]=S(I),R[3+i]=255}return R}"undefined"!=typeof window&&(window.blurhash={decodeBlurHash:e})}(),function(){if("undefined"!=typeof window){var d=function(e){var t=document.createElement("div");return t.innerHTML=e,t.classList.add("inner-wrap"),t},e=function(e){var t,n,r=document.createElement("div"),o=decodeURIComponent(e.dataset.content).replace("<img","<div"),o=(r.innerHTML=o,r.children[0]),r=function(e){var t={};if(!e)return"";try{var n=/\$placeholder=(\S+)=placeholder/gi.exec(e);n&&n[1]&&(t.placeholderImage=n[1])}catch(e){console.log(e)}return t}(o.getAttribute("alt")),o=o.dataset.placeholderimg||r.placeholderImage;o&&/blurhash:/.test(o)&&(r=document.createElement("canvas"),o=blurhash.decodeBlurHash(o.replace("blurhash:",""),32,32),t=r.getContext("2d"),r.width=32,r.height=32,(n=t.createImageData(32,32)).data.set(o),t.putImageData(n,0,0),o=r,e.children[0].appendChild(o)),e.dataset.content=e.dataset.content.replace(/%24placeholder%3D(\S+)%3Dplaceholder/gi,"").replace(/%24aspect-ratio%3D(\S+)%3Daspect-ratio/gi,"")},r=function(n){function r(e){n.classList.remove("loaded"),e.preventDefault(),e.stopPropagation(),(e=n.querySelectorAll(".error-wrap")[0])&&n.removeChild(e),e=n.children[1],n.removeChild(e),e=d(t),o(e),a(e),n.appendChild(e)}var t=decodeURIComponent(n.dataset.content),e=d(t),o=function(e){e.children[0].onload=function(){setTimeout(function(){n.classList.add("loaded")},100);var e=n.querySelectorAll(".error-wrap")[0];e&&n.removeChild(e)},e.ontransitionend=function(){n.children[0].classList.add("loaded")},/<video/.test(t)&&setTimeout(function(){n.classList.add("loaded")},100)},a=function(e){e.children[0].onerror=function(){var e=document.createElement("div"),t=(e.classList.add("error-wrap"),document.createElement("span")),t=(t.classList.add("error-tip"),e.appendChild(t),document.createElement("button"));t.innerText="Retry",t.classList.add("retry-btn"),t.onclick=r,e.appendChild(t),n.appendChild(e)}};o(e),a(e),n.appendChild(e)},t=document.querySelectorAll(".lazyload-wrap");if(window.IntersectionObserver)for(var n,o,a=0;a<t.length;a++)e(c=t[a]),!function(t){var n=new IntersectionObserver(function(e){e.forEach(function(e){e.intersectionRatio>=window.$lazyload.intersectionRatio&&(r(t),n.disconnect())})},{root:document,threshold:[0,.2,.4,.6,.8,1]});n.observe(t)}(c);else for(var i=0;i<t.length;i++){var c=t[i];n=c,o=void 0,o=decodeURIComponent(n.dataset.content),n.appendChild(d(o))}}}();</script></body>
 </html>
