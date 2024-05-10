@@ -34,6 +34,7 @@ jobs:
             ${{ runner.OS }}-npm-cache
       - name: setup dot
         run: |
+          sudo apt-get update
           sudo apt-get install graphviz
           sudo apt-get install imagemagick
       - name: accept eula
