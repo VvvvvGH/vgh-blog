@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "hexo": "^7.0.0",
-    "hexo-filter-plantuml": "^2.1.1",
+    "hexo-filter-plantuml": "github:VvvvvGH/hexo-filter-plantuml",
     "hexo-generator-archive": "^2.0.0",
     "hexo-generator-category": "^2.0.0",
     "hexo-generator-index": "^3.0.0",
