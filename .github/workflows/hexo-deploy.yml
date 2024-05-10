@@ -43,8 +43,6 @@ jobs:
         run: sudo apt-get install ttf-mscorefonts-installer
       - name: install font
         run: sudo apt-get install fonts-noto-cjk
-      - name: install font-family
-        run: sudo apt-get install ttf-ubuntu-font-family
       - name: update cache
         run: sudo fc-cache -f -v
       - name: Install Dependencies
