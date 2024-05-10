@@ -32,6 +32,10 @@ jobs:
           key: ${{ runner.OS }}-npm-cache
           restore-keys: |
             ${{ runner.OS }}-npm-cache
+      - name: setup dot
+        run: |
+          sudo apt-get install graphviz
+          sudo apt-get install imagemagick
       - name: Install Dependencies
         run: npm install
       - name: Install hexo
