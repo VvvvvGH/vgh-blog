@@ -36,6 +36,16 @@ jobs:
         run: |
           sudo apt-get install graphviz
           sudo apt-get install imagemagick
+      - name: accept eula
+        run: echo ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true | sudo debconf-set-selections
+      - name: install font
+        run: sudo apt-get install ttf-mscorefonts-installer
+      - name: install font
+        run: sudo apt-get install fonts-noto-cjk
+      - name: install font-family
+        run: sudo apt-get install ttf-ubuntu-font-family
+      - name: update cache
+        run: sudo fc-cache -f -v
       - name: Install Dependencies
         run: npm install
       - name: Install hexo
